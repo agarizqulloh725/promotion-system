@@ -16,4 +16,11 @@ class GeneralRouteController extends Controller
     public function register(){
         return view('v1.auth.register');
     }
+    public function adminDashboard(){
+        return view('v1.backend.dashboard');
+    }
+    public function testToken()
+    {
+        return view('v1.auth.me');
+    }
 }

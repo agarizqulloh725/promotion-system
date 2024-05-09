@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\v1\api;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Models\RoleHasPermissions;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class AuthController extends Controller
 {
@@ -33,13 +36,15 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // $token = $user->createToken('auth_token')->plainTextToken;
+        RoleHasPermissions::create([
+            'user_id' => $user->id,
+            'permission_id' => Permission::where('name', 'user')->first()->id
+        ]);
 
         return response()->json([
             'status' => 'success',
             'message' => 'User registered successfully',
-            // 'access_token' => $token,
-            'token_type' => 'Bearer',
+            'user' => $user,
         ]);
     }
 
@@ -64,18 +69,26 @@ class AuthController extends Controller
                 'message' => 'Invalid credentials',
             ], 401);
         }
-
         $user = Auth::user();
 
-
         $token = $user->createToken('auth_token')->plainTextToken;
-
+        $cookieName = 'access_token';
+        $cookieLifetime = 60 * 24;
+    
+        $cookie = Cookie::create($cookieName)
+            ->withValue($token)
+            ->withExpires(time() + (60 * $cookieLifetime))
+            ->withPath('/')
+            ->withHttpOnly(false)
+            ->withSameSite(Cookie::SAMESITE_LAX);
+    
         return response()->json([
             'status' => 'success',
             'message' => 'Login successful',
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
+            'token_type1' => 'Bearer',
+            'token_type2' => $token,
+            'token_type3' =>  $user
+        ])->withCookie($cookie);
     }
 
     public function logout(Request $request)
@@ -85,6 +98,14 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Logout successful',
+        ]);
+    }
+    public function me()
+    {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User details retrieved successfully',
+            'user' => Auth::user(),
         ]);
     }
 }
