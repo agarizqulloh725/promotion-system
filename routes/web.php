@@ -9,6 +9,13 @@ Route::get('/login', [GeneralRouteController::class, 'login']);
 Route::get('/register', [GeneralRouteController::class, 'register']);
 Route::get('/test', [GeneralRouteController::class, 'testToken']);
 
+Route::get('/homepage', [GeneralRouteController::class, 'homePage']);
+Route::get('/product', [GeneralRouteController::class, 'product']);
+Route::get('/promo', [GeneralRouteController::class, 'promo']);
+Route::get('/about', [GeneralRouteController::class, 'about']);
+Route::get('/branch', [GeneralRouteController::class, 'branch']);
+Route::get('/profile', [GeneralRouteController::class, 'profile']);
+
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [GeneralRouteController::class, 'adminDashboard']);
+    Route::get('/dashboard', [GeneralRouteController::class, 'adminDashboard'])->middleware('isAdmin');
 });

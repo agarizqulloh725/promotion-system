@@ -78,8 +78,7 @@
 
                 if (response.ok) {
                     const result = await response.json();
-                    //ambil respon untuk redirect page untuk menentukan user ini admin atau bukan
-                    window.location.href = '/me';
+                    window.location.href = result.url;
                 } else {
                     const error = await response.json();
                     console.error('Login gagal:', error);

@@ -82,13 +82,21 @@ class AuthController extends Controller
             ->withHttpOnly(false)
             ->withSameSite(Cookie::SAMESITE_LAX);
     
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Login successful',
-            'token_type1' => 'Bearer',
-            'token_type2' => $token,
-            'token_type3' =>  $user
-        ])->withCookie($cookie);
+            $role = RoleHasPermissions::where('user_id', $user->id)->first();
+            $permission = Permission::find($role->permission_id);
+            $url = '';
+    
+            if ($permission->name === 'super_admin' || $permission->name === 'admin') {
+                $url = '/admin/dashboard';
+            } else {
+                $url = '/';
+            }
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Login successful',
+                'token' => $token,
+                'url' => $url
+            ])->withCookie($cookie);
     }
 
     public function logout(Request $request)
@@ -100,12 +108,40 @@ class AuthController extends Controller
             'message' => 'Logout successful',
         ]);
     }
-    public function me()
+    public function userCheck()
     {
+        $user = Auth::user();
+    
+        if (!$user) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'User not authenticated'
+            ], 401);
+        }
+    
+        $role = RoleHasPermissions::where('user_id', $user->id)->first();
+    
+        if (!$role) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Role not found'
+            ], 404);
+        }
+    
+        $permission = Permission::find($role->permission_id);
+    
+        if (!$permission) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Permission not found'
+            ], 404);
+        }
+    
         return response()->json([
             'status' => 'success',
-            'message' => 'User details retrieved successfully',
-            'user' => Auth::user(),
+            'user' => bcrypt($user->id),
+            'role' => bcrypt($role->id),
+            'permission' => $permission->name
         ]);
     }
 }
