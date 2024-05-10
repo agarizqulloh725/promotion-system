@@ -21346,7 +21346,7 @@ code {
   margin-top: 1rem;
 }
 
-#proBanner {
+/* #proBanner {
   position: fixed;
   left: 0;
   top: 0;
@@ -21415,7 +21415,7 @@ code {
 
 .proBanner-padding-top {
   padding-top: 70px !important;
-}
+} */
 
 /* Dashboard */
 .card-statistics .highlight-icon {

@@ -21,7 +21,7 @@ class GeneralRouteController extends Controller
     }
     //admin
     public function adminDashboard(){
-        return view('v1.backend.dashboard');
+        return view('v1.backend.pages.dashboard');
     }
     //all user 
     public function homePage(){
