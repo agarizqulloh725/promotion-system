@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +23,9 @@ class GeneralRouteController extends Controller
     //admin
     public function adminDashboard(){
         return view('v1.backend.pages.dashboard');
+    }
+    public function ProCategory(){
+        return view('v1.backend.pages.proCategory.index');
     }
     //all user 
     public function homePage(){

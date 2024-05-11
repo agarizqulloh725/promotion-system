@@ -18,4 +18,5 @@ Route::get('/profile', [GeneralRouteController::class, 'profile']);
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [GeneralRouteController::class, 'adminDashboard'])->middleware('isAdmin');
+    Route::get('/pro-category', [GeneralRouteController::class, 'ProCategory'])->middleware('isAdmin');
 });
