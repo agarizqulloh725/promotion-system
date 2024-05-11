@@ -24,21 +24,23 @@ Route::prefix('v1')->group(function () {
     Route::get('me', [AuthController::class, 'userCheck'])->middleware('auth:sanctum');
 
     Route::prefix('admin')->group(function () {
-        Route::resources([
-            'pro-category' => ProCategoryController::class,
-            'brand' => BrandController::class,
-            'pro-color' => ProColorController::class,
-            'specification' => SpecificationController::class,
-            'pro-specification' => ProSpecificationController::class,
-            'pro-size' => ProSizeController::class,
-            'promo' => PromoController::class,
-            'wishlist' => WishlistController::class,
-            'permissions' => PermissionController::class,
-            'role-permissions' => RolePermissionController::class,
-            'product' => ProductController::class,
-            'pro-image' => ProImageController::class,
-            'pro-promo' => ProPromoController::class,
-            'pro-stock' => ProStockController::class,
-        ]);
-    });
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::resources([
+                'pro-category' => ProCategoryController::class,
+                'brand' => BrandController::class,
+                'pro-color' => ProColorController::class,
+                'specification' => SpecificationController::class,
+                'pro-specification' => ProSpecificationController::class,
+                'pro-size' => ProSizeController::class,
+                'promo' => PromoController::class,
+                'wishlist' => WishlistController::class,
+                'permissions' => PermissionController::class,
+                'role-permissions' => RolePermissionController::class,
+                'product' => ProductController::class,
+                'pro-image' => ProImageController::class,
+                'pro-promo' => ProPromoController::class,
+                'pro-stock' => ProStockController::class,
+            ]);
+        });
+    });    
 });

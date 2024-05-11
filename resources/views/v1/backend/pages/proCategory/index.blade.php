@@ -65,6 +65,31 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showModalLabel">Show Category</h5>
+                <button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="showForm">
+                    <input type="hidden" id="showId" value="">
+                    <div class="form-group">
+                        <label for="showName">Nama Kategori</label>
+                        <input type="text" class="form-control" id="showName" placeholder="Masukan Nama">
+                    </div>
+                    <div class="form-group">
+                        <label for="showDescription">Description</label>
+                        <input type="text" class="form-control" id="showDescription" placeholder="Masukan deskripsi">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -104,7 +129,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this category?
+                Yakin ingin menghapus kategori ini ?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
@@ -120,14 +145,18 @@
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('utils.js') }}"></script>
 <script>
-
+const token = getCookieValue('access_token');
 $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {
             url: '/api/v1/admin/pro-category/',
             type:'GET',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+            },
             dataSrc: ''
         },
         columnDefs: [{
@@ -141,7 +170,7 @@ $(document).ready(function() {
             }},
             { data: "name" },
             { data: null, render: function (data, type, row) {
-                return `<a href="view/${row.id}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+                return `<button onclick="showCategory(${row.id})" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
                         <button onclick="editCategory(${row.id}, '${row.name}')" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                         <button class="btn btn-danger btn-sm delete-btn" data-id="${row.id}"><i class="fa fa-trash"></i></button>`;
             }}
@@ -151,7 +180,6 @@ $(document).ready(function() {
     $('#btnCreate').click(function() {
         $('#createModal').modal('show');
     })
-
     $('#createForm').submit(function(e) {
         e.preventDefault();
         var categoryName = $('#categoryName').val();
@@ -159,11 +187,14 @@ $(document).ready(function() {
         $.ajax({
             url: '/api/v1/admin/pro-category/',
             type: 'POST',
-            data: { 
+            headers: {
+            'Authorization': 'Bearer ' + token
+            },
+            contentType: 'application/json',
+            data: JSON.stringify({
                 name: categoryName,
                 description: categoryDescription
-            
-            },
+            }),
             success: function(result) {
                 table.ajax.reload(null, false);
                 $('#createModal').modal('hide');
@@ -198,6 +229,9 @@ $(document).ready(function() {
         $.ajax({
             url: '/api/v1/admin/pro-category/' + categoryId,
             type: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
             success: function(result) {
                 $('#deleteModal').modal('hide');
                 table.ajax.reload();
@@ -228,6 +262,9 @@ $(document).ready(function() {
         $.ajax({
             url: '/api/v1/admin/pro-category/' + id,
             type: 'PUT',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
             data: { 
                 name: updatedName,
                 description: editDescription
@@ -259,13 +296,43 @@ $(document).ready(function() {
         $('#deleteModal').modal('hide');
         $('#createModal').modal('hide');
         $('#editModal').modal('hide');
+        $('#showModal').modal('hide');
     });
 });
+function showCategory(id) {
+    $.ajax({
+        url: '/api/v1/admin/pro-category/' + id, 
+        type: 'GET',
+        headers: {
+                'Authorization': 'Bearer ' + token
+            },
+        contentType: 'application/json',
+        success: function(response) {
+            $('#showId').val(response.id);             
+            $('#showName').val(response.name);        
+            $('#showDescription').val(response.description); 
 
+            $('#showModal').modal('show');
+        },
+        error: function(error) {
+            console.log('Error fetching category:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to fetch category details. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}
 function editCategory(id) {
     $.ajax({
         url: '/api/v1/admin/pro-category/' + id, 
         type: 'GET',
+        headers: {
+                'Authorization': 'Bearer ' + token
+            },
+        contentType: 'application/json',
         success: function(response) {
             $('#editId').val(response.id);             
             $('#editName').val(response.name);        
