@@ -10,5 +10,5 @@ class Promo extends Model
     use HasFactory;
 
     protected $table = 'promo';
-    protected $fillable = ['name', 'start_time', 'end_time', 'image'];
+    protected $fillable = ['name', 'start_time', 'end_time','discount','cashback','bonus', 'image'];
 }

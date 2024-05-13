@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
+            $table->decimal('discount', 8, 2)->nullable();
+            $table->decimal('cashback', 8, 2)->nullable();
+            $table->decimal('bonus', 8, 2)->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

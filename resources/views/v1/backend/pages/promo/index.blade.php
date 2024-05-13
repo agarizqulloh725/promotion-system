@@ -10,11 +10,11 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h2 class="page-title"> Brand Produk </h2>
+        <h2 class="page-title"> Promo Produk </h2>
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-            <i class="fa fa-plus"></i> Tambah Brand
+            <i class="fa fa-plus"></i> Tambah Promo
         </button>        
     </div>
     <div class="row">
@@ -25,8 +25,8 @@
                 <thead>
                     <tr>
                     <th> No </th>
-                    <th> Type Kategori </th>
-                    <th> Name Brand</th>
+                    <th> Name </th>
+                    <th> Start promo</th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -42,37 +42,50 @@
   <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="createModalLabel">Create New Brand</h5>
+              <h5 class="modal-title" id="createModalLabel">Create New Promo</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
           <div class="modal-body">
               <form id="createForm">
-                  <div class="form-group">
-                      <label for="brandName">Name Brand</label>
-                      <input type="text" class="form-control" id="brandName" placeholder="Enter Brand name">
-                  </div>
-                  <div class="form-group">
-                      <label for="productCategory">Category</label>
-                      <select class="form-control" id="productCategory">
-                          @foreach ($category as $cat)
-                              <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                          @endforeach
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="brandDescription">Deskripsi Brand</label>
-                      <input type="text" class="form-control" id="brandDescription" placeholder="Masukan Deskripsi">
-                  </div>
-                  <div class="form-group">
-                      <label for="brandImage">Brand Image</label>
-                      <input type="file" class="form-control-file" id="brandImage">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-check-label mx-auto" for="isShow">Show this brand?</label>
-                    <input type="checkbox" class="form-check-input mx-auto" id="isShow">
-                  </div>
+                <div class="form-group">
+                    <label for="createPromoName">Name Promo</label>
+                    <input type="text" class="form-control" id="createPromoName" placeholder="Enter Promo name">
+                </div>
+                <div class="form-group">
+                    <label for="createPromoDescription">Deskripsi Promo</label>
+                    <input type="text" class="form-control" id="createPromoDescription" placeholder="Masukan Deskripsi">
+                </div>
+                <div class="form-group">
+                    <label for="createStartTime">Start Time</label>
+                    <input type="datetime-local" class="form-control" id="createStartTime">
+                </div>
+                <div class="form-group">
+                    <label for="createEndTime">End Time</label>
+                    <input type="datetime-local" class="form-control" id="createEndTime">
+                </div>
+                <div class="form-group">
+                    <label for="createDiscount">Discount</label>
+                    <input type="number" step="0.01" class="form-control" id="createDiscount" placeholder="Enter discount">
+                </div>
+                <div class="form-group">
+                    <label for="createCashback">Cashback</label>
+                    <input type="number" step="0.01" class="form-control" id="createCashback" placeholder="Enter cashback">
+                </div>
+                <div class="form-group">
+                    <label for="createBonus">Bonus</label>
+                    <input type="number" step="0.01" class="form-control" id="createBonus" placeholder="Enter bonus">
+                </div>
+                <div class="form-group">
+                    <label for="createPromoImages">Promo Image</label>
+                    <input type="file" class="form-control-file" id="createPromoImages" multiple onchange="previewImages();">
+                    <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label mx-auto" for="createIsShow">Show this Promo?</label>
+                    <input type="checkbox" class="form-check-input mx-auto" id="createIsShow">
+                </div>
                   <div class="modal-footer">
                       <button type="submit" class="btn btn-primary">Save</button>
                       <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
@@ -84,35 +97,53 @@
 </div>
 
 <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="showModalLabel">Show Brand</h5>
-                <button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="showForm">
-                    <input type="hidden" id="showId" value="">
-                    <div class="form-group">
-                        <label for="showName">Nama Brand</label>
-                        <input type="text" class="form-control" id="showName" placeholder="Masukan Nama">
-                    </div>
-                    <div class="form-group">
-                        <label for="showDescription">Description</label>
-                        <input type="text" class="form-control" id="showDescription" placeholder="Masukan deskripsi">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+  <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="showModalLabel">Edit Promo</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form id="showForm">
+                  <input type="hidden" id="showId" value="">
+                  <div class="form-group">
+                      <label for="showName">Nama Promo</label>
+                      <input type="text" class="form-control" id="showName" placeholder="Masukan Nama">
+                  </div>
+                  <div class="form-group">
+                      <label for="showPromoCategory">Category</label>
+                      <select class="form-control" id="showPromoCategory">
+                          @foreach ($category as $cat)
+                              <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                          @endforeach
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label for="showDescription">Description</label>
+                      <input type="text" class="form-control" id="showDescription" placeholder="Masukan deskripsi">
+                  </div>
+                  <div class="form-group">
+                      <label for="showImagePreviewContainer">Promo Image</label>
+                      <div id="showImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-check-label mx-auto" for="showIsShow">Show this Promo?</label>
+                    <input type="checkbox" class="form-check-input mx-auto" id="showIsShow">
+                </div>                
+              </form>
+          </div>
+      </div>
+  </div>
 </div>
+
+
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Brand</h5>
+                <h5 class="modal-title" id="editModalLabel">Edit Promo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -121,22 +152,53 @@
                 <form id="editForm">
                     <input type="hidden" id="editId" value="">
                     <div class="form-group">
-                        <label for="editName">Nama Brand</label>
+                        <label for="editName">Nama Promo</label>
                         <input type="text" class="form-control" id="editName" placeholder="Masukan Nama">
                     </div>
                     <div class="form-group">
-                        <label for="updateDescription">Description</label>
-                        <input type="text" class="form-control" id="updateDescription" placeholder="Masukan deskripsi">
+                        <label for="editDescription">Description</label>
+                        <input type="text" class="form-control" id="editDescription" placeholder="Masukan deskripsi">
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
+                    <div class="form-group">
+                        <label for="editStartTime">Start Time</label>
+                        <input type="datetime-local" class="form-control" id="editStartTime">
                     </div>
+                    <div class="form-group">
+                        <label for="editEndTime">End Time</label>
+                        <input type="datetime-local" class="form-control" id="editEndTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDiscount">Discount</label>
+                        <input type="number" step="0.01" class="form-control" id="editDiscount" placeholder="Enter discount">
+                    </div>
+                    <div class="form-group">
+                        <label for="editCashback">Cashback</label>
+                        <input type="number" step="0.01" class="form-control" id="editCashback" placeholder="Enter cashback">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBonus">Bonus</label>
+                        <input type="number" step="0.01" class="form-control" id="editBonus" placeholder="Enter bonus">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPromoImages">Promo Image</label>
+                        <input type="file" class="form-control-file" id="editPromoImages" multiple onchange="editPreviewImages();">
+                        <div id="editImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-check-label mx-auto" for="editIsShow">Show this Promo?</label>
+                      <input type="checkbox" class="form-check-input mx-auto" id="editIsShow">
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Update</button>
+                      <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
+                  </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
+  </div>
+  
+
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -147,7 +209,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Yakin ingin menghapus Brand ini ?
+                Yakin ingin menghapus Promo ini ?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
@@ -170,7 +232,7 @@ $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {
-            url: '/api/v1/admin/brand/',
+            url: '/api/v1/admin/promo/',
             type:'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -184,17 +246,15 @@ $(document).ready(function() {
         }],
         columns: [
             { data: null, 
-              render: function (data, type, full, meta) {
+            render: function (data, type, full, meta) {
                 return meta.row + 1;
             }},
-            { data: null, 
-              render: function (data, type, full, meta) {
-                return data.product_category.name;
-            }},
             { data: "name" },
+            { data: "start_time" },
             { data: null, render: function (data, type, row) {
-                return `<button onclick="showBrand(${row.id})" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
-                        <button onclick="editBrand(${row.id}, '${row.name}')" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
+                console.log(data);
+                return `<button onclick="showPromo(${row.id})" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
+                        <button onclick="editPromo(${row.id}, '${row.name}')" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                         <button class="btn btn-danger btn-sm delete-btn" data-id="${row.id}"><i class="fa fa-trash"></i></button>`;
             }}
         ]
@@ -204,53 +264,68 @@ $(document).ready(function() {
         $('#createModal').modal('show');
     })
     $('#createForm').submit(function(e) {
-        e.preventDefault();
-        var brandName = $('#brandName').val();
-        var brandDescription = $('#brandDescription').val();
-        $.ajax({
-            url: '/api/v1/admin/brand/',
-            type: 'POST',
-            headers: {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append('name', $('#createPromoName').val());
+    formData.append('description', $('#createPromoDescription').val());
+    formData.append('start_time', $('#createStartTime').val());
+    formData.append('end_time', $('#createEndTime').val());
+    formData.append('discount', $('#createDiscount').val());
+    formData.append('cashback', $('#createCashback').val());
+    formData.append('bonus', $('#createBonus').val());
+    var files = $('#createPromoImages').get(0).files;
+    if (files.length > 0) {
+        for (var i = 0; i < files.length; i++) {
+            formData.append('image[]', files[i]);
+        }
+    }
+    formData.append('is_show', $('#createIsShow').is(':checked') ? '1' : '0');
+
+    $.ajax({
+        url: '/api/v1/admin/promo/',
+        type: 'POST',
+        headers: {
             'Authorization': 'Bearer ' + token
-            },
-            contentType: 'application/json',
-            data: JSON.stringify({
-                name: brandName,
-                description: brandDescription
-            }),
-            success: function(result) {
-                table.ajax.reload(null, false);
-                $('#createModal').modal('hide');
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Brand created successfully!',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            },
-            error: function(request, msg, error) {
-                console.log('Error creating Brand:', error);
-                $('#createModal').modal('hide');
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed to create Brand. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        });
+        },
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function(result) {
+            table.ajax.reload(null, false);
+            $('#createModal').modal('hide');
+            Swal.fire({
+                title: 'Success!',
+                text: 'Promo created successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        },
+        error: function(request, msg, error) {
+            console.log('Error creating Promo:', error);
+            $('#createModal').modal('hide');
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to create Promo. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     });
+});
+
+
 
     $('#dataTable').on('click', '.delete-btn', function() {
-        var brandId = $(this).data('id');
+        var PromoId = $(this).data('id');
         $('#deleteModal').modal('show');
-        $('#confirmDelete').data('id', brandId); 
+        $('#confirmDelete').data('id', PromoId); 
     });
 
     $('#confirmDelete').click(function() {
-        var brandId = $(this).data('id');
+        var PromoId = $(this).data('id');
         $.ajax({
-            url: '/api/v1/admin/brand/' + brandId,
+            url: '/api/v1/admin/promo/' + PromoId,
             type: 'DELETE',
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -260,60 +335,78 @@ $(document).ready(function() {
                 table.ajax.reload();
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Brand Deleted successfully!',
+                    text: 'Promo Deleted successfully!',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 });
             },
             error: function(request, msg, error) {
-                console.log('Error deleting Brand:', error);
+                console.log('Error deleting Promo:', error);
                 Swal.fire({
                     title: 'Error!',
-                    text: 'Failed to deleting Brand. Please try again.',
+                    text: 'Failed to deleting Promo. Please try again.',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
             }
         });
     });
-
     $('#editForm').submit(function(e) {
-        e.preventDefault();
-        var id = $('#editId').val();
-        var updatedName = $('#editName').val();
-        var updateDescription = $('#updateDescription').val(); 
-        $.ajax({
-            url: '/api/v1/admin/brand/' + id,
-            type: 'PUT',
-            headers: {
-                'Authorization': 'Bearer ' + token
-            },
-            data: { 
-                name: updatedName,
-                description: updateDescription
-            },
-            success: function(result) {
-                table.ajax.reload();
-                $('#editModal').modal('hide');
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Brand updated successfully!',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            },
-            error: function(request, msg, error) {
-                console.log('Error updating Brand:', error);
-                $('#editModal').modal('hide');
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed to update Brand. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append('_method', 'PUT');
+    var files = $('#editPromoImages').get(0).files;
+    
+    if (files.length > 0) {
+        $.each(files, function(i, file) {
+            formData.append('image[]', file);
         });
+    }
+
+    formData.append('name', $('#editName').val());
+    formData.append('description', $('#editDescription').val());
+    formData.append('product_category_id', $('#editPromoCategory').val());
+    formData.append('start_time', $('#editStartTime').val());
+    formData.append('end_time', $('#editEndTime').val());
+    formData.append('discount', $('#editDiscount').val());
+    formData.append('cashback', $('#editCashback').val());
+    formData.append('bonus', $('#editBonus').val());
+    formData.append('is_show', $('#editIsShow').is(':checked') ? 1 : 0); 
+
+    $.ajax({
+        url: '/api/v1/admin/promo/' + $('#editId').val(),
+        type: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        processData: false, 
+        contentType: false,  
+        data: formData,
+        success: function(result) {
+            table.ajax.reload(null, false);
+            $('#editModal').modal('hide');
+            Swal.fire({
+                title: 'Success!',
+                text: 'Promo updated successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        },
+        error: function(request, msg, error) {
+            console.log('Error updating Promo:', error);
+            $('#editModal').modal('hide');
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to update Promo. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     });
+});
+
+
 
     $('.close,.closeModal').on('click', function() {
         $('#deleteModal').modal('hide');
@@ -322,52 +415,87 @@ $(document).ready(function() {
         $('#showModal').modal('hide');
     });
 });
-function showBrand(id) {
-    $.ajax({
-        url: '/api/v1/admin/brand/' + id, 
+function showPromo(id) {
+  $.ajax({
+        url: '/api/v1/admin/promo/' + id, 
         type: 'GET',
         headers: {
                 'Authorization': 'Bearer ' + token
-            },
+        },
         contentType: 'application/json',
         success: function(response) {
-            $('#showId').val(response.id);             
-            $('#showName').val(response.name);        
-            $('#showDescription').val(response.description); 
+          console.log(response.image);
+            $('#showId').val(response.id);
+            $('#showName').val(response.name);
+            $('#showDescription').val(response.description);
+            $('#showImagePreviewContainer').empty();
+            $('#showPromoCategory').val(response.product_category_id);
+
+            if (response.image) {
+              let images = Array.isArray(response.image) ? response.image : [response.image];
+              images.forEach(function(imageUrl) {
+                  var fullPath = '/images/promo/' + imageUrl;
+                  var img = $('<img>').attr("src", fullPath);
+                  img.css({ "max-width": "150px", "height": "auto" });
+                  $("#showImagePreviewContainer").append(img);
+              });
+          }
+
+            $('#showIsShow').prop('checked', response.is_show === 1);
 
             $('#showModal').modal('show');
         },
         error: function(error) {
-            console.log('Error fetching brand:', error);
+            console.log('Error fetching Promo:', error);
             Swal.fire({
                 title: 'Error!',
-                text: 'Failed to fetch brand details. Please try again.',
+                text: 'Failed to fetch Promo details. Please try again.',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
         }
     });
 }
-function editBrand(id) {
+function editPromo(id) {
     $.ajax({
-        url: '/api/v1/admin/brand/' + id, 
+        url: '/api/v1/admin/promo/' + id, 
         type: 'GET',
         headers: {
                 'Authorization': 'Bearer ' + token
-            },
+        },
         contentType: 'application/json',
         success: function(response) {
-            $('#editId').val(response.id);             
-            $('#editName').val(response.name);        
-            $('#updateDescription').val(response.description); 
+            console.log(response.image);
+            $('#editId').val(response.id);
+            $('#editName').val(response.name);
+            $('#editDescription').val(response.description);
+            $('#editStartTime').val(response.start_time);
+            $('#editEndTime').val(response.end_time);
+            $('#editDiscount').val(response.discount);
+            $('#editCashback').val(response.cashback);
+            $('#editBonus').val(response.bonus);
+            $('#editImagePreviewContainer').empty();
+            $('#editPromoCategory').val(response.product_category_id);
+
+            if (response.image) {
+                let images = Array.isArray(response.image) ? response.image : [response.image];
+                images.forEach(function(imageUrl) {
+                    var fullPath = '/images/promo/' + imageUrl;
+                    var img = $('<img>').attr("src", fullPath);
+                    img.css({ "max-width": "150px", "height": "auto" });
+                    $("#editImagePreviewContainer").append(img);
+                });
+            }
+
+            $('#editIsShow').prop('checked', response.is_show === 1);
 
             $('#editModal').modal('show');
         },
         error: function(error) {
-            console.log('Error fetching Brand:', error);
+            console.log('Error fetching Promo:', error);
             Swal.fire({
                 title: 'Error!',
-                text: 'Failed to fetch Brand details. Please try again.',
+                text: 'Failed to fetch Promo details. Please try again.',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
@@ -375,5 +503,43 @@ function editBrand(id) {
     });
 }
 
+
+function previewImages() {
+    var files = $("#createPromoImages").get(0).files;
+    $("#imagePreviewContainer").empty(); 
+
+    if (files.length > 0) {
+        Array.from(files).forEach(file => {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var img = $('<img>').attr("src", e.target.result);
+                img.css({ "max-width": "150px", "height": "auto" });
+                $("#imagePreviewContainer").append(img);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+}
+function editPreviewImages() {
+    var files = $("#editPromoImages").get(0).files; 
+    var container = $("#editImagePreviewContainer");
+    container.empty(); 
+
+    if (files.length > 0) {
+        Array.from(files).forEach(function(file) {
+            var reader = new FileReader(); 
+
+            reader.onload = function(event) {
+                var img = $('<img>').attr("src", event.target.result); 
+                img.css({ "max-width": "150px", "height": "auto" }); 
+                container.append(img);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+}
 </script>
 @endpush

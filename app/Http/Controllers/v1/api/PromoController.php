@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\v1\api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Promo;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PromoController extends Controller
 {
@@ -29,13 +30,27 @@ class PromoController extends Controller
     public function store(Request $request)
     {
         try {
-            $validatedData = $request->validate([
-                'name' => 'required|string',
-                'start_time' => 'nullable|date',
-                'end_time' => 'nullable|date',
-                'image' => 'nullable|string',
-            ]);
 
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string|max:1000',
+                'start_time' => 'required|date_format:Y-m-d\TH:i',
+                'end_time' => 'required|date_format:Y-m-d\TH:i|after_or_equal:start_time',
+                'discount' => 'required|numeric|between:0,99.99',
+                'cashback' => 'required|numeric|between:0,99.99',
+                'bonus' => 'required|numeric|between:0,99.99',
+                'is_show' => 'required|boolean',
+                'image' => 'nullable',
+            ]);
+            
+            if ($request->hasFile('image')) {
+                $file = $request->file('image')[0];
+                if ($file->isValid()) {
+                    $randomFileName = uniqid('promo_') . '.' . $file->extension();
+                    $file->move(public_path('images/promo'), $randomFileName);
+                    $validatedData['image'] = $randomFileName;
+                }
+            }  
             $promo = Promo::create($validatedData);
             return response()->json($promo, 201);
 
@@ -68,12 +83,28 @@ class PromoController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'name' => 'required|string',
-                'start_time' => 'nullable|date',
-                'end_time' => 'nullable|date',
-                'image' => 'nullable|string',
-            ]);
+                'name' => 'required|string|max:255',
+                'start_time' => 'required|date_format:Y-m-d\TH:i',
+                'end_time' => 'required|date_format:Y-m-d\TH:i|after_or_equal:start_time',
+                'discount' => 'required|numeric|between:0,99.99',
+                'cashback' => 'required|numeric|between:0,99.99',
+                'bonus' => 'required|numeric|between:0,99.99',
+                'is_show' => 'required|boolean',
+                'image' => 'nullable|array',
+                'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);            
             $promo = Promo::findOrFail($id);
+            if(isset($request->image)){
+                if(File::exists(public_path('images/promo/'. $promo->image))) {
+                    File::delete(public_path('images/promo/'. $promo->image));
+                }          
+                if ($request->hasFile('image')) {
+                    $file = $request->file('image')[0];  
+                        $randomFileName = uniqid('promo_') . '.' . $file->extension();
+                        $file->move(public_path('images/promo'), $randomFileName);
+                        $validatedData['image'] = $randomFileName;
+                }  
+            } 
             $promo->update($validatedData);
             return response()->json($promo, 200);
 

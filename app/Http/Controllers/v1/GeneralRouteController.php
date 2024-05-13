@@ -33,7 +33,7 @@ class GeneralRouteController extends Controller
     }
     public function adminPromo(){
         $category = ProductCategory::all();
-        return view('v1.backend.pages.brand.index',compact('category'));
+        return view('v1.backend.pages.promo.index',compact('category'));
     }
     //all user 
     public function homePage(){
