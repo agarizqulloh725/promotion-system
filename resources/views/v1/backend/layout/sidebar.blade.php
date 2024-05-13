@@ -14,8 +14,8 @@
           <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
         </a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href='/'>
+      <li class="nav-item">
+        <a class="nav-link" href='/admin/dashboard'>
           <span class="menu-title">Dashboard</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
@@ -29,6 +29,24 @@
       <li class="nav-item">
         <a class="nav-link" href='/admin/brand'>
           <span class="menu-title">Brand</span>
+          <i class="mdi mdi-home menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href='/admin/product'>
+          <span class="menu-title">Product</span>
+          <i class="mdi mdi-home menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href='/admin/promo'>
+          <span class="menu-title">Promo</span>
+          <i class="mdi mdi-home menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href='/admin/user-role'>
+          <span class="menu-title">User Akses</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\v1\api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BrandController extends Controller
 {
@@ -32,11 +33,19 @@ class BrandController extends Controller
             $validated = $request->validate([
                 'product_category_id' => 'nullable|exists:product_category,id',
                 'name' => 'required|string|max:255',
-                'image' => 'nullable|string|max:255',
+                'image' => 'nullable',
                 'description' => 'nullable|string',
                 'is_show' => 'nullable|boolean',
             ]);
 
+            if ($request->hasFile('image')) {
+                $file = $request->file('image')[0];
+                if ($file->isValid()) {
+                    $randomFileName = uniqid('brand_') . '.' . $file->extension();
+                    $file->move(public_path('images/brand'), $randomFileName);
+                    $validated['image'] = $randomFileName;
+                }
+            }            
             $brand = Brand::create($validated);
             return response()->json($brand, 201);
 
@@ -72,16 +81,25 @@ class BrandController extends Controller
             $validated = $request->validate([
                 'product_category_id' => 'nullable|exists:product_category,id',
                 'name' => 'required|string|max:255',
-                'image' => 'nullable|string|max:255',
+                'image' => 'nullable',
                 'description' => 'nullable|string',
                 'is_show' => 'nullable|boolean',
             ]);
 
             $brand = Brand::findOrFail($id);
+            if(isset($request->image)){
+                if(File::exists(public_path('images/brand/'. $brand->image))) {
+                    File::delete(public_path('images/brand/'. $brand->image));
+                }          
+                if ($request->hasFile('image')) {
+                    $file = $request->file('image')[0];  
+                        $randomFileName = uniqid('brand_') . '.' . $file->extension();
+                        $file->move(public_path('images/brand'), $randomFileName);
+                        $validated['image'] = $randomFileName;
+                }  
+            } 
             $brand->update($validated);
-
             return response()->json($brand);
-
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Brand not found', 'message' => $e->getMessage()], 404);
         } catch (ValidationException $e) {
@@ -98,6 +116,9 @@ class BrandController extends Controller
     {
         try {
             $brand = Brand::findOrFail($id);
+            if(File::exists(public_path('images/brand/'. $brand->image))) {
+                File::delete(public_path('images/brand/'. $brand->image));
+            }
             $brand->delete();
 
             return response()->json(['message' => 'Brand deleted successfully']);

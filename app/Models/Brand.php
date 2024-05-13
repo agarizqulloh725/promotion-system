@@ -17,8 +17,8 @@ class Brand extends Model
         'is_show'
     ];
 
-    // public function productCategory()
-    // {
-    //     return $this->belongsTo(ProductCategory::class);
-    // }
+    public function productCategory()
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
 }
