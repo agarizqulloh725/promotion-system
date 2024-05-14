@@ -45,8 +45,14 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href='/admin/product-promo'>
+          <span class="menu-title">Promo Product</span>
+          <i class="mdi mdi-home menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href='/admin/user-role'>
-          <span class="menu-title">User Akses</span>
+          <span class="menu-title">User Management</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
