@@ -17,7 +17,7 @@ class RoleHasPermissions extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function permission()
+    public function permissions()
     {
         return $this->belongsTo(Permission::class, 'permission_id');
     }

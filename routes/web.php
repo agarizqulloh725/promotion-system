@@ -21,4 +21,5 @@ Route::prefix('admin')->group(function () {
     Route::get('/pro-category', [GeneralRouteController::class, 'ProCategory'])->middleware('isAdmin');
     Route::get('/brand', [GeneralRouteController::class, 'adminBrand'])->middleware('isAdmin');
     Route::get('/promo', [GeneralRouteController::class, 'adminPromo'])->middleware('isAdmin');
+    Route::get('/user-role', [GeneralRouteController::class, 'adminUser'])->middleware('isAdmin');
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,10 @@ class GeneralRouteController extends Controller
     public function adminPromo(){
         $category = ProductCategory::all();
         return view('v1.backend.pages.promo.index',compact('category'));
+    }
+    public function adminUser(){
+        $permissions = Permission::all();
+        return view('v1.backend.pages.user.index',compact('permissions'));
     }
     //all user 
     public function homePage(){

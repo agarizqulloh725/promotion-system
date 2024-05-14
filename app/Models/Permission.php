@@ -11,4 +11,10 @@ class Permission extends Model
     protected $table = 'permissions';
 
     protected $fillable = ['name'];
+
+
+    public function rolePermissions()
+    {
+        return $this->hasMany(RoleHasPermissions::class);
+    }
 }
