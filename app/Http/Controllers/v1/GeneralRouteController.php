@@ -45,6 +45,14 @@ class GeneralRouteController extends Controller
         $product = Product::all();
         return view('v1.backend.pages.proPromo.index',compact('product'));
     }
+    public function adminSpesification(){
+        $category = ProductCategory::all();
+        return view('v1.backend.pages.spesification.index',compact('category'));
+    }
+    public function adminBranch(){
+        $category = ProductCategory::all();
+        return view('v1.backend.pages.branch.index',compact('category'));
+    }
     //all user 
     public function homePage(){
         return view('v1.frontend.pages.homepage');

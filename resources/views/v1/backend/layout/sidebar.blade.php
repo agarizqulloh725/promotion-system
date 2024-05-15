@@ -56,6 +56,18 @@
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href='/admin/spesification'>
+          <span class="menu-title">Spesification</span>
+          <i class="mdi mdi-home menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href='/admin/branch'>
+          <span class="menu-title">Toko Cabang</span>
+          <i class="mdi mdi-home menu-icon"></i>
+        </a>
+      </li>
       {{-- <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
           <span class="menu-title">Basic UI Elements</span>

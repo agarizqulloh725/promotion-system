@@ -5,6 +5,7 @@ use App\Http\Controllers\v1\api\AuthController;
 use App\Http\Controllers\v1\api\UserController;
 use App\Http\Controllers\v1\api\BrandController;
 use App\Http\Controllers\v1\api\PromoController;
+use App\Http\Controllers\v1\api\BranchController;
 use App\Http\Controllers\v1\api\ProductController;
 use App\Http\Controllers\v1\api\ProSizeController;
 use App\Http\Controllers\v1\api\ProColorController;
@@ -27,6 +28,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::middleware('auth:sanctum')->group(function () {
             Route::resources([
+                'branch' => BranchController::class,
                 'pro-category' => ProCategoryController::class,
                 'brand' => BrandController::class,
                 'pro-color' => ProColorController::class,
