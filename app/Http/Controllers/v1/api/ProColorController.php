@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\v1\api;
 
-use App\Http\Controllers\Controller;
 use App\Models\ProductColor;
 use App\Models\ProductStock;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\BranchProduct;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProColorController extends Controller
 {
@@ -17,10 +19,13 @@ class ProColorController extends Controller
     public function index(Request $request)
     {
         $idBranch = (int) $request->idbranch;
-        $idProduct = (int) $request->idproduct;
+        $idBranchProduct = (int) $request->idproduct;
+        $idProSpec = (int) $request->idspec;
+        $tamp =  BranchProduct::find($idBranchProduct);
+
         try {
-            if(isset($idBranch) && isset($idProduct)){
-                $colors = ProductColor::with('color')->where('branch_product_id', $idBranch)->where('product_id',$idProduct )->get();
+            if(isset($idBranch) && isset($idBranchProduct) && isset($idBranchProduct)){
+                $colors = ProductColor::with('color')->where('branch_product_id', $idBranchProduct)->where('product_id',$tamp->product_id )->where('product_specification_id',$idProSpec )->get();
             }else{
                 $colors = ProductColor::all();
             }
@@ -36,14 +41,18 @@ class ProColorController extends Controller
     public function store(Request $request)
     {
         try {
+            $tamp = DB::table('branch_product')->where('id',$request['branch_product_id'])->first();
+
             $validatedData = $request->validate([
                 'branch_product_id' => 'required',
-                'product_id' => 'nullable',
                 'color_id' => 'nullable',
+                'product_specification_id' => 'required',
             ]);
+            $validatedData['product_id'] = $tamp->product_id;
 
-            $existingColor = ProductColor::where('branch_product_id', $validatedData['branch_product_id'])
-            ->where('product_id', $validatedData['product_id'])
+            $existingColor = ProductColor::where('color_id', $validatedData['color_id'])
+            ->where('branch_product_id', $validatedData['branch_product_id'])->where('product_id', $validatedData['product_id'])
+            ->where('product_specification_id', $validatedData['product_specification_id'])
             ->first();
 
             if ($existingColor) {
@@ -51,9 +60,11 @@ class ProColorController extends Controller
             }
 
             $color = ProductColor::create($validatedData);
+            $idBranch = DB::table('branch_product')->where('id',$validatedData['branch_product_id'])->first();
             $productStock = ProductStock::create([
                 'product_specification_id' => $request['product_specification_id'],
                 'product_color_id' => $color->id,
+                'branch_id' => $idBranch->branch_id,
                 'branch_product_id' => $validatedData['branch_product_id'],
                 'product_id' => $validatedData['product_id'],
                 'stock' => $request['stock'],

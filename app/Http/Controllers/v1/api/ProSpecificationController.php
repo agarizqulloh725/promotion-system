@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\v1\api;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
 use App\Models\BranchProduct;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Models\ProductSpecification;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -18,11 +19,14 @@ class ProSpecificationController extends Controller
     public function index(Request $request)
     {
         $idBranch = (int) $request->idbranch;
-        $idProduct = (int) $request->idproduct;
+        $idBranchProduct = (int) $request->idbranchproduct;
         try {
-            if(isset($idBranch) && isset($idProduct)){
-                $product = BranchProduct::where('id',$request->idproduct)->first();
-                $specifications = ProductSpecification::where('product_id', $product->product_id)->get();
+            if(isset($idBranch) && isset($idBranchProduct)){
+                $product = DB::table('branch_product')->where('id',$idBranchProduct)->first();
+                $specifications = DB::table('product_specification')->where('product_id', $product->product_id)
+                ->where('branch_product_id', $idBranchProduct)
+                ->get();
+
             }else{
                 $specifications = ProductSpecification::all();
             }
@@ -38,15 +42,19 @@ class ProSpecificationController extends Controller
     public function store(Request $request)
     {
         try {
+            $product = DB::table('branch_product')->where('id',(int) $request->branch_product_id)->first();
             $validatedData = $request->validate([
                 'specification_id' => 'nullable|exists:specification,id',
-                'product_id' => 'nullable',
+                'branch_product_id' =>'nullable',
                 'name' => 'required|string',
                 'price' => 'nullable|numeric',
                 'description' => 'nullable|string',
             ]);
-            $exists = ProductSpecification::where('product_id', $validatedData['product_id'])
-            ->where('specification_id', $validatedData['specification_id'])
+            $validatedData['product_id'] = $product->product_id;
+
+            $tamp = BranchProduct::findOrFail($request['branch_product_id']);
+            $exists = ProductSpecification::where('product_id', $tamp->product_id)
+            ->where('specification_id', $validatedData['specification_id'])->where('branch_product_id', $validatedData['branch_product_id'])
             ->exists();
 
             if ($exists) {

@@ -43,7 +43,7 @@
     <div>
         <div>
             <h5>
-                Stok total cabang : 17 unit
+                Stok total cabang : {{ $totalStock }} unit
             </h5>
         </div>
     </div>
@@ -168,6 +168,9 @@ const idProd = urlParts[urlParts.length - 2];
 const idBranch = urlParts[urlParts.length - 3];
 const idSpec = urlParts[urlParts.length - 1];
 
+console.log('branchPro', idProd);
+console.log('idBranch', idBranch);
+console.log('idSpec', idSpec);
 $(document).ready(function() {
     $('#createProduct').select2({
         dropdownParent: $("#createModal")              
@@ -175,7 +178,7 @@ $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {
-            url: `/api/v1/admin/pro-color/?idbranch=${idBranch}&idproduct=${idProd}`,
+            url: `/api/v1/admin/pro-color/?idbranch=${idBranch}&idproduct=${idProd}&idspec=${idSpec}`,
             type:'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -218,8 +221,8 @@ $(document).ready(function() {
             data: JSON.stringify({
                 color_id: $('#createColor').val(),
                 stock: $('#amountStock').val(),
-                product_id: idProd,
-                branch_product_id: idBranch,
+                branch_product_id: idProd,
+                branch_id: idBranch,
                 product_specification_id: idSpec
             }),
             success: function(result) {
@@ -254,7 +257,7 @@ $(document).ready(function() {
     $('#confirmDelete').click(function() {
         var categoryId = $(this).data('id');
         $.ajax({
-            url: '/api/v1/admin/product/' + categoryId,
+            url: '/api/v1/admin/pro-color/' + categoryId,
             type: 'DELETE',
             headers: {
                 'Authorization': 'Bearer ' + token

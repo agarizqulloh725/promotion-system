@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('product_color', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('color_id');
-            $table->unsignedBigInteger('branch_product_id');
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('color_id')->nullable();
+            $table->unsignedBigInteger('branch_product_id')->nullable();
+            $table->unsignedBigInteger('product_specification_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('branch_product_id')->references('id')->on('branch_product')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
-            $table->foreign('color_id')->references('id')->on('color')->onDelete('cascade');
+            // $table->foreign('branch_product_id')->references('id')->on('branch_product')->onDelete('cascade');
+            // $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
+            // $table->foreign('color_id')->references('id')->on('color')->onDelete('cascade');
         });
     }
 

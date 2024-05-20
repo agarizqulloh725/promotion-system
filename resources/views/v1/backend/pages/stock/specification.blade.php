@@ -42,7 +42,7 @@
     <div>
         <div>
             <h5>
-                Stok total cabang : 17 unit
+                Stok total cabang : {{$totalStock}} unit
             </h5>
         </div>
     </div>
@@ -180,15 +180,13 @@ const token = getCookieValue('access_token');
 const currentUrl = window.location.href;
 const urlParts = currentUrl.split('/');
 const idBranch = urlParts[urlParts.length - 2];
-const idProduct = urlParts[urlParts.length - 1];
-console.log(idBranch);
-console.log(idProduct);
+const idBranchProduct = urlParts[urlParts.length - 1];
 
 $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {
-            url: `/api/v1/admin/pro-specification/?idbranch=${idBranch}&idproduct=${idProduct}`,
+            url: `/api/v1/admin/pro-specification/?idbranch=${idBranch}&idbranchproduct=${idBranchProduct}`,
             type:'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -206,7 +204,7 @@ $(document).ready(function() {
             }},
             { data: "name" },
             { data: null, render: function (data, type, row) {
-                return `<a href='/admin/stock/${idBranch}/${idProduct}/${row.id}' class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Stock</a>`;
+                return `<a href='/admin/stock/${idBranch}/${idBranchProduct}/${row.id}' class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Stock</a>`;
             }}
         ]
     });
@@ -226,7 +224,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify({
                 name: $('#createName').val(),
-                product_id: idProduct,
+                branch_product_id: idBranchProduct,
                 specification_id:$('#createSpecification').val(),
                 price:$('#createPrice').val(),
                 description:$('#createDescription').val()
@@ -333,9 +331,9 @@ $(document).ready(function() {
         $('#showModal').modal('hide');
     });
 });
-function editStock(id, idBranch, idProduct) {
+function editStock(id, idBranch, idBranchProduct) {
     $.ajax({
-        url: `/api/v1/admin/pro-stock/?idspec=${id}&idbranch=${idBranch}&idproduct=${idBranch}`,
+        url: `/api/v1/admin/pro-stock/?idspec=${id}&idbranch=${idBranch}&idbranchproduct=${idBranch}`,
         type: 'GET',
         headers: {
                 'Authorization': 'Bearer ' + token

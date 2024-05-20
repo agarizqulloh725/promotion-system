@@ -43,7 +43,7 @@
     <div>
         <div>
             <h5>
-                Stok total cabang : 17 unit
+                Stok total cabang  : {{$totalStock}} unit
             </h5>
         </div>
     </div>

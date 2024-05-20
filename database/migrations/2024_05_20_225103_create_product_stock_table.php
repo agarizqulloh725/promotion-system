@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_specification_id')->nullable();
             $table->unsignedBigInteger('product_color_id')->nullable();
             $table->unsignedBigInteger('product_size_id')->nullable();
+            $table->unsignedBigInteger('branch_id')->nullable();
+            $table->unsignedBigInteger('branch_product_id')->nullable();
             $table->unsignedBigInteger('product_id')->nullable();
             $table->integer('stock')->nullable();
             $table->timestamps();
@@ -24,6 +26,8 @@ return new class extends Migration
             $table->foreign('product_color_id')->references('id')->on('product_color')->onDelete('no action');
             $table->foreign('product_size_id')->references('id')->on('product_size')->onDelete('no action');
             $table->foreign('product_id')->references('id')->on('product')->onDelete('no action');
+            $table->foreign('branch_id')->references('id')->on('branch')->onDelete('no action');
+            $table->foreign('branch_product_id')->references('id')->on('branch')->onDelete('no action');
         });
     }
 

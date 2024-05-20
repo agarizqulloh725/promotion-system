@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Http\Controllers\Controller;
 use App\Models\Color;
-use App\Models\Permission;
 use App\Models\Product;
-use App\Models\ProductCategory;
-use App\Models\ProductSpecification;
-use App\Models\Specification;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Models\Specification;
+use App\Models\ProductCategory;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\ProductSpecification;
 use Illuminate\Support\Facades\Auth;
 
 class GeneralRouteController extends Controller
@@ -59,19 +60,23 @@ class GeneralRouteController extends Controller
     public function adminStock(){
         return view('v1.backend.pages.stock.branch');
     }
-    public function adminShowStockBranch(){
+    public function adminShowStockBranch($branch){
         $product = Product::all();
-        return view('v1.backend.pages.stock.product',compact('product'));
+        $totalStock = DB::table('product_stock')->where('branch_id', $branch)->sum('stock');
+        return view('v1.backend.pages.stock.product',compact(['product', 'totalStock']));
     }
     public function adminShowStockProduct($branch,$product){
         $specification = Specification::all();
-        return view('v1.backend.pages.stock.specification', compact('specification'));
+        $totalStock = DB::table('product_stock')->where('product_id', $product)->where('branch_id',$branch)->sum('stock');
+        return view('v1.backend.pages.stock.specification', compact(['specification', 'totalStock']));
     }
-    public function adminShowStockSpecification(){
-        $specification = Specification::all();
-        $product = Product::all();
+    public function adminShowStockSpecification($branch,$product,$specification){
+        // dd($specification);
+        $specificationn = Specification::all();
+        $productt = Product::all();
         $color = Color::all();
-        return view('v1.backend.pages.stock.color', compact(['specification','product','color']));
+        $totalStock = DB::table('product_stock')->where('product_id', $product)->where('product_specification_id', $specification)->sum('stock');
+        return view('v1.backend.pages.stock.color', compact(['specificationn','productt','color','totalStock']));
     }
     //all user 
     public function homePage(){
