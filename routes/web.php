@@ -25,4 +25,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/product-promo', [GeneralRouteController::class, 'adminProductPromo'])->middleware('isAdmin');
     Route::get('/spesification', [GeneralRouteController::class, 'adminSpesification'])->middleware('isAdmin');
     Route::get('/branch', [GeneralRouteController::class, 'adminBranch'])->middleware('isAdmin');
+    Route::get('/stock', [GeneralRouteController::class, 'adminStock'])->middleware('isAdmin');
+    Route::get('/stock/{branch}/{product}/{specification}', [GeneralRouteController::class, 'adminShowStockSpecification'])->middleware('isAdmin');
+    Route::get('/stock/{branch}/{product}', [GeneralRouteController::class, 'adminShowStockProduct'])->middleware('isAdmin');
+    Route::get('/stock/{branch}', [GeneralRouteController::class, 'adminShowStockBranch'])->middleware('isAdmin');
 });

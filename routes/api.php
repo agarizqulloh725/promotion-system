@@ -14,6 +14,7 @@ use App\Http\Controllers\v1\api\ProPromoController;
 use App\Http\Controllers\v1\api\ProStockController;
 use App\Http\Controllers\v1\api\WishlistController;
 use App\Http\Controllers\v1\api\PermissionController;
+use App\Http\Controllers\v1\api\ProBranchController;
 use App\Http\Controllers\v1\api\ProCategoryController;
 use App\Http\Controllers\v1\api\SpecificationController;
 use App\Http\Controllers\v1\api\RolePermissionController;
@@ -44,6 +45,7 @@ Route::prefix('v1')->group(function () {
                 'pro-promo' => ProPromoController::class,
                 'pro-stock' => ProStockController::class,
                 'user' => UserController::class,
+                'pro-branch' => ProBranchController::class,
             ]);
         });
     });    

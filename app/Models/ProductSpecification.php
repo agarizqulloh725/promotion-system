@@ -10,7 +10,7 @@ class ProductSpecification extends Model
     use HasFactory;
     protected $table = 'product_specification';
 
-    protected $fillable = ['specification_id', 'name', 'harga', 'description'];
+    protected $fillable = ['specification_id', 'product_id', 'name', 'price', 'description'];
 
     public function specification()
     {

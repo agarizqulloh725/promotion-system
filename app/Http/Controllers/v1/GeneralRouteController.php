@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Color;
 use App\Models\Permission;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductSpecification;
+use App\Models\Specification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,6 +55,23 @@ class GeneralRouteController extends Controller
     public function adminBranch(){
         $category = ProductCategory::all();
         return view('v1.backend.pages.branch.index',compact('category'));
+    }
+    public function adminStock(){
+        return view('v1.backend.pages.stock.branch');
+    }
+    public function adminShowStockBranch(){
+        $product = Product::all();
+        return view('v1.backend.pages.stock.product',compact('product'));
+    }
+    public function adminShowStockProduct($branch,$product){
+        $specification = Specification::all();
+        return view('v1.backend.pages.stock.specification', compact('specification'));
+    }
+    public function adminShowStockSpecification(){
+        $specification = Specification::all();
+        $product = Product::all();
+        $color = Color::all();
+        return view('v1.backend.pages.stock.color', compact(['specification','product','color']));
     }
     //all user 
     public function homePage(){

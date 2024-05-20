@@ -3,26 +3,21 @@
 namespace App\Http\Controllers\v1\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProductStock;
+use App\Models\ProductColor;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
-class ProStockController extends Controller
+class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         try {
-            if(isset($request['idprocolor'])){
-                $idProColor = (int) $request['idprocolor'];
-                $stocks= ProductStock::where('product_color_id', $idProColor)->first();
-            }else{
-                $stocks = ProductStock::all();
-            }
-            return response()->json($stocks, 200);
+            $colors = ProductColor::all();
+            return response()->json($colors, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Unable to fetch data', 'message' => $e->getMessage()], 500);
         }
@@ -35,15 +30,14 @@ class ProStockController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'product_specification_id' => 'nullable|exists:product_specification,id',
-                'product_color_id' => 'nullable|exists:product_color,id',
-                'product_size_id' => 'nullable|exists:product_size,id',
-                'product_id' => 'nullable|exists:product,id',
-                'stock' => 'required|integer'
+                'name' => 'required|string',
+                'image' => 'nullable|string',
+                'code' => 'nullable|string',
             ]);
 
-            $stock = ProductStock::create($validatedData);
-            return response()->json($stock, 201);
+            $color = ProductColor::create($validatedData);
+            return response()->json($color, 201);
+
         } catch (ValidationException $e) {
             return response()->json(['error' => 'Validation Error', 'messages' => $e->errors()], 422);
         } catch (\Exception $e) {
@@ -57,8 +51,8 @@ class ProStockController extends Controller
     public function show(string $id)
     {
         try {
-            $stock = ProductStock::findOrFail($id);
-            return response()->json($stock, 200);
+            $color = ProductColor::findOrFail($id);
+            return response()->json($color, 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Resource not found', 'message' => $e->getMessage()], 404);
         } catch (\Exception $e) {
@@ -73,17 +67,17 @@ class ProStockController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'product_specification_id' => 'nullable|exists:product_specification,id',
-                'product_color_id' => 'nullable|exists:product_color,id',
-                'product_size_id' => 'nullable|exists:product_size,id',
-                'product_id' => 'nullable|exists:product,id',
-                'stock' => 'required|integer'
+                'name' => 'required|string',
+                'image' => 'nullable|string',
+                'code' => 'nullable|string',
             ]);
 
-            $stock = ProductStock::findOrFail($id);
-            $stock->update($validatedData);
-            return response()->json($stock, 200);
+            $color = ProductColor::findOrFail($id);
+            $color->update($validatedData);
+            return response()->json($color, 200);
+
         } catch (ValidationException $e) {
+
             return response()->json(['error' => 'Validation Error', 'messages' => $e->errors()], 422);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Resource not found', 'message' => $e->getMessage()], 404);
@@ -98,9 +92,10 @@ class ProStockController extends Controller
     public function destroy(string $id)
     {
         try {
-            $stock = ProductStock::findOrFail($id);
-            $stock->delete();
+            $color = ProductColor::findOrFail($id);
+            $color->delete();
             return response()->json(['message' => 'Resource deleted'], 200);
+
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Resource not found', 'message' => $e->getMessage()], 404);
         } catch (\Exception $e) {

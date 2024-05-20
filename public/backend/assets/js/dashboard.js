@@ -222,7 +222,10 @@
     document.querySelector('.page-body-wrapper').classList.remove('pt-0');
     document.querySelector('.navbar').classList.remove('pt-5');
   } else {
-    document.querySelector('.page-body-wrapper').classList.add('pt-0');
+    const pageBodyWrapper = document.querySelector('.page-body-wrapper');
+    if (pageBodyWrapper) {
+        pageBodyWrapper.classList.add('pt-0');
+    }
   }
 
 })(jQuery);
