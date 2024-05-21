@@ -78,6 +78,14 @@ class GeneralRouteController extends Controller
         $totalStock = DB::table('product_stock')->where('product_id', $product)->where('product_specification_id', $specification)->sum('stock');
         return view('v1.backend.pages.stock.color', compact(['specificationn','productt','color','totalStock']));
     }
+    public function adminProduct(){
+        $category = ProductCategory::all();
+        return view('v1.backend.pages.product.index',compact('category'));
+    }
+    public function adminColor(){
+        $category = ProductCategory::all();
+        return view('v1.backend.pages.color.index',compact('category'));
+    }
     //all user 
     public function homePage(){
         return view('v1.frontend.pages.homepage');

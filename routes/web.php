@@ -20,6 +20,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [GeneralRouteController::class, 'adminDashboard'])->middleware('isAdmin');
     Route::get('/pro-category', [GeneralRouteController::class, 'ProCategory'])->middleware('isAdmin');
     Route::get('/brand', [GeneralRouteController::class, 'adminBrand'])->middleware('isAdmin');
+    Route::get('/products', [GeneralRouteController::class, 'adminProduct'])->middleware('isAdmin');
+    Route::get('/color', [GeneralRouteController::class, 'adminColor'])->middleware('isAdmin');
     Route::get('/promo', [GeneralRouteController::class, 'adminPromo'])->middleware('isAdmin');
     Route::get('/user-role', [GeneralRouteController::class, 'adminUser'])->middleware('isAdmin');
     Route::get('/product-promo', [GeneralRouteController::class, 'adminProductPromo'])->middleware('isAdmin');

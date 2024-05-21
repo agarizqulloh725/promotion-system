@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\v1\api;
 
-use App\Http\Controllers\Controller;
-use App\Models\ProductColor;
+use App\Models\Color;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ColorController extends Controller
 {
@@ -16,7 +17,7 @@ class ColorController extends Controller
     public function index()
     {
         try {
-            $colors = ProductColor::all();
+            $colors = Color::all();
             return response()->json($colors, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Unable to fetch data', 'message' => $e->getMessage()], 500);
@@ -31,11 +32,19 @@ class ColorController extends Controller
         try {
             $validatedData = $request->validate([
                 'name' => 'required|string',
-                'image' => 'nullable|string',
+                'image' => 'nullable',
                 'code' => 'nullable|string',
             ]);
+            if ($request->hasFile('image')) {
+                $file = $request->file('image')[0];
+                if ($file->isValid()) {
+                    $randomFileName = uniqid('color_') . '.' . $file->extension();
+                    $file->move(public_path('images/color'), $randomFileName);
+                    $validatedData['image'] = $randomFileName;
+                }
+            }    
 
-            $color = ProductColor::create($validatedData);
+            $color = Color::create($validatedData);
             return response()->json($color, 201);
 
         } catch (ValidationException $e) {
@@ -51,7 +60,7 @@ class ColorController extends Controller
     public function show(string $id)
     {
         try {
-            $color = ProductColor::findOrFail($id);
+            $color = Color::findOrFail($id);
             return response()->json($color, 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Resource not found', 'message' => $e->getMessage()], 404);
@@ -68,11 +77,21 @@ class ColorController extends Controller
         try {
             $validatedData = $request->validate([
                 'name' => 'required|string',
-                'image' => 'nullable|string',
+                'image' => 'nullable',
                 'code' => 'nullable|string',
             ]);
-
-            $color = ProductColor::findOrFail($id);
+            $color = Color::findOrFail($id);
+            if(isset($request->image)){
+                if(File::exists(public_path('images/color/'. $color->image))) {
+                    File::delete(public_path('images/color/'. $color->image));
+                }          
+                if ($request->hasFile('image')) {
+                    $file = $request->file('image')[0];  
+                        $randomFileName = uniqid('color_') . '.' . $file->extension();
+                        $file->move(public_path('images/color'), $randomFileName);
+                        $validatedData['image'] = $randomFileName;
+                }  
+            } 
             $color->update($validatedData);
             return response()->json($color, 200);
 
@@ -92,7 +111,10 @@ class ColorController extends Controller
     public function destroy(string $id)
     {
         try {
-            $color = ProductColor::findOrFail($id);
+            $color = Color::findOrFail($id);
+            if(File::exists(public_path('images/color/'. $color->image))) {
+                File::delete(public_path('images/color/'. $color->image));
+            }
             $color->delete();
             return response()->json(['message' => 'Resource deleted'], 200);
 

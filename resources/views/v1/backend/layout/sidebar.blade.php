@@ -33,7 +33,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href='/admin/product'>
+        <a class="nav-link" href='/admin/products'>
           <span class="menu-title">Product</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
@@ -51,8 +51,8 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href='/admin/user-role'>
-          <span class="menu-title">User Management</span>
+        <a class="nav-link" href='/admin/branch'>
+          <span class="menu-title">Toko Cabang</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
@@ -63,14 +63,20 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href='/admin/branch'>
-          <span class="menu-title">Toko Cabang</span>
+        <a class="nav-link" href='/admin/color'>
+          <span class="menu-title">Color</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href='/admin/stock'>
           <span class="menu-title">Stock</span>
+          <i class="mdi mdi-home menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href='/admin/user-role'>
+          <span class="menu-title">User Management</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
