@@ -39,7 +39,7 @@ class BrandController extends Controller
             ]);
 
             if ($request->hasFile('image')) {
-                $file = $request->file('image')[0];
+                $file = $request->file('image[0]');
                 if ($file->isValid()) {
                     $randomFileName = uniqid('brand_') . '.' . $file->extension();
                     $file->move(public_path('images/brand'), $randomFileName);

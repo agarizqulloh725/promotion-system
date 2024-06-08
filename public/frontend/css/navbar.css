@@ -1,0 +1,17 @@
+.navbar-nav .nav-link.active {
+    color: #D2202D !important;
+    font-weight: 700 !important;
+  }
+  .btn-custom-nav {
+    background: linear-gradient(to right, #FF512F, #DD2476); /* Gradient color from the image */
+    border: none;
+    color: white;
+    padding: 8px 24px; /* Adjust padding to match the design */
+    border-radius: 25px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.3s ease;
+  }
+  .btn-custom-nav:hover {
+    background: linear-gradient(to right, #DD2476, #FF512F); /* Invert gradient on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+  }
