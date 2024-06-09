@@ -9,18 +9,21 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto gap-4">
                     <li class="nav-item">
-                        <a class="nav-link poppins-regular text-white active" aria-current="page" href="#">Beranda</a>
+                        <a class="nav-link poppins-regular text-white {{ request()->is('/') ? 'active' : '' }}" aria-current="page" href="/">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link poppins-regular text-white" href="#">Produk</a>
+                        <a class="nav-link poppins-regular text-white {{ request()->is('product') ? 'active' : '' }}" href="/product">Produk</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link poppins-regular text-white" href="#">Promo</a>
+                        <a class="nav-link poppins-regular text-white {{ request()->is('promo') ? 'active' : '' }}" href="/promo">Promo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link poppins-regular text-white" href="#">Cabang</a>
+                        <a class="nav-link poppins-regular text-white {{ request()->is('branch') ? 'active' : '' }}" href="/branch">Cabang</a>
                     </li>
-                </ul>
+                    <li class="nav-item">
+                        <a class="nav-link poppins-regular text-white {{ request()->is('about') ? 'active' : '' }}" href="/about">About</a>
+                    </li>
+                </ul>                
                 <button class="btn btn-outline-danger poppins-regular btn-custom-nav ms-2" type="button">Hubungi Kami</button>
             </div>
         </div>

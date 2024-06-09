@@ -191,7 +191,7 @@ ul li {
 @section('content')
 
 {{-- content header --}}
-<div class="container pt-5">
+<div class="container pt-5 mt-5 pb-5 mb-5">
     <div class="row pt-5 mt-5">
         <div class="col">
             <h2 class="poppins-semibold text-danger" >Temukan Inovasi Terkini dalam Gadget Pengalaman Belanja yang Tanpa Batas!</h2>
@@ -212,7 +212,7 @@ ul li {
     </div>
 </div>
 
-<div class="image-background">
+<div class="image-background" style="margin-top: 90px; margin-bottom: 90px">
     <div class="container">
         <div class="row p-4">
             <div class="col-8">
@@ -269,7 +269,7 @@ ul li {
     </div>
 </div>
 
-<div class="container my-4">
+<div class="container mt-5 mb-5 pt-5 pb-5">
     <h3 class="text-danger poppins-semibold">
         <span class="brand-line"></span>Brand Pilihan
     </h3>
@@ -282,7 +282,7 @@ ul li {
 </div>
 
 
-<div class="image-background">
+<div class="image-background" style="margin-top: 120px; margin-bottom: 80px">
     <div class="container text-start pt-4 pb-4">
         <h3 class="text-white poppins-semibold">
             <span class="brand-line-white"></span>Produk Populer Bulan Ini
@@ -335,7 +335,7 @@ ul li {
     </div>
 </div>
 
-<div class="container my-4">
+<div class="container mt-5 mb-5 pb-5 pt-5">
     <h3 class="text-danger poppins-semibold">
         <span class="brand-line"></span>Testimonial
     </h3>
@@ -373,7 +373,7 @@ ul li {
     </div>
 </div>
 
-<div class="container">
+<div class="container pt-5 pb-5 mb-5">
     <div class="row">
         <div class="col-md-6 mt-5">
             <!-- Embed YouTube Video -->
