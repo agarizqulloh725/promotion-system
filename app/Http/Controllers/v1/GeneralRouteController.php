@@ -94,6 +94,10 @@ class GeneralRouteController extends Controller
     {
         return view('v1.frontend.pages.product');
     }
+    public function productShow()
+    {
+        return view('v1.frontend.pages.product.show');
+    }
     public function promo()
     {
         return view('v1.frontend.pages.promo');
