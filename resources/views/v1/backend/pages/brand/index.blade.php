@@ -439,14 +439,14 @@ function editBrand(id) {
             $('#editBrandCategory').val(response.product_category_id);
 
             if (response.image) {
-              let images = Array.isArray(response.image) ? response.image : [response.image];
-              images.forEach(function(imageUrl) {
-                  var fullPath = '/images/brand/' + imageUrl;
-                  var img = $('<img>').attr("src", fullPath);
-                  img.css({ "max-width": "150px", "height": "auto" });
-                  $("#editImagePreviewContainer").append(img);
-              });
-          }
+                let images = Array.isArray(response.image) ? response.image : [response.image];
+                images.forEach(function(imageUrl) {
+                    var fullPath = '/images/brand/' + imageUrl;
+                    var img = $('<img>').attr("src", fullPath);
+                    img.css({ "max-width": "150px", "height": "auto" });
+                    $("#editImagePreviewContainer").append(img);
+                });
+            }
 
             $('#editIsShow').prop('checked', response.is_show === 1);
 

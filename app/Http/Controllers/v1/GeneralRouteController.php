@@ -10,6 +10,7 @@ use App\Models\Specification;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use App\Models\ProductSpecification;
 use Illuminate\Support\Facades\Auth;
 
@@ -108,7 +109,8 @@ class GeneralRouteController extends Controller
     }
     public function branch()
     {
-        return view('v1.frontend.pages.branch');
+        $branch = Branch::all();
+        return view('v1.frontend.pages.branch', compact('branch'));
     }
     public function profile()
     {
