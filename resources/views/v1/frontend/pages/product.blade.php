@@ -151,16 +151,17 @@
                 <div class="dropdown">
                     <a class="text-reset text-body text-decoration-none" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="d-flex align-items-center justify-content-between">
-                            <p class="mb-0 poppins-regular">iPhone</p>
+                            <p class="mb-0 poppins-regular">Semua Merek</p>
                             <i class="fas fa-chevron-right"></i>
                         </div>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="#">iPhone 13</a></li>
                         <li><a class="dropdown-item" href="#">iPhone 13 Pro</a></li>
                         <li><a class="dropdown-item" href="#">iPhone 12</a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
+                <div id="brandUI"></div>
                 <hr>
                 <div class="dropdown mt-2">
                     <a class="text-reset text-body text-decoration-none" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -169,16 +170,16 @@
                         </div>
                     </a>
                     <div class="container mt-2">
-                        <div class="row g-2">
-                            <div class="col"><button class="btn btn-outline-secondary rounded-pill">2016</button></div>
-                            <div class="col"><button class="btn btn-outline-secondary rounded-pill">2017</button></div>
-                            <div class="col"><button class="btn btn-outline-secondary rounded-pill">2018</button></div>
-                            <div class="col"><button class="btn btn-outline-secondary rounded-pill">2019</button></div>
-                            <div class="col"><button class="btn btn-outline-secondary rounded-pill">2020</button></div>
-                            <div class="col"><button class="btn btn-outline-secondary rounded-pill">2021</button></div>
-                            <div class="col"><button class="btn btn-outline-secondary rounded-pill">2022</button></div>
-                            <div class="col"><button class="btn btn-danger rounded-pill">2023</button></div>
-                            <div class="col"><button class="btn btn-outline-secondary rounded-pill">2024</button></div>
+                        <div class="row g-2 ctTahun">
+                            <div class="col"><button class="btn btn-outline-secondary rounded-pill" onclick="setSelectedTahun(2016, event)">2016</button></div>
+                            <div class="col"><button class="btn btn-outline-secondary rounded-pill" onclick="setSelectedTahun(2017, event)">2017</button></div>
+                            <div class="col"><button class="btn btn-outline-secondary rounded-pill" onclick="setSelectedTahun(2018, event)">2018</button></div>
+                            <div class="col"><button class="btn btn-outline-secondary rounded-pill" onclick="setSelectedTahun(2019, event)">2019</button></div>
+                            <div class="col"><button class="btn btn-outline-secondary rounded-pill" onclick="setSelectedTahun(2020, event)">2020</button></div>
+                            <div class="col"><button class="btn btn-outline-secondary rounded-pill" onclick="setSelectedTahun(2021, event)">2021</button></div>
+                            <div class="col"><button class="btn btn-outline-secondary rounded-pill" onclick="setSelectedTahun(2022, event)">2022</button></div>
+                            <div class="col"><button class="btn btn-outline-secondary rounded-pill" onclick="setSelectedTahun(2023, event)">2023</button></div>
+                            <div class="col"><button class="btn btn-outline-secondary rounded-pill" onclick="setSelectedTahun(2024, event)">2024</button></div>
                         </div>
                     </div>  
                 </div>
@@ -189,34 +190,43 @@
                             <p class="mb-0 poppins-semibold" style="font-size: 20px">Promo</p>
                         </div>
                     </a>
-                    <ul class=" px-2 py-2 list-unstyled" aria-labelledby="dropdownMenuButton">
-                        <li><button class="btn btn-outline-secondary rounded-pill w-100 mb-2">Discount</button></li>
-                        <li><button class="btn btn-outline-secondary rounded-pill w-100 mb-2">Cashback</button></li>
-                        <li><button class="btn btn-outline-secondary rounded-pill w-100">Bonus</button></li>
-                    </ul>
+                    <ul class="px-2 py-2 list-unstyled ctPromo" aria-labelledby="dropdownMenuButton">
+                        <li><button class="btn btn-outline-secondary rounded-pill w-100 mb-2" onclick="setSelectedPromo('Discount', event)">Discount</button></li>
+                        <li><button class="btn btn-outline-secondary rounded-pill w-100 mb-2" onclick="setSelectedPromo('Cashback', event)">Cashback</button></li>
+                        <li><button class="btn btn-outline-secondary rounded-pill w-100" onclick="setSelectedPromo('Bonus', event)">Bonus</button></li>
+                    </ul>                    
                 </div>
                 <div class="px-2">
-                    <button class=" pt-3 pb-3 btn btn-danger rounded-pill w-100 text-white poppins-medium" style="font-size: 14px">Terapkan Filter</button>
+                    <button class=" pt-3 pb-3 btn btn-danger rounded-pill w-100 text-white poppins-medium" style="font-size: 14px" onclick="applyFilters()">Terapkan Filter</button>
                 </div>
 
             </div>
             
         </div>
         <div class="col-md-9">
-            <div class="d-flex justify-content-end align-items-center pt-0 pt-lg-0 pt-sm-3 pt-md-3 ctr-urutkan">
-                <span class="me-2 poppins-semibold">Urutkan: </span>
-                <div class="dropdown">
-                    <button class="btn btn-outline-danger dropdown-toggle rounded-pill poppins-medium" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        Paling Sesuai
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Paling Sesuai</a></li>
-                        <li><a class="dropdown-item" href="#">Terbaru</a></li>
-                        <li><a class="dropdown-item" href="#">Paling Populer</a></li>
-                    </ul>
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="d-flex align-items-center">
+                    <div class="d-flex">
+                        <input type="text" class="form-control me-2 inputSearch" placeholder="Cari Product"  aria-label="Search">
+                        {{-- <button class="btn btn-outline-danger buttonSearch" type="submit">Cari</button> --}}
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="me-2 poppins-semibold">Urutkan:</span>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-danger dropdown-toggle rounded-pill poppins-medium" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Paling Sesuai
+                        </button>
+                        <ul class="dropdown-menu filterdropdown" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Paling Sesuai</a></li>
+                            <li><a class="dropdown-item" href="#">Terbaru</a></li>
+                            <li><a class="dropdown-item" href="#">Paling Populer</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="row pt-3">
+            
+            <div class="row pt-3" id="productListContainer">
                 <!-- Single product -->
                 <div class="col-md-4 mb-4">
                     <div class="card border-1 rounded-4 shadow">
@@ -351,7 +361,8 @@
                     </div>
                 </div>
             </div>
-            
+            <div id="paginationContainer" class="pagination">
+            </div>
         </div>
     </div>
 </div>
@@ -388,4 +399,256 @@
 @endsection
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>
+
+<script>
+var selectedYear = [];
+var selectedBrand = [];
+var selectedPromo = [];
+var filterSort = "";
+
+async function fetchBrand() {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/v1/get-brand');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        if (result.success && result.data) {
+            updateUIBrand(result.data);
+        } else {
+            console.error('No brands data found:', result.message);
+        }
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+}
+async function fetchTahun() {
+    try {
+        const response = await fetch('https://api.example.com/data');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+    }
+} 
+async function fetchProducts(pageUrl) {
+    pageUrl = pageUrl || 'http://127.0.0.1:8000/api/v1/get-products';
+    try {
+        const response = await fetch(pageUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        updateProductList(result.data.data);
+        updatePagination(result.data.links);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+    }
+}
+
+async function applyFilters() {
+    const years = selectedYear; 
+    const brands = selectedBrand; 
+    const promos = selectedPromo;
+
+    const queryParams = new URLSearchParams({
+        years: years.join(','),
+        brands: brands.join(','),
+        promos: promos.join(','),
+    }).toString();
+
+    const url = `http://127.0.0.1:8000/api/v1/get-products?${queryParams}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        if (result.success) {
+            updateProductList(result.data.data);
+        } else {
+            console.error('Failed to fetch products:', result.message);
+        }
+    } catch (error) {
+        console.error('Error fetching products:', error);
+    }
+}
+
+
+function updateProductList(products) {
+    const productListContainer = document.getElementById('productListContainer');
+    productListContainer.innerHTML = '';
+    products.forEach(product => {
+        productListContainer.innerHTML += `
+            <div class="col-md-4 mb-4">
+                <div class="card border-1 rounded-4 shadow">
+                    <img class="card-img-top pt-2" src="${product.image}" alt="${product.name}">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.name}</h5>
+                        <p class="card-text mb-4">${product.description}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold m-0">${product.price}</h5>
+                            <span class="badge bg-danger">${product.discount}</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-center align-items-center gap-2">
+                            <button class="btn btn-danger rounded-pill w-100">View Product</button>
+                            <button class="btn btn-outline-danger rounded-circle">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+}
+function updatePagination(links) {
+    const paginationContainer = document.getElementById('paginationContainer');
+    paginationContainer.innerHTML = '';
+    links.forEach(link => {
+        paginationContainer.innerHTML += `<a href="#" onclick="fetchProducts('${link.url}')" class="page-link ${link.active ? 'active' : ''}">${link.label}</a>`;
+    });
+}
+
+
+function updateUIBrand(brands) {
+    const container = document.getElementById('brandUI');
+    container.innerHTML = ''; 
+    brands.forEach(brand => {
+        let dropdownHTML = `
+            <div class="dropdown">
+                <a onclick="setSelectedBrand(${brand.id}, event)" class="text-reset text-body text-decoration-none" href="#" id="dropdownMenuLink-${brand.id}">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <p class="mb-0 poppins-regular">${brand.name}</p>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+        `;
+        container.innerHTML += dropdownHTML;
+    });
+}
+
+function setSelectedBrand(brandId, event) {
+    event.preventDefault();
+    console.log("Selected Brand ID:", brandId);
+}
+
+function setSelectedPromo(typepromo, event) {
+    event.preventDefault();
+    console.log("Selected Promo Type:", typepromo);
+
+    const isActive = event.currentTarget.classList.contains('btn-danger');
+    const buttons = document.querySelectorAll('.ctPromo .btn');
+
+    buttons.forEach(button => {
+        button.classList.remove('btn-danger');
+        button.classList.add('btn-outline-secondary');
+    });
+
+    if (!isActive) {
+        event.currentTarget.classList.remove('btn-outline-secondary');
+        event.currentTarget.classList.add('btn-danger');
+    }else{
+        event.currentTarget.classList.remove('btn-danger');
+        event.currentTarget.classList.add('btn-outline-secondary');
+    }
+}
+
+function setSelectedTahun(tahun, event) {
+    event.preventDefault();
+    console.log("Selected Year:", tahun);
+
+    const index = selectedYear.indexOf(tahun);
+
+    if (event.currentTarget.classList.contains('btn-danger')) {
+        event.currentTarget.classList.remove('btn-danger');
+        event.currentTarget.classList.add('btn-outline-secondary');
+        if (index !== -1) {
+            selectedYear.splice(index, 1);
+        }
+    } else {
+        event.currentTarget.classList.remove('btn-outline-secondary');
+        event.currentTarget.classList.add('btn-danger');
+        if (index === -1) {
+            selectedYear.push(tahun);
+            selectedYear.sort((a, b) => a - b);
+        }
+    }
+    console.log("Active Years:", selectedYear);
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.querySelector('.inputSearch');
+    const searchButton = document.querySelector('.buttonSearch');
+    const sortingDropdown = document.querySelector('.filterdropdown');
+
+    // searchButton.addEventListener('click', function(event) {
+    //     event.preventDefault();
+    //     const query = searchInput.value;
+    //     fetchProducts(`http://127.0.0.1:8000/api/v1/get-products?search=${encodeURIComponent(query)}`);
+    // });
+
+    const debounce = (func, delay) => {
+        let debounceTimer;
+        return function() {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
+    };
+
+    searchInput.addEventListener('input', debounce(function() {
+    const searchQuery = this.value;
+    let queryParams = new URLSearchParams({
+        search: encodeURIComponent(searchQuery)
+    });
+    if (selectedYear.length > 0) {
+        queryParams.append('years', selectedYear.join(','));
+    }
+    if (selectedBrand) {
+        queryParams.append('brand', selectedBrand);
+    }
+    if (selectedPromo.length > 0) {
+        queryParams.append('promos', selectedPromo.join(','));
+    }
+    if (filterSort) {
+        queryParams.append('sort', filterSort);
+    }
+        const apiUrl = `http://127.0.0.1:8000/api/v1/get-products?${queryParams.toString()}`;
+        fetchProducts(apiUrl);
+    }, 250));
+
+
+    sortingDropdown.addEventListener('click', function(event) {
+        if (event.target.tagName === 'A') {
+            const sortValue = event.target.textContent;
+            let sortParam = '';
+            switch (sortValue) {
+                case 'Paling Sesuai':
+                    sortParam = 'relevance';
+                    break;
+                case 'Terbaru':
+                    sortParam = 'newest';
+                    break;
+                case 'Paling Populer':
+                    sortParam = 'popularity';
+                    break;
+            }
+            fetchProducts(`http://127.0.0.1:8000/api/v1/get-products?sort=${sortParam}`);
+        }
+    });
+
+    fetchBrand();
+    fetchProducts();
+});
+
+</script>
 @endpush

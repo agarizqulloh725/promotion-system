@@ -142,34 +142,39 @@
     </nav>
 </div>
 
+@foreach ($branch as $mybranch)
 {{-- content body --}}
 <div class="container my-4">
     <div class="card border-1 shadow rounded-3">
         <div class="row g-0">
             <div class="col-md-4 d-flex justify-content-between align-items-center">
                 <div class="p-2">
-                    <img class="img-fluid rounded-3" width="450px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/M%C3%BCnster%2C_LVM%2C_B%C3%BCrogeb%C3%A4ude_--_2013_--_5149-51.jpg/1200px-M%C3%BCnster%2C_LVM%2C_B%C3%BCrogeb%C3%A4ude_--_2013_--_5149-51.jpg" alt="Lima Waktu - Waru">
+                    <img class="img-fluid rounded-3" width="450px" src="{{asset('images/branch/'.$mybranch->image)}}" alt="Lima Waktu - Waru">
                 </div>
             </div>
             <!-- Content Column -->
             <div class="col-md-8">
                 <div class="card-body">
-                    <h3 class="card-title poppins-semibold">LIMA WAKTU - WARU</h3>
+                    <h3 class="card-title poppins-semibold">{{$mybranch->name}}</h3>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="" style="width: 700px">
-                            <p class="poppins-regular">POM, Jl. Brigjend Katamso No.37-39, Mekar Raya Binangun, Janti, Kec. Waru, SIDOARJO ( BARAT, Jawa Timur 61256)</p>
+                            <p class="poppins-regular">{{$mybranch->address}}</p>
                         </div>
-                        <img class="p-2" width="80px" src="{{asset('frontend/img/icon/iconwa.png')}}" alt="">
+                        <a href="https://wa.me/62{{ ltrim($mybranch->wa, '0') }}" target="_blank">
+                            <img class="p-2" width="80px" src="{{ asset('frontend/img/icon/iconwa.png') }}" alt="WhatsApp Icon">
+                        </a>
                     </div>
                     <!-- Map Embed -->
                     <div class="embed-responsive embed-responsive-16by9 ">
-                        <iframe class="w-100 h-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0153790414093!2d-122.08424968529271!3d37.42199977982113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb5b5eacb96d3%3A0x2a6f263ad0b08b8!2sGoogleplex!5e0!3m2!1sen!2sus!4v1641393289245!5m2!1sen!2sus" allowfullscreen></iframe>
+                        <iframe class="w-100 h-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0153790414093!2d{{$mybranch->lang}}!3d{{$mybranch->lat}}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb5b5eacb96d3%3A0x2a6f263ad0b08b8!2sGoogleplex!5e0!3m2!1sen!2sus!4v1641393289245!5m2!1sen!2sus" allowfullscreen></iframe>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endforeach
 
 
 <div class="image-backgroundfoot p-3">

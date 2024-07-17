@@ -49,8 +49,33 @@
             <div class="modal-body">
                 <form id="createForm">
                     <div class="form-group">
-                        <label for="categoryName">Name Kategori</label>
-                        <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
+                        <label for="name">Nama Toko</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter category name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Nama Cabang</label>
+                        <input type="text" class="form-control" id="branch" placeholder="Enter category name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Alamat</label>
+                        <input type="text" class="form-control" id="address" placeholder="Enter category name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Latitude</label>
+                        <input type="text" class="form-control" id="lat" placeholder="Enter category name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Langtitude</label>
+                        <input type="text" class="form-control" id="lang" placeholder="Enter category name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Whatsapp</label>
+                        <input type="text" class="form-control" id="wa" placeholder="Enter category name">
+                    </div>
+                    <div class="form-group">
+                        <label for="createBranchImages">Gambar : </label>
+                        <input type="file" class="form-control-file" id="createBranchImages" onchange="previewImages();">
+                        <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -95,8 +120,33 @@
                 <form id="editForm">
                     <input type="hidden" id="editId" value="">
                     <div class="form-group">
-                        <label for="editName">Nama Kategori</label>
-                        <input type="text" class="form-control" id="editName" placeholder="Masukan Nama">
+                        <label for="editName">Nama Toko</label>
+                        <input type="text" class="form-control" id="editName" placeholder="Enter category name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBranch">Nama Cabang</label>
+                        <input type="text" class="form-control" id="editBranch" placeholder="Enter branch name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editAddress">Alamat</label>
+                        <input type="text" class="form-control" id="editAddress" placeholder="Enter address">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLat">Latitude</label>
+                        <input type="text" class="form-control" id="editLat" placeholder="Enter latitude">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLang">Langtitude</label>
+                        <input type="text" class="form-control" id="editLang" placeholder="Enter langtitude">
+                    </div>
+                    <div class="form-group">
+                        <label for="editWa">Whatsapp</label>
+                        <input type="text" class="form-control" id="editWa" placeholder="Enter whatsapp">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBranchImages">Gambar :</label>
+                        <input type="file" class="form-control-file" id="editBranchImages" onchange="editPreviewImages();">
+                        <div id="editImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Update</button>
@@ -169,40 +219,55 @@ $(document).ready(function() {
         $('#createModal').modal('show');
     })
     $('#createForm').submit(function(e) {
-        e.preventDefault();
-        var categoryName = $('#categoryName').val();
-        $.ajax({
-            url: '/api/v1/admin/branch/',
-            type: 'POST',
-            headers: {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append('name', $('#name').val());
+    formData.append('branch', $('#branch').val());
+    formData.append('address', $('#address').val());
+    formData.append('lat', $('#lat').val());
+    formData.append('lang', $('#lang').val());
+    formData.append('wa', $('#wa').val());
+
+    var files = $('#createBranchImages').get(0).files;
+    if (files.length > 0) {
+        for (var i = 0; i < files.length; i++) {
+            formData.append('image[]', files[i]);
+        }
+    }
+
+    $.ajax({
+        url: '/api/v1/admin/branch/',
+        type: 'POST',
+        headers: {
             'Authorization': 'Bearer ' + token
-            },
-            contentType: 'application/json',
-            data: JSON.stringify({
-                name: categoryName,
-            }),
-            success: function(result) {
-                table.ajax.reload(null, false);
-                $('#createModal').modal('hide');
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Category created successfully!',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            },
-            error: function(request, msg, error) {
-                console.log('Error creating category:', error);
-                $('#createModal').modal('hide');
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed to create category. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        });
+        },
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function(result) {
+            table.ajax.reload(null, false);
+            $('#createModal').modal('hide');
+            Swal.fire({
+                title: 'Success!',
+                text: 'Category created successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        },
+        error: function(request, msg, error) {
+            console.log('Error creating category:', error);
+            $('#createModal').modal('hide');
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to create category. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     });
+});
+
 
     $('#dataTable').on('click', '.delete-btn', function() {
         var categoryId = $(this).data('id');
@@ -241,40 +306,56 @@ $(document).ready(function() {
     });
 
     $('#editForm').submit(function(e) {
-        e.preventDefault();
-        var id = $('#editId').val();
-        var updatedName = $('#editName').val();
-        $.ajax({
-            url: '/api/v1/admin/branch/' + id,
-            type: 'PUT',
-            headers: {
-                'Authorization': 'Bearer ' + token
-            },
-            data: { 
-                name: updatedName,
-            },
-            success: function(result) {
-                table.ajax.reload();
-                $('#editModal').modal('hide');
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Category updated successfully!',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            },
-            error: function(request, msg, error) {
-                console.log('Error updating category:', error);
-                $('#editModal').modal('hide');
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed to update category. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        });
+    e.preventDefault();
+    
+    var id = $('#editId').val();
+    var formData = new FormData(this);
+    formData.append('_method', 'PUT');
+    formData.append('name', $('#editName').val());
+    formData.append('branch', $('#editBranch').val());
+    formData.append('address', $('#editAddress').val());
+    formData.append('lat', $('#editLat').val());
+    formData.append('lang', $('#editLang').val());
+    formData.append('wa', $('#editWa').val());
+
+    var files = $('#editBranchImages').get(0).files;
+    if (files.length > 0) {
+        for (var i = 0; i < files.length; i++) {
+            formData.append('image[]', files[i]);
+        }
+    }
+
+    $.ajax({
+        url: '/api/v1/admin/branch/' + $('#editId').val(),
+        type: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function(result) {
+            table.ajax.reload();
+            $('#editModal').modal('hide');
+            Swal.fire({
+                title: 'Success!',
+                text: 'Category updated successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        },
+        error: function(request, msg, error) {
+            console.log('Error updating category:', error);
+            $('#editModal').modal('hide');
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to update category. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     });
+});
 
     $('.close,.closeModal').on('click', function() {
         $('#deleteModal').modal('hide');
@@ -313,12 +394,30 @@ function editCategory(id) {
         url: '/api/v1/admin/branch/' + id, 
         type: 'GET',
         headers: {
-                'Authorization': 'Bearer ' + token
-            },
+            'Authorization': 'Bearer ' + token
+        },
         contentType: 'application/json',
         success: function(response) {
             $('#editId').val(response.id); 
             $('#editName').val(response.name);             
+            $('#editBranch').val(response.branch);             
+            $('#editAddress').val(response.address);             
+            $('#editLat').val(response.lat);             
+            $('#editLang').val(response.lang);             
+            $('#editWa').val(response.wa);             
+
+            var container = $('#editImagePreviewContainer');
+            container.empty();
+            if (response.image) {
+                let images = Array.isArray(response.image) ? response.image : [response.image];
+                images.forEach(function(imageUrl) {
+                    var fullPath = '/images/branch/' + imageUrl;
+                    var img = $('<img>').attr("src", fullPath);
+                    img.css({ "max-width": "150px", "height": "auto" });
+                    container.append(img);
+                });
+            }
+
             $('#editModal').modal('show');
         },
         error: function(error) {
@@ -331,6 +430,44 @@ function editCategory(id) {
             });
         }
     });
+}
+
+function previewImages() {
+    var files = $("#createBranchImages").get(0).files;
+    $("#imagePreviewContainer").empty(); 
+
+    if (files.length > 0) {
+        Array.from(files).forEach(file => {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var img = $('<img>').attr("src", e.target.result);
+                img.css({ "max-width": "150px", "height": "auto" });
+                $("#imagePreviewContainer").append(img);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+}
+function editPreviewImages() {
+    var files = $("#editBranchImages").get(0).files; 
+    var container = $("#editImagePreviewContainer");
+    container.empty(); 
+
+    if (files.length > 0) {
+        Array.from(files).forEach(function(file) {
+            var reader = new FileReader(); 
+
+            reader.onload = function(event) {
+                var img = $('<img>').attr("src", event.target.result); 
+                img.css({ "max-width": "150px", "height": "auto" }); 
+                container.append(img);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
 }
 
 </script>

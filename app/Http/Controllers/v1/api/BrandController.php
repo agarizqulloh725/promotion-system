@@ -39,10 +39,10 @@ class BrandController extends Controller
             ]);
 
             if ($request->hasFile('image')) {
-                $file = $request->file('image[0]');
-                if ($file->isValid()) {
-                    $randomFileName = uniqid('brand_') . '.' . $file->extension();
-                    $file->move(public_path('images/brand'), $randomFileName);
+                $file = $request->file('image');
+                if ($file[0]->isValid()) {
+                    $randomFileName = uniqid('brand_') . '.' . $file[0]->extension();
+                    $file[0]->move(public_path('images/brand'), $randomFileName);
                     $validated['image'] = $randomFileName;
                 }
             }            

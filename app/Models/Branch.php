@@ -11,6 +11,9 @@ class Branch extends Model
     protected $table = 'branch';
     protected $fillable = [
         'name',
+        'branch',
+        'address',
+        'wa',
         'lat',
         'lang',
         'image'
