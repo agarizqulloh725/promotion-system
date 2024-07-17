@@ -33,6 +33,11 @@
 .spacing-1{
     letter-spacing: 1px;
 }
+.dropdown-item.activefill {
+    background-color: #dc3545;
+    color: white;
+}
+
 @media (min-width: 200px) { 
     .t-desc {
         font-size: 13px;
@@ -149,7 +154,7 @@
             <h5 class="poppins-semibold mb-3 mt-2">Filter</h5>
             <div class="border border-1 rounded-4 p-4 shadow">
                 <div class="dropdown">
-                    <a class="text-reset text-body text-decoration-none" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="text-reset text-body text-decoration-none bg-primary" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="d-flex align-items-center justify-content-between">
                             <p class="mb-0 poppins-regular">Semua Merek</p>
                             <i class="fas fa-chevron-right"></i>
@@ -214,16 +219,16 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="me-2 poppins-semibold">Urutkan:</span>
                     <div class="dropdown">
-                        <button class="btn btn-outline-danger dropdown-toggle rounded-pill poppins-medium" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="btn btn-outline-danger dropdown-toggle rounded-pill poppins-medium" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                             Paling Sesuai
-                        </button>
+                        </div>
                         <ul class="dropdown-menu filterdropdown" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="#">Paling Sesuai</a></li>
-                            <li><a class="dropdown-item" href="#">Terbaru</a></li>
-                            <li><a class="dropdown-item" href="#">Paling Populer</a></li>
+                            <li><div class="dropdown-item activefill" href="#" onclick="setSortOption('Paling Sesuai', event)">Paling Sesuai</div></li>
+                            <li><div class="dropdown-item" href="#" onclick="setSortOption('Terbaru', event)">Terbaru</div></li>
+                            <li><div class="dropdown-item" href="#" onclick="setSortOption('Paling Populer', event)">Paling Populer</div></li>
                         </ul>
                     </div>
-                </div>
+                </div>                             
             </div>
             
             <div class="row pt-3" id="productListContainer">
@@ -361,7 +366,11 @@
                     </div>
                 </div>
             </div>
-            <div id="paginationContainer" class="pagination">
+            <div class="d-flex justify-content-center">
+                <div>
+                    <ul class="pagination" id="paginationContainer">
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -404,7 +413,8 @@
 var selectedYear = [];
 var selectedBrand = [];
 var selectedPromo = [];
-var filterSort = "";
+var filterSort = "relevance";
+var searchh = "";
 
 async function fetchBrand() {
     try {
@@ -450,6 +460,7 @@ async function fetchProducts(pageUrl) {
 }
 
 async function applyFilters() {
+    document.querySelector('.inputSearch').value = '';
     const years = selectedYear; 
     const brands = selectedBrand; 
     const promos = selectedPromo;
@@ -537,28 +548,48 @@ function updateUIBrand(brands) {
 function setSelectedBrand(brandId, event) {
     event.preventDefault();
     console.log("Selected Brand ID:", brandId);
+
+    const index = selectedBrand.indexOf(brandId);
+    const isActive = index !== -1;
+    const targetDiv = event.currentTarget.querySelector('div');
+
+    if (isActive) {
+        selectedBrand.splice(index, 1);
+        targetDiv.classList.remove('bg-danger');
+    } else {
+        selectedBrand.push(brandId);
+        targetDiv.classList.add('bg-danger');
+    }
+
+    console.log("Selected Brands:", selectedBrand);
 }
+
 
 function setSelectedPromo(typepromo, event) {
     event.preventDefault();
     console.log("Selected Promo Type:", typepromo);
 
-    const isActive = event.currentTarget.classList.contains('btn-danger');
-    const buttons = document.querySelectorAll('.ctPromo .btn');
+    const index = selectedPromo.indexOf(typepromo);
+    if (index === -1) {
+        selectedPromo.push(typepromo);
+    } else {
+        selectedPromo.splice(index, 1);
+    }
 
+    const buttons = document.querySelectorAll('.ctPromo .btn');
     buttons.forEach(button => {
-        button.classList.remove('btn-danger');
-        button.classList.add('btn-outline-secondary');
+        if (selectedPromo.includes(button.textContent)) {
+            button.classList.add('btn-danger');
+            button.classList.remove('btn-outline-secondary');
+        } else {
+            button.classList.remove('btn-danger');
+            button.classList.add('btn-outline-secondary');
+        }
     });
 
-    if (!isActive) {
-        event.currentTarget.classList.remove('btn-outline-secondary');
-        event.currentTarget.classList.add('btn-danger');
-    }else{
-        event.currentTarget.classList.remove('btn-danger');
-        event.currentTarget.classList.add('btn-outline-secondary');
-    }
+    console.log("Selected Promos:", selectedPromo);
 }
+
 
 function setSelectedTahun(tahun, event) {
     event.preventDefault();
@@ -583,12 +614,60 @@ function setSelectedTahun(tahun, event) {
     console.log("Active Years:", selectedYear);
 }
 
+function setSortOption(option, event) {
+    event.preventDefault();
+    console.log("Selected Sort Option:", option);
+    
+    const dropdownButton = document.getElementById('dropdownMenuButton');
+    dropdownButton.textContent = option;
+    
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+        item.classList.remove('activefill');
+    });
+    event.currentTarget.classList.add('activefill');
+
+    let sortParam = '';
+    switch (option) {
+        case 'Paling Sesuai':
+            sortParam = 'relevance';
+            break;
+        case 'Terbaru':
+            sortParam = 'newest';
+            break;
+        case 'Paling Populer':
+            sortParam = 'popularity';
+            break;
+    }
+    filterSort = sortParam;
+
+    let queryParams = new URLSearchParams({
+        sort: sortParam
+    });
+
+    if (selectedYear.length > 0) {
+        queryParams.append('years', selectedYear.join(','));
+    }
+
+    if (selectedBrand.length > 0) {
+        queryParams.append('brands', selectedBrand.join(','));
+    }
+
+    if (selectedPromo.length > 0) {
+        queryParams.append('promos', selectedPromo.join(','));
+    }
+
+    if (searchh) {
+        queryParams.append('search', encodeURIComponent(searchh));
+    }
+
+    const apiUrl = `http://127.0.0.1:8000/api/v1/get-products?${queryParams.toString()}`;
+    fetchProducts(apiUrl);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.querySelector('.inputSearch');
     const searchButton = document.querySelector('.buttonSearch');
-    const sortingDropdown = document.querySelector('.filterdropdown');
-
     // searchButton.addEventListener('click', function(event) {
     //     event.preventDefault();
     //     const query = searchInput.value;
@@ -613,8 +692,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (selectedYear.length > 0) {
         queryParams.append('years', selectedYear.join(','));
     }
-    if (selectedBrand) {
-        queryParams.append('brand', selectedBrand);
+    if (selectedBrand.length > 0) {
+        queryParams.append('brands', selectedBrand.join(','));
     }
     if (selectedPromo.length > 0) {
         queryParams.append('promos', selectedPromo.join(','));
@@ -625,26 +704,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const apiUrl = `http://127.0.0.1:8000/api/v1/get-products?${queryParams.toString()}`;
         fetchProducts(apiUrl);
     }, 250));
-
-
-    sortingDropdown.addEventListener('click', function(event) {
-        if (event.target.tagName === 'A') {
-            const sortValue = event.target.textContent;
-            let sortParam = '';
-            switch (sortValue) {
-                case 'Paling Sesuai':
-                    sortParam = 'relevance';
-                    break;
-                case 'Terbaru':
-                    sortParam = 'newest';
-                    break;
-                case 'Paling Populer':
-                    sortParam = 'popularity';
-                    break;
-            }
-            fetchProducts(`http://127.0.0.1:8000/api/v1/get-products?sort=${sortParam}`);
-        }
-    });
 
     fetchBrand();
     fetchProducts();
