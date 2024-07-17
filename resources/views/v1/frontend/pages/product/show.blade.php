@@ -94,6 +94,10 @@
     background-color: red !important;
     color: white !important;
 }
+.inactiv-spec{
+    background-color: #F0F0F0;
+    color: rgb(0, 0, 0) !important;
+}
 .color-circle {
     width: 40px;
     height: 40px;
@@ -103,6 +107,16 @@
 .active-color-circle {
     border: 2px solid #FF0000;
 }
+
+.show-more {
+    color: red;
+    cursor: pointer;
+    display: none;
+}
+.hidden-text {
+    display: none;
+}
+
 
 @media (min-width: 200px) { 
     .t-desc {
@@ -228,37 +242,51 @@
         </div>
     </div>
     <div class="col">
-        <h4 class="">SAMSUNG GALAXY A15</h4>
-        <div class="d-flex align">
-            <h4 class="text-danger poppins-bold">Rp 3.999.000</h4>
-            <p style="" class="poppins-semibold">&nbsp Rp 4.250.000</p>
-            <button class="btn rounded-pill poppins-medium text-danger" style="background-color: #ff00000e">-10%</button>
-        </div>
-        <hr>
-        <p class="poppins-medium">SPESIFIKASI</p>
-        <ul class="poppins-regular">
-            <li>
-                Ukuran layar: 6.5 inci, 1080 x 2340 pixels, Super AMOLED, 90Hz
-            </li>
-            <li>
-                Memori: RAM 8 GB, ROM 256 GB.....
-            </li>
-        </ul>
-        <p class="poppins-semibold text-danger">Lihat Selengkapnya</p>
-        <hr>
-        <p class="poppins-regular" style="color: #000000">Pilih Spesifikasi</p>
-        <div class="d-flex gap-3">
-            <button style="background-color: #F0F0F0" class="btn activ-spec poppins-regular rounded-pill">4/128gb</button>
-            <button style="background-color: #F0F0F0" class="btn poppins-regular rounded-pill">4/128gb</button>
-            <button style="background-color: #F0F0F0" class="btn poppins-regular rounded-pill">4/128gb</button>
-        </div>
+        @foreach ($product as $key => $prd)
+            <h4 class=""  onclick="window.location='{{ route('productDetail', $prd['id']) }}'">{{ $prd['name'] }}</h4>
+            <div class="d-flex align">
+                <h4 class="text-danger poppins-bold">Rp {{ $prd['price'] }}</h4>
+                <p style="" class="poppins-semibold">&nbsp Rp 4.250.000</p>
+                <button class="btn rounded-pill poppins-medium text-danger" style="background-color: #ff00000e">-10%</button>
+            </div>
+        
+            <hr>
+
+            {{-- Spesification --}}
+            <div class="spec">
+                <p class="poppins-medium">SPESIFIKASI</p>
+            <ul class="poppins-regular" id="spec-list">
+                <li>
+                    {{$prd['description']}}
+                </li>
+                <li>
+                    Memori: RAM 8 GB, ROM 256 GB..... Ukuran layar: 6.5 inci, 1080 x 2340 pixels, Super AMOLED, 90Hz Ukuran layar: 6.5 inci, 1080 x 2340 pixels, Super AMOLED, 90Hz
+                </li>
+            </ul>
+            <p class="poppins-semibold text-danger show-more" onclick="toggleText()">Lihat Selengkapnya</p>
+            </div>
+
+            <hr>
+            <p class="poppins-regular" style="color: #000000">Pilih Spesifikasi</p>
+
+            <div class="d-flex gap-3">
+                @foreach ($prd['spec'] as $index => $spec)
+                    <button data-index="{{ $index }}" id="spec-btn-{{ $index }}" class="btn spec-btn inactiv-spec poppins-regular rounded-pill">{{ $spec['spec_name'] }}</button>
+                    
+                    @endforeach
+            </div>
+        @endforeach
         <hr>
         <p class="poppins-regular">Pilih Varian Warna</p>
         <div class="d-flex justify-content-start gap-2">
-            <div class="color-circle active-color-circle" style="background-color: #F9D423;"></div>
-            <div class="color-circle" style="background-color: #4CAF50;"></div>
-            <div class="color-circle" style="background-color: #3F51B5;"></div>
-            <div class="color-circle" style="background-color: #BDBDBD;"></div>
+            <div class="color-container " id="color-container">
+                {{-- <div class="d-flex justify-content-start gap-2 color-list" id="color-list-{{ $index }}"
+                    style="display: {{ $index == 0 ? 'flex' : 'none' }};">
+                    @foreach ($spec['col'] as $col)
+                        <img src="{{ asset('images/color/' . $col['color_image'])}}" alt="{{ $col['color_name'] }}">
+                    @endforeach 
+                {{-- </div> --}}
+            </div>
         </div>
         
         <hr>
@@ -346,17 +374,123 @@
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>
 <script>
-function changeImage(element) {
-            var mainImage = document.getElementById('main-image');
-            mainImage.src = element.src;
-            mainImage.alt = element.alt;
 
-            var thumbnails = document.querySelectorAll('.thumbnail-img');
-            thumbnails.forEach(function(thumbnail) {
-                thumbnail.classList.remove('active-thumbnail');
+</script>
+<script >  
+    
+    var imageUrl  = "{{ asset('images/color/') }}";  
+    document.addEventListener("DOMContentLoaded", function() {
+        const listItems = document.querySelectorAll('#spec-list li');
+        const showMoreText = document.querySelector('.show-more');
+
+        listItems.forEach(item => {
+            const words = item.textContent.trim().split(/\s+/);
+            if (words.length > 20) {
+                const visibleText = words.slice(0, 10).join(' ');
+                const hiddenText = words.slice(10).join(' ');
+                item.innerHTML = `${visibleText}<span class="hidden-text">${hiddenText}</span>`;
+                showMoreText.style.display = 'block';
+            }
+        });
+
+        const specButtons = document.querySelectorAll('.spec-btn.inactiv-spec');
+        const product = @json($product);
+        const colorContainer = document.querySelector('#color-container');
+
+        if (specButtons.length > 0) {
+            specButtons[0].classList.remove('inactiv-spec'); 
+            specButtons[0].classList.add('activ-spec');
+            colorContainer.innerHTML = '';
+
+            const spec = product[0].spec[0];
+            spec.col.forEach(color => {
+                const img = document.createElement('img');
+                img.src = imageUrl+'/'+color.color_image;
+                img.alt = color.color_name;
+                colorContainer.appendChild(img);
             });
 
-            element.classList.add('active-thumbnail');
         }
+
+        // Color spec 
+        specButtons.forEach(function(button, index) {
+            button.addEventListener('click', function() {
+                colorContainer.innerHTML = '';
+
+                const spec = product[0].spec[index];
+                spec.col.forEach(color => {
+                    const img = document.createElement('img');
+                    img.src = imageUrl+'/'+color.color_image;
+                    console.log(img.src);
+                    img.alt = color.color_name;
+                    img.style.marginRight = '8px'; 
+                    colorContainer.appendChild(img);
+                });
+                specButtons.forEach(b => {
+                    b.classList.remove('activ-spec');
+                    b.classList.add('inactiv-spec');
+                });
+
+                this.classList.remove('inactiv-spec');
+                this.classList.add('activ-spec');
+            });
+        });
+    });
+
+        function toggleText() {
+            const hiddenTexts = document.querySelectorAll('.hidden-text');
+            const showMoreText = document.querySelector('.show-more');
+            hiddenTexts.forEach(item => {
+                if (item.style.display === 'none' || item.style.display === '') {
+                    item.style.display = 'inline';
+                    showMoreText.textContent = 'Lihat Lebih Sedikit';
+                } else {
+                    item.style.display = 'none';
+                    showMoreText.textContent = 'Lihat Selengkapnya';
+                }
+            });
+        }
+    function changeImage(element) {
+        var mainImage = document.getElementById('main-image');
+        mainImage.src = element.src;
+        mainImage.alt = element.alt;
+
+        var thumbnails = document.querySelectorAll('.thumbnail-img');
+        thumbnails.forEach(function(thumbnail) {
+            thumbnail.classList.remove('active-thumbnail');
+        });
+        element.classList.add('active-thumbnail');
+    }
+
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     const listItems = document.querySelectorAll('#spec-list li');
+    //     const showMoreText = document.querySelector('.show-more');
+
+    //     listItems.forEach(item => {
+    //         const words = item.textContent.split(' ');
+    //         if (words.length > 20) {
+    //             const visibleText = words.slice(0, 10).join(' ');
+    //             const hiddenText = words.slice(10).join(' ');
+    //             item.innerHTML = `${visibleText}<span class="hidden-text" style="display:none;"> ${hiddenText}</span>`;
+    //             showMoreText.style.display = 'block';
+    //         }
+    //     });
+    // });
+
+    // function toggleText() {
+    //     const hiddenTexts = document.querySelectorAll('.hidden-text');
+    //     const showMoreText = document.querySelector('.show-more');
+    //     hiddenTexts.forEach(item => {
+    //         if (item.style.display === 'none' || item.style.display === '') {
+    //             item.style.display = 'inline';
+    //             showMoreText.textContent = 'Lihat Lebih Sedikit';
+    //         } else {
+    //             item.style.display = 'none';
+    //             showMoreText.textContent = 'Lihat Selengkapnya';
+    //         }
+    //     });
+    // }
 </script>
+
+
 @endpush
