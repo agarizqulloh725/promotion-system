@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\v1\api\FeController;
 use App\Http\Controllers\v1\api\AuthController;
 use App\Http\Controllers\v1\api\UserController;
 use App\Http\Controllers\v1\api\BrandController;
@@ -26,6 +27,9 @@ Route::prefix('v1')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('me', [AuthController::class, 'userCheck'])->middleware('auth:sanctum');
+
+    Route::get('get-brand', [FeController::class, 'getBrand']);
+    Route::get('get-products', [FeController::class, 'getProduct']);
 
     Route::prefix('admin')->group(function () {
         Route::middleware('auth:sanctum')->group(function () {
