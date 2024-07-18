@@ -72,6 +72,11 @@
                         <label for="productTokopediaLink">Tokopedia Link</label>
                         <input type="url" class="form-control" id="productTokopediaLink" placeholder="Enter Tokopedia URL">
                     </div>
+                    <div class="form-group">
+                        <label for="createProductImages">Product Image</label>
+                        <input type="file" class="form-control-file" id="createProductImages" multiple onchange="previewImages();">
+                        <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                    </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="productShow">
                         <label class="form-check-label" for="productShow">Show Product?</label>
@@ -268,12 +273,17 @@ $(document).ready(function() {
     formData.append('is_popular', $('#productPopular').is(':checked') ? 1 : 0);
 
     // Handle file uploads for images, if any
-    // var files = $('#createBrandImages').get(0).files;  // Ensure this ID matches your actual file input's ID
+    // var files = $('#createProductImages').get(0).files;  // Ensure this ID matches your actual file input's ID
     // if (files.length > 0) {
     //     for (var i = 0; i < files.length; i++) {
     //         formData.append('images[]', files[i]);  // Change 'image[]' to 'images[]' if your backend expects an array
     //     }
     // }
+
+    var files = $('#createProductImages')[0].files;
+    for (var i = 0; i < files.length; i++) {
+        formData.append('product_images[]', files[i]);
+    }
 
     $.ajax({
         url: '/api/v1/admin/product/', 
@@ -359,7 +369,7 @@ $(document).ready(function() {
     formData.append('is_show', $('#editProductShow').is(':checked') ? 1 : 0);
     formData.append('is_popular', $('#editProductPopular').is(':checked') ? 1 : 0);
 
-    // var files = $('#editBrandImages').get(0).files; 
+    // var files = $('#editProductImages').get(0).files; 
     // if (files.length > 0) {
     //     $.each(files, function(i, file) {
     //         formData.append('images[]', file);
@@ -496,7 +506,7 @@ function editProduct(id) {
 }
 
 function previewImages() {
-    var files = $("#createBrandImages").get(0).files;
+    var files = $("#createProductImages").get(0).files;
     $("#imagePreviewContainer").empty(); 
     if (files.length > 0) {
         Array.from(files).forEach(file => {
@@ -507,13 +517,12 @@ function previewImages() {
                 img.css({ "max-width": "150px", "height": "auto" });
                 $("#imagePreviewContainer").append(img);
             };
-
             reader.readAsDataURL(file);
         });
     }
 }
 function editPreviewImages() {
-    var files = $("#editBrandImages").get(0).files; 
+    var files = $("#editProductImages").get(0).files; 
     var container = $("#editImagePreviewContainer");
     container.empty(); 
 
