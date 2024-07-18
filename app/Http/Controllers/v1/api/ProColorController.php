@@ -60,6 +60,22 @@ class ProColorController extends Controller
             }
 
             $color = ProductColor::create($validatedData);
+            if ($color) {
+                if ($request->hasFile('color_images')) {
+                    $images = $request->file('color_images');
+                    $imageNames = [];
+        
+                    foreach ($images as $image) {
+                        if ($image->isValid()) {
+                            $randomFileName = uniqid('colorProduct_') . '.' . $image->extension();
+                            $image->move(public_path('images/color-product'), $randomFileName);
+                            $imageNames[] = $randomFileName;
+                        }
+                    }
+                    $color->name = json_encode($imageNames);
+                    $color->save();
+                }
+            }
             $idBranch = DB::table('branch_product')->where('id',$validatedData['branch_product_id'])->first();
             $productStock = ProductStock::create([
                 'product_specification_id' => $request['product_specification_id'],

@@ -209,44 +209,56 @@ $(document).ready(function() {
         $('#createModal').modal('show');
     })
     $('#createForm').submit(function(e) {
-        e.preventDefault();
-        var categoryName = $('#categoryName').val();
-        $.ajax({
-            url: '/api/v1/admin/pro-color',
-            type: 'POST',
-            headers: {
+    e.preventDefault();
+
+    // Ambil gambar multiple dari input file
+    var files = $('#createBrandImages')[0].files;
+    var formData = new FormData();
+
+    // Tambahkan file ke FormData
+    for (var i = 0; i < files.length; i++) {
+        formData.append('color_images[]', files[i]);
+    }
+
+    // Tambahkan data lainnya ke FormData
+    formData.append('color_id', $('#createColor').val());
+    formData.append('stock', $('#amountStock').val());
+    formData.append('branch_product_id', idProd);
+    formData.append('branch_id', idBranch);
+    formData.append('product_specification_id', idSpec);
+
+    $.ajax({
+        url: '/api/v1/admin/pro-color',
+        type: 'POST',
+        headers: {
             'Authorization': 'Bearer ' + token
-            },
-            contentType: 'application/json',
-            data: JSON.stringify({
-                color_id: $('#createColor').val(),
-                stock: $('#amountStock').val(),
-                branch_product_id: idProd,
-                branch_id: idBranch,
-                product_specification_id: idSpec
-            }),
-            success: function(result) {
-                table.ajax.reload(null, false);
-                $('#createModal').modal('hide');
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Category created successfully!',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            },
-            error: function(request, msg, error) {
-                console.log('Error creating category:', request.responseJSON.error);
-                $('#createModal').modal('hide');
-                Swal.fire({
-                    title: 'Error!',
-                    text: request.responseJSON.error,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        });
+        },
+        processData: false,  // penting untuk mematikan proses default
+        contentType: false,  // penting untuk mematikan jenis konten default
+        data: formData,
+        success: function(result) {
+            table.ajax.reload(null, false);
+            $('#createModal').modal('hide');
+            Swal.fire({
+                title: 'Success!',
+                text: 'Category created successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        },
+        error: function(request, msg, error) {
+            console.log('Error creating category:', request.responseJSON.error);
+            $('#createModal').modal('hide');
+            Swal.fire({
+                title: 'Error!',
+                text: request.responseJSON.error,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     });
+});
+
 
     $('#dataTable').on('click', '.delete-btn', function() {
         var categoryId = $(this).data('id');
@@ -349,6 +361,23 @@ function editStock(id) {
             });
         }
     });
+}
+function previewImages() {
+    var files = $("#createBrandImages").get(0).files;
+    $("#imagePreviewContainer").empty(); 
+    if (files.length > 0) {
+        Array.from(files).forEach(file => {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var img = $('<img>').attr("src", e.target.result);
+                img.css({ "max-width": "150px", "height": "auto" });
+                $("#imagePreviewContainer").append(img);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
 }
 
 </script>
