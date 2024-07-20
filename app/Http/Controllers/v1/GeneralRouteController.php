@@ -73,7 +73,10 @@ class GeneralRouteController extends Controller
     public function adminShowStockProduct($branch,$product){
         $specification = Specification::all();
         $totalStock = DB::table('product_stock')->where('product_id', $product)->where('branch_id',$branch)->sum('stock');
-        return view('v1.backend.pages.stock.specification', compact(['specification', 'totalStock']));
+        $branch = DB::table('branch')->select('name')->where('id', $branch)->first();
+        $product = DB::table('product')->select('name')->where('id', $product)->first();
+        return view('v1.backend.pages.stock.specification', compact(['specification', 'totalStock', 'product', 'branch']));
+
     }
     public function adminShowStockSpecification($branch,$product,$specification){
         // dd($specification);
@@ -81,7 +84,11 @@ class GeneralRouteController extends Controller
         $productt = Product::all();
         $color = Color::all();
         $totalStock = DB::table('product_stock')->where('product_id', $product)->where('product_specification_id', $specification)->sum('stock');
-        return view('v1.backend.pages.stock.color', compact(['specificationn','productt','color','totalStock']));
+        $branch = DB::table('branch')->select('name')->where('id', $branch)->first();
+        $prd = DB::table('product')->select('name')->where('id', $product)->first();
+        $spec = DB::table('specification')->select('name')->where('id', $specification)->first();
+
+        return view('v1.backend.pages.stock.color', compact(['specificationn','productt','color','totalStock', 'branch', 'prd', 'spec']));
     }
     public function adminProduct(){
         $category = ProductCategory::all();

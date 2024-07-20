@@ -13,7 +13,7 @@
     <div class="page-header">
         <div>
             <h2 >Color</h2>
-            <h5>Iphone 13 Pro Max 2024</h5>
+            <h5>{{$branch->name}} / {{$prd->name}} / {{$spec->name}}</h5>
         </div>
         <div class="d-flex justify-content-end">
             <button type="button" id="btnCreate" class="btn btn-primary mb-2">
@@ -21,6 +21,25 @@
             </button>        
         </div>
     </div>
+
+    <!-- Back button at the top -->
+    <div class="d-flex justify-content-start">
+        <div class="btn-index mb-2">
+            <a href="{{ route('stockAdmin') }}" class="btn btn-primary mr-3">
+                <i class="fa fa-arrow-left"></i> Back to stock
+            </a>
+        </div>
+
+        <div class="btn-back mb-2" style="margin-left: 4px">
+
+            <button type="button" class="btn btn-secondary ml-2" onclick="window.history.back();">
+                <i class="fa fa-arrow-left"></i> Back
+            </button>
+        </div>
+
+    </div>
+
+
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">

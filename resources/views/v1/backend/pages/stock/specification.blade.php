@@ -12,7 +12,7 @@
     <div class="page-header">
         <div>
             <h2 >Stock Product Specification</h2>
-            <h5>Iphone 13 Pro Max 2024</h5>
+            <h5>{{$branch->name}} / {{$product->name}}</h5>
         </div>
         <div class="d-flex justify-content-end">
             <button type="button" id="btnCreate" class="btn btn-primary mb-2">
@@ -20,6 +20,14 @@
             </button>        
         </div>
     </div>
+
+    <!-- Back button at the top -->
+    <div class="d-flex justify-content-start mb-3">
+    <button type="button" class="btn btn-secondary" onclick="window.history.back();">
+        <i class="fa fa-arrow-left"></i> Back
+    </button>
+    </div>
+    
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">

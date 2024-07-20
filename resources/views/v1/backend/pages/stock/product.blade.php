@@ -23,6 +23,14 @@
             </button>        
         </div>
     </div>
+
+    <!-- Back button at the top -->
+    <div class="d-flex justify-content-start mb-3">
+        <button type="button" class="btn btn-secondary" onclick="window.history.back();">
+            <i class="fa fa-arrow-left"></i> Back
+        </button>
+    </div>
+
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
