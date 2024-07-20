@@ -31,6 +31,8 @@ class FeController extends Controller
     public function getProduct(Request $request) {
         try {
             $query = Product::where('is_show', 1);
+
+            // return response()->json($query);
     
             $years = $request->has('years') ? explode(',', $request->years) : [];
             $brands = $request->has('brands') ? explode(',', $request->brands) : [];

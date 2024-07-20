@@ -66,7 +66,9 @@ class GeneralRouteController extends Controller
     public function adminShowStockBranch($branch){
         $product = Product::all();
         $totalStock = DB::table('product_stock')->where('branch_id', $branch)->sum('stock');
-        return view('v1.backend.pages.stock.product',compact(['product', 'totalStock']));
+        $branch =  DB::table('branch')->select('branch.name')->where('id', $branch)->first();
+        // return $branch;
+        return view('v1.backend.pages.stock.product',compact(['product','totalStock','branch']));
     }
     public function adminShowStockProduct($branch,$product){
         $specification = Specification::all();

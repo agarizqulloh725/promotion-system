@@ -13,11 +13,13 @@
     <div class="page-header">
         <div>
             <h2 >Stock Product Cabang</h2>
-            <h5>Iphone 13 Pro Max 2024</h5>
+            {{-- @foreach ($branch as $item)     --}}
+            <h5>{{ $branch->name }}</h5>
+            {{-- @endforeach --}}
         </div>
         <div class="d-flex justify-content-end">
             <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-                <i class="fa fa-plus"></i> Tambah Kategori
+                <i class="fa fa-plus"></i> Tambah Product
             </button>        
         </div>
     </div>
