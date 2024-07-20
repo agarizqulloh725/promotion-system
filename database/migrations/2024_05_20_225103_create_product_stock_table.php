@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreign('product_size_id')->references('id')->on('product_size')->onDelete('no action');
             $table->foreign('product_id')->references('id')->on('product')->onDelete('no action');
             $table->foreign('branch_id')->references('id')->on('branch')->onDelete('no action');
-            $table->foreign('branch_product_id')->references('id')->on('branch')->onDelete('no action');
+            $table->foreign('branch_product_id')->references('id')->on('branch_product')->onDelete('no action');
         });
     }
 
