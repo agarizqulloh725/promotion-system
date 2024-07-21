@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('product_promo', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('brand_id')->nullable();
             $table->string('name')->nullable();
             $table->decimal('discount', 8, 2)->nullable();
             $table->decimal('cashback', 8, 2)->nullable();

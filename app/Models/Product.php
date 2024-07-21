@@ -13,6 +13,15 @@ class Product extends Model
     protected $fillable = [
         'name', 'slug', 'description', 'price', 
         'link_video', 'link_tokopedia', 
-        'is_show', 'is_popular'
+        'is_show', 'is_popular','brand'
     ];
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+    public function promo()
+    {
+        return $this->hasOne(ProductPromo::class);
+    }
 }
