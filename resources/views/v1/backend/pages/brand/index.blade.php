@@ -10,11 +10,11 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h2 class="page-title"> Brand Produk </h2>
+        <h2 class="page-title"> Brand Product </h2>
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-            <i class="fa fa-plus"></i> Tambah Brand
+            <i class="fa fa-plus"></i> Create Brand
         </button>        
     </div>
     <div class="row">
@@ -25,8 +25,8 @@
                 <thead>
                     <tr>
                     <th> No </th>
-                    <th> Type Kategori </th>
-                    <th> Name Brand</th>
+                    <th> Category</th>
+                    <th> Brand</th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -42,7 +42,7 @@
   <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="createModalLabel">Create New Brand</h5>
+              <h5 class="modal-title" id="createModalLabel">Create Brand</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
@@ -50,11 +50,11 @@
           <div class="modal-body">
               <form id="createForm">
                   <div class="form-group">
-                      <label for="createBrandName">Name Brand</label>
-                      <input type="text" class="form-control" id="createBrandName" placeholder="Enter Brand name">
+                      <label for="createBrandName" class="mb-2">Brand</label>
+                      <input type="text" class="form-control" id="createBrandName" placeholder="Name">
                   </div>
                   <div class="form-group">
-                      <label for="createBrandCategory">Category</label>
+                      <label for="createBrandCategory" class="mb-2 pt-3">Category</label>
                       <select class="form-control" id="createBrandCategory">
                           @foreach ($category as $cat)
                               <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -62,15 +62,15 @@
                       </select>
                   </div>
                   <div class="form-group">
-                      <label for="createBrandDescription">Deskripsi Brand</label>
-                      <input type="text" class="form-control" id="createBrandDescription" placeholder="Masukan Deskripsi">
+                      <label for="createBrandDescription" class="mb-2 pt-3">Description</label>
+                      <input type="text" class="form-control" id="createBrandDescription" placeholder="Description">
                   </div>
-                  <div class="form-group">
-                      <label for="createBrandImages">Brand Image</label>
+                  <div class="form-group pt-3">
+                      <label for="createBrandImages">Image</label>
                       <input type="file" class="form-control-file" id="createBrandImages" multiple onchange="previewImages();">
                       <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group pt-3">
                     <label class="form-check-label mx-auto" for="createIsShow">Show this brand?</label>
                     <input type="checkbox" class="form-check-input mx-auto" id="createIsShow">
                   </div>
@@ -97,11 +97,11 @@
               <form id="showForm">
                   <input type="hidden" id="showId" value="">
                   <div class="form-group">
-                      <label for="showName">Nama Brand</label>
-                      <input type="text" class="form-control" id="showName" placeholder="Masukan Nama">
+                      <label for="showName" class="mb-2">Brand</label>
+                      <input type="text" class="form-control" id="showName" placeholder="Name">
                   </div>
                   <div class="form-group">
-                      <label for="showBrandCategory">Category</label>
+                      <label for="showBrandCategory" class="mb-2 pt-3">Category</label>
                       <select class="form-control" id="showBrandCategory">
                           @foreach ($category as $cat)
                               <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -110,7 +110,7 @@
                   </div>
                   <div class="form-group">
                       <label for="showDescription">Description</label>
-                      <input type="text" class="form-control" id="showDescription" placeholder="Masukan deskripsi">
+                      <input type="text" class="form-control" id="showDescription" placeholder="Description">
                   </div>
                   <div class="form-group">
                       <label for="showImagePreviewContainer">Brand Image</label>
@@ -140,11 +140,11 @@
               <form id="editForm">
                   <input type="hidden" id="editId" value="">
                   <div class="form-group">
-                      <label for="editName">Nama Brand</label>
-                      <input type="text" class="form-control" id="editName" placeholder="Masukan Nama">
+                      <label for="editName" class="mb-2">Brand</label>
+                      <input type="text" class="form-control" id="editName" placeholder="name">
                   </div>
                   <div class="form-group">
-                      <label for="editBrandCategory">Category</label>
+                      <label for="editBrandCategory" class="mb-2 pt-3">Category</label>
                       <select class="form-control" id="editBrandCategory">
                           @foreach ($category as $cat)
                               <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -152,19 +152,19 @@
                       </select>
                   </div>
                   <div class="form-group">
-                      <label for="editDescription">Description</label>
-                      <input type="text" class="form-control" id="editDescription" placeholder="Masukan deskripsi">
+                      <label for="editDescription" class="mb-2 pt-3">Description</label>
+                      <input type="text" class="form-control" id="editDescription" placeholder="Descrition">
                   </div>
                   <div class="form-group">
-                      <label for="editBrandImages">Brand Image</label>
+                      <label for="editBrandImages" class="mb-2 pt-3">Image</label>
                       <input type="file" class="form-control-file" id="editBrandImages" multiple onchange="editPreviewImages();">
                       <div id="editImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group pt-2">
                     <label class="form-check-label mx-auto" for="editIsShow">Show this brand?</label>
                     <input type="checkbox" class="form-check-input mx-auto" id="editIsShow">
                 </div>                
-                  <div class="modal-footer">
+                  <div class="modal-footer pt-3">
                       <button type="submit" class="btn btn-primary">Update</button>
                       <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
                   </div>

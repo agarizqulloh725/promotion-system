@@ -10,11 +10,11 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h2 class="page-title"> Kategori Produk </h2>
+        <h2 class="page-title"> Product Category </h2>
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-            <i class="fa fa-plus"></i> Tambah Kategori
+            <i class="fa fa-plus"></i> Create Category
         </button>        
     </div>
     <div class="row">
@@ -41,7 +41,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Category</h5>
+                <h5 class="modal-title" id="createModalLabel">Create Category</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -49,11 +49,11 @@
             <div class="modal-body">
                 <form id="createForm">
                     <div class="form-group">
-                        <label for="categoryName">Name Kategori</label>
+                        <label for="categoryName" class="mb-2">Category Name</label>
                         <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
                     </div>
-                    <div class="form-group">
-                        <label for="categoryDescription">Deskripsi Kategori</label>
+                    <div class="form-group pt-3 mb-3">
+                        <label for="categoryDescription" class="mb-2">Category Description</label>
                         <input type="text" class="form-control" id="categoryDescription" placeholder="Masukan Deskripsi">
                     </div>
                     <div class="modal-footer">
@@ -103,11 +103,11 @@
                 <form id="editForm">
                     <input type="hidden" id="editId" value="">
                     <div class="form-group">
-                        <label for="editName">Nama Kategori</label>
+                        <label for="editName" class="mb-2">Category Name</label>
                         <input type="text" class="form-control" id="editName" placeholder="Masukan Nama">
                     </div>
-                    <div class="form-group">
-                        <label for="editDescription">Description</label>
+                    <div class="form-group mb-3">
+                        <label for="editDescription" class="mb-2 pt-3">Description</label>
                         <input type="text" class="form-control" id="editDescription" placeholder="Masukan deskripsi">
                     </div>
                     <div class="modal-footer">
