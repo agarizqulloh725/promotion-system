@@ -10,11 +10,11 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h2 class="page-title"> Kategori Color </h2>
+        <h2 class="page-title"> Color </h2>
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-            <i class="fa fa-plus"></i> Tambah Kategori
+            <i class="fa fa-plus"></i> Create Color
         </button>        
     </div>
     <div class="row">
@@ -25,7 +25,7 @@
                 <thead>
                     <tr>
                     <th> No </th>
-                    <th> name </th>
+                    <th> Name </th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -41,7 +41,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Category</h5>
+                <h5 class="modal-title" id="createModalLabel">Create Color</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -49,11 +49,11 @@
             <div class="modal-body">
                 <form id="createForm">
                     <div class="form-group">
-                        <label for="nameSpesification">Name</label>
-                        <input type="text" class="form-control" id="nameSpesification" placeholder="Enter category name">
+                        <label for="nameSpesification" class="mb-2">Name</label>
+                        <input type="text" class="form-control" id="nameSpesification" placeholder="Color">
                     </div>
-                    <div class="form-group">
-                        <label for="createBrandImages">Brand Image</label>
+                    <div class="form-group pt-3 mb-2">
+                        <label for="createBrandImages">Color Image</label>
                         <input type="file" class="form-control-file" id="createBrandImages" multiple onchange="previewImages();">
                         <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
                     </div>
@@ -70,7 +70,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="showModalLabel">Show Category</h5>
+                <h5 class="modal-title" id="showModalLabel">Color Detail</h5>
                 <button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -79,11 +79,11 @@
                 <form id="showForm">
                     <input type="hidden" id="showId" value="">
                     <div class="form-group">
-                        <label for="showName">Nama Kategori</label>
-                        <input type="text" class="form-control" id="showName" placeholder="Masukan Nama">
+                        <label for="showName" class="mb-2">Name</label>
+                        <input type="text" class="form-control" id="showName" placeholder="Name">
                     </div>
-                    <div class="form-group">
-                        <label for="showImagePreviewContainer">Brand Image</label>
+                    <div class="form-group pt-3 mb-2">
+                        <label for="showImagePreviewContainer">Color Image</label>
                         <div id="showImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
                     </div>
                 </form>
@@ -95,7 +95,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+                <h5 class="modal-title" id="editModalLabel">Edit Color</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -104,11 +104,11 @@
                 <form id="editForm">
                     <input type="hidden" id="editId" value="">
                     <div class="form-group">
-                        <label for="editName">Nama Kategori</label>
-                        <input type="text" class="form-control" id="editName" placeholder="Masukan Nama">
+                        <label for="editName" class="mb-2">Name</label>
+                        <input type="text" class="form-control" id="editName" placeholder="Name">
                     </div>
-                    <div class="form-group">
-                        <label for="editBrandImages">Brand Image</label>
+                    <div class="form-group pt-3 mb-2">
+                        <label for="editBrandImages">Color Image</label>
                         <input type="file" class="form-control-file" id="editBrandImages" multiple onchange="editPreviewImages();">
                         <div id="editImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
                     </div>

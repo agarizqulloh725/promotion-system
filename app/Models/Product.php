@@ -15,4 +15,13 @@ class Product extends Model
         'link_video', 'link_tokopedia', 
         'is_show', 'is_popular'
     ];
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+    public function promo()
+    {
+        return $this->hasOne(ProductPromo::class);
+    }
 }

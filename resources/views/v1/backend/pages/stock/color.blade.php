@@ -26,7 +26,7 @@
     <div class="d-flex justify-content-start">
         <div class="btn-index mb-2">
             <a href="{{ route('stockAdmin') }}" class="btn btn-primary mr-3">
-                <i class="fa fa-arrow-left"></i> Back to stock
+                <i class="fa fa-arrow-left"></i> Back to stock index
             </a>
         </div>
 
@@ -361,7 +361,7 @@ function editStock(id) {
     $.ajax({
         url: `/api/v1/admin/pro-stock/?idprocolor=${id}`,
         type: 'GET',
-        headers: {
+        headers: { 
                 'Authorization': 'Bearer ' + token
             },
         contentType: 'application/json',

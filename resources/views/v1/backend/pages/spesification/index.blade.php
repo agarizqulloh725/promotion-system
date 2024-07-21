@@ -10,11 +10,11 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h2 class="page-title"> Kategori Produk </h2>
+        <h2 class="page-title"> Spesification </h2>
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-            <i class="fa fa-plus"></i> Tambah Kategori
+            <i class="fa fa-plus"></i> Create Spesification
         </button>        
     </div>
     <div class="row">
@@ -25,7 +25,7 @@
                 <thead>
                     <tr>
                     <th> No </th>
-                    <th> name </th>
+                    <th> Name </th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -41,16 +41,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Category</h5>
+                <h5 class="modal-title" id="createModalLabel">Create Spesification</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form id="createForm">
-                    <div class="form-group">
-                        <label for="nameSpesification">Name</label>
-                        <input type="text" class="form-control" id="nameSpesification" placeholder="Enter category name">
+                    <div class="form-group mb-3">
+                        <label for="nameSpesification" class="mb-2">Spesification Name</label>
+                        <input type="text" class="form-control" id="nameSpesification" placeholder="Name">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -65,7 +65,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="showModalLabel">Show Category</h5>
+                <h5 class="modal-title" id="showModalLabel">Spesification Detail</h5>
                 <button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -73,9 +73,9 @@
             <div class="modal-body">
                 <form id="showForm">
                     <input type="hidden" id="showId" value="">
-                    <div class="form-group">
-                        <label for="showName">Nama Kategori</label>
-                        <input type="text" class="form-control" id="showName" placeholder="Masukan Nama">
+                    <div class="form-group mb-3">
+                        <label for="showName" class="mb-2">Spesification Name</label>
+                        <input type="text" class="form-control" id="showName" placeholder="Spesification ">
                     </div>
                 </form>
             </div>
@@ -86,7 +86,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+                <h5 class="modal-title" id="editModalLabel">Edit Spesification</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -94,8 +94,8 @@
             <div class="modal-body">
                 <form id="editForm">
                     <input type="hidden" id="editId" value="">
-                    <div class="form-group">
-                        <label for="editName">Nama Kategori</label>
+                    <div class="form-group mb-3 ">
+                        <label for="editName" class="mb-2" >Spesification Name</label>
                         <input type="text" class="form-control" id="editName" placeholder="Masukan Nama">
                     </div>
                     <div class="modal-footer">

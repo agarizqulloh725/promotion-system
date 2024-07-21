@@ -139,7 +139,7 @@ class AuthController extends Controller
     
         return response()->json([
             'status' => 'success',
-            'user' => bcrypt($user->id),
+            'user' => $user,
             'role' => bcrypt($role->id),
             'permission' => $permission->name
         ]);

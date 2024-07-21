@@ -43,6 +43,40 @@
     <script src={{asset('backend/assets/js/todolist.js')}}></script>
     <script src={{asset('backend/assets/js/jquery.cookie.js')}}></script>
     <script src={{asset('backend/assets/js/dashboard.js')}}></script>
+    <script src="{{ asset('utils.js') }}"></script>
+    <script>
+        const tokenn = getCookieValue('access_token');
+        function fetchMe() {
+            $.ajax({
+                url: '/api/v1/me/',
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + tokenn
+                },
+                contentType: 'application/json',
+                success: function(response) {
+
+                  const profileNames = document.querySelectorAll('.nameProfile');
+                  const userName = response.user.name;
+                  profileNames.forEach(element => {
+                      element.textContent = userName;
+                  });
+                  
+                  const profilepermission = document.querySelectorAll('.roleUser');
+                  const role = response.permission;
+                  profilepermission.forEach(element => {
+                      element.textContent = role;
+                  });
+
+                },
+                error: function(error) {
+                    console.log('Error fetching product:', error);
+                }
+            });
+        }
+
+      fetchMe();
+    </script>
     @stack('script')
 </body>
 </html>

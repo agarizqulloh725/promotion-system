@@ -10,11 +10,11 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h2 class="page-title"> Promo Produk </h2>
+        <h2 class="page-title"> Promo </h2>
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-            <i class="fa fa-plus"></i> Tambah Promo
+            <i class="fa fa-plus"></i> Create Promo
         </button>        
     </div>
     <div class="row">
@@ -26,7 +26,7 @@
                     <tr>
                     <th> No </th>
                     <th> Name </th>
-                    <th> Start promo</th>
+                    <th> Start Date</th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -42,55 +42,64 @@
   <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="createModalLabel">Create New Promo</h5>
+              <h5 class="modal-title" id="createModalLabel">Create Promo</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
           <div class="modal-body">
-              <form id="createForm">
-                <div class="form-group">
-                    <label for="createPromoName">Name Promo</label>
-                    <input type="text" class="form-control" id="createPromoName" placeholder="Enter Promo name">
+            <form id="createForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="createPromoName" class="mb-2">Name</label>
+                            <input type="text" class="form-control" id="createPromoName" placeholder="Promo Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="createPromoDescription" class="mb-2 pt-3">Description</label>
+                            <input type="text" class="form-control" id="createPromoDescription" placeholder="Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="createStartTime" class="mb-2 pt-3">Start Time</label>
+                            <input type="datetime-local" class="form-control" id="createStartTime">
+                        </div>
+                        <div class="form-group">
+                            <label for="createEndTime" class="mb-2 pt-3">End Time</label>
+                            <input type="datetime-local" class="form-control" id="createEndTime">
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="createDiscount" class="mb-2">Discount</label>
+                            <input type="number" step="0.01" class="form-control" id="createDiscount" placeholder="Discount">
+                        </div>
+                        <div class="form-group">
+                            <label for="createCashback" class="mb-2 pt-3">Cashback</label>
+                            <input type="number" step="0.01" class="form-control" id="createCashback" placeholder="Cashback">
+                        </div>
+                        <div class="form-group">
+                            <label for="createBonus" class="mb-2 pt-3">Bonus</label>
+                            <input type="number" step="0.01" class="form-control" id="createBonus" placeholder="Bonus">
+                        </div>
+                        <div class="form-group pt-3">
+                            <label for="createPromoImages">Image</label>
+                            <input type="file" class="form-control-file" id="createPromoImages" multiple onchange="previewImages();">
+                            <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                        </div>
+                        <div class="form-group pt-3 mb-2">
+                            <label class="form-check-label mx-auto" for="createIsShow">Show this Promo?</label>
+                            <input type="checkbox" class="form-check-input mx-auto" id="createIsShow">
+                        </div>
+                        
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="createPromoDescription">Deskripsi Promo</label>
-                    <input type="text" class="form-control" id="createPromoDescription" placeholder="Masukan Deskripsi">
+                
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
                 </div>
-                <div class="form-group">
-                    <label for="createStartTime">Start Time</label>
-                    <input type="datetime-local" class="form-control" id="createStartTime">
-                </div>
-                <div class="form-group">
-                    <label for="createEndTime">End Time</label>
-                    <input type="datetime-local" class="form-control" id="createEndTime">
-                </div>
-                <div class="form-group">
-                    <label for="createDiscount">Discount</label>
-                    <input type="number" step="0.01" class="form-control" id="createDiscount" placeholder="Enter discount">
-                </div>
-                <div class="form-group">
-                    <label for="createCashback">Cashback</label>
-                    <input type="number" step="0.01" class="form-control" id="createCashback" placeholder="Enter cashback">
-                </div>
-                <div class="form-group">
-                    <label for="createBonus">Bonus</label>
-                    <input type="number" step="0.01" class="form-control" id="createBonus" placeholder="Enter bonus">
-                </div>
-                <div class="form-group">
-                    <label for="createPromoImages">Promo Image</label>
-                    <input type="file" class="form-control-file" id="createPromoImages" multiple onchange="previewImages();">
-                    <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
-                </div>
-                <div class="form-group">
-                    <label class="form-check-label mx-auto" for="createIsShow">Show this Promo?</label>
-                    <input type="checkbox" class="form-check-input mx-auto" id="createIsShow">
-                </div>
-                  <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">Save</button>
-                      <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
-                  </div>
-              </form>
+            </form>
           </div>
       </div>
   </div>
@@ -100,37 +109,60 @@
   <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="showModalLabel">Edit Promo</h5>
+              <h5 class="modal-title" id="showModalLabel">Promo Detail</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
           <div class="modal-body">
               <form id="showForm">
-                  <input type="hidden" id="showId" value="">
-                  <div class="form-group">
-                      <label for="showName">Nama Promo</label>
-                      <input type="text" class="form-control" id="showName" placeholder="Masukan Nama">
-                  </div>
-                  <div class="form-group">
-                      <label for="showPromoCategory">Category</label>
-                      <select class="form-control" id="showPromoCategory">
-                          @foreach ($category as $cat)
-                              <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                          @endforeach
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="showDescription">Description</label>
-                      <input type="text" class="form-control" id="showDescription" placeholder="Masukan deskripsi">
-                  </div>
-                  <div class="form-group">
-                      <label for="showImagePreviewContainer">Promo Image</label>
-                      <div id="showImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-check-label mx-auto" for="showIsShow">Show this Promo?</label>
-                    <input type="checkbox" class="form-check-input mx-auto" id="showIsShow">
+                <input type="hidden" id="showId" value="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="showName" class="mb-2">Name</label>
+                            <input type="text" class="form-control" id="showName" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="showDescription" class="mb-2 pt-3">Description</label>
+                            <input type="text" class="form-control" id="showDescription" placeholder="Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="showStartTime" class="mb-2 pt-3">Start Time</label>
+                            <input type="datetime-local" class="form-control" id="showStartTime">
+                        </div>
+                        <div class="form-group">
+                            <label for="showEndTime" class="mb-2 pt-3">End Time</label>
+                            <input type="datetime-local" class="form-control" id="showEndTime">
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="showDiscount" class="mb-2">Discount</label>
+                            <input type="number" step="0.01" class="form-control" id="showDiscount" placeholder="Discount">
+                        </div>
+                        <div class="form-group">
+                            <label for="showCashback" class="mb-2 pt-3">Cashback</label>
+                            <input type="number" step="0.01" class="form-control" id="showCashback" placeholder="Cashback">
+                        </div>
+                        <div class="form-group">
+                            <label for="showBonus" class="mb-2 pt-3">Bonus</label>
+                            <input type="number" step="0.01" class="form-control" id="showBonus" placeholder="Bonus">
+                        </div>
+                        <div class="form-group pt-3" >
+                            <label for="showPromoImages">Image</label>
+                            <input type="file" class="form-control-file" id="showPromoImages" multiple onchange="showPreviewImages();">
+                            <div id="showImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                        </div>
+                        <div class="form-group pt-3 mb-2">
+                          <label class="form-check-label mx-auto" for="showIsShow">Show this Promo?</label>
+                          <input type="checkbox" class="form-check-input mx-auto" id="showIsShow">
+                      </div>
+                        
+                    </div>
+
                 </div>                
               </form>
           </div>
@@ -140,7 +172,7 @@
 
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editModalLabel">Edit Promo</h5>
@@ -151,43 +183,53 @@
             <div class="modal-body">
                 <form id="editForm">
                     <input type="hidden" id="editId" value="">
-                    <div class="form-group">
-                        <label for="editName">Nama Promo</label>
-                        <input type="text" class="form-control" id="editName" placeholder="Masukan Nama">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="editName" class="mb-2">Name</label>
+                                <input type="text" class="form-control" id="editName" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="editDescription" class="mb-2 pt-3">Description</label>
+                                <input type="text" class="form-control" id="editDescription" placeholder="Description">
+                            </div>
+                            <div class="form-group">
+                                <label for="editStartTime" class="mb-2 pt-3">Start Time</label>
+                                <input type="datetime-local" class="form-control" id="editStartTime">
+                            </div>
+                            <div class="form-group">
+                                <label for="editEndTime" class="mb-2 pt-3">End Time</label>
+                                <input type="datetime-local" class="form-control" id="editEndTime">
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="editDiscount" class="mb-2">Discount</label>
+                                <input type="number" step="0.01" class="form-control" id="editDiscount" placeholder="Discount">
+                            </div>
+                            <div class="form-group">
+                                <label for="editCashback" class="mb-2 pt-3">Cashback</label>
+                                <input type="number" step="0.01" class="form-control" id="editCashback" placeholder="Cashback">
+                            </div>
+                            <div class="form-group">
+                                <label for="editBonus" class="mb-2 pt-3">Bonus</label>
+                                <input type="number" step="0.01" class="form-control" id="editBonus" placeholder="Bonus">
+                            </div>
+                            <div class="form-group pt-3" >
+                                <label for="editPromoImages">Image</label>
+                                <input type="file" class="form-control-file" id="editPromoImages" multiple onchange="editPreviewImages();">
+                                <div id="editImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>
+                            <div class="form-group pt-3 mb-2">
+                              <label class="form-check-label mx-auto" for="editIsShow">Show this Promo?</label>
+                              <input type="checkbox" class="form-check-input mx-auto" id="editIsShow">
+                          </div>
+                            
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="editDescription">Description</label>
-                        <input type="text" class="form-control" id="editDescription" placeholder="Masukan deskripsi">
-                    </div>
-                    <div class="form-group">
-                        <label for="editStartTime">Start Time</label>
-                        <input type="datetime-local" class="form-control" id="editStartTime">
-                    </div>
-                    <div class="form-group">
-                        <label for="editEndTime">End Time</label>
-                        <input type="datetime-local" class="form-control" id="editEndTime">
-                    </div>
-                    <div class="form-group">
-                        <label for="editDiscount">Discount</label>
-                        <input type="number" step="0.01" class="form-control" id="editDiscount" placeholder="Enter discount">
-                    </div>
-                    <div class="form-group">
-                        <label for="editCashback">Cashback</label>
-                        <input type="number" step="0.01" class="form-control" id="editCashback" placeholder="Enter cashback">
-                    </div>
-                    <div class="form-group">
-                        <label for="editBonus">Bonus</label>
-                        <input type="number" step="0.01" class="form-control" id="editBonus" placeholder="Enter bonus">
-                    </div>
-                    <div class="form-group">
-                        <label for="editPromoImages">Promo Image</label>
-                        <input type="file" class="form-control-file" id="editPromoImages" multiple onchange="editPreviewImages();">
-                        <div id="editImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-check-label mx-auto" for="editIsShow">Show this Promo?</label>
-                      <input type="checkbox" class="form-check-input mx-auto" id="editIsShow">
-                  </div>
+                  
+                    
                   <div class="modal-footer">
                       <button type="submit" class="btn btn-primary">Update</button>
                       <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
@@ -428,6 +470,13 @@ function showPromo(id) {
             $('#showId').val(response.id);
             $('#showName').val(response.name);
             $('#showDescription').val(response.description);
+            $('#showImagePreviewContainer').empty();
+            $('#showPromoCategory').val(response.product_category_id);
+            $('#showStartTime').val(response.start_time);
+            $('#showEndTime').val(response.end_time);
+            $('#showDiscount').val(response.discount);
+            $('#showCashback').val(response.cashback);
+            $('#showBonus').val(response.bonus);
             $('#showImagePreviewContainer').empty();
             $('#showPromoCategory').val(response.product_category_id);
 

@@ -10,11 +10,11 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h2 class="page-title"> Kategori Produk </h2>
+        <h2 class="page-title"> Branch Store </h2>
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-            <i class="fa fa-plus"></i> Tambah Kategori
+            <i class="fa fa-plus"></i> Create Branch
         </button>        
     </div>
     <div class="row">
@@ -25,7 +25,7 @@
                 <thead>
                     <tr>
                     <th> No </th>
-                    <th> name </th>
+                    <th> Name </th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -37,45 +37,52 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Category</h5>
+                <h5 class="modal-title" id="createModalLabel">Create Branch</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form id="createForm">
-                    <div class="form-group">
-                        <label for="name">Nama Toko</label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter category name">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Nama Cabang</label>
-                        <input type="text" class="form-control" id="branch" placeholder="Enter category name">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Alamat</label>
-                        <input type="text" class="form-control" id="address" placeholder="Enter category name">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Latitude</label>
-                        <input type="text" class="form-control" id="lat" placeholder="Enter category name">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Langtitude</label>
-                        <input type="text" class="form-control" id="lang" placeholder="Enter category name">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Whatsapp</label>
-                        <input type="text" class="form-control" id="wa" placeholder="Enter category name">
-                    </div>
-                    <div class="form-group">
-                        <label for="createBranchImages">Gambar : </label>
-                        <input type="file" class="form-control-file" id="createBranchImages" onchange="previewImages();">
-                        <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name" class="mb-2">Store Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Store">
+                            </div>
+                            <div class="form-group">
+                                <label for="branch" class="mb-2 pt-3">Branch Name</label>
+                                <input type="text" class="form-control" id="branch" placeholder="Branch">
+                            </div>
+                            <div class="form-group">
+                                <label for="address" class="mb-2 pt-3">Address</label>
+                                <input type="text" class="form-control" id="address" placeholder="Address">
+                            </div>
+                            <div class="form-group mb-2 pt-3">
+                                <label for="lat" class="mb-2">Latitude</label>
+                                <input type="text" class="form-control" id="lat" placeholder="Latitude">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lang" class="mb-2">Longitude</label>
+                                <input type="text" class="form-control" id="lang" placeholder="Longitude">
+                            </div>
+                            <div class="form-group">
+                                <label for="wa" class="mb-2 pt-3">Whatsapp</label>
+                                <input type="text" class="form-control" id="wa" placeholder="Whatsapp">
+                            </div>
+                            <div class="form-group pt-5">
+                                <label for="createBranchImages" class="mb-2">Image :</label>
+                                <input type="file" class="form-control-file" id="createBranchImages" onchange="previewImages();">
+                                <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -86,11 +93,15 @@
         </div>
     </div>
 </div>
+
+
+
+
 <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="showModalLabel">Show Category</h5>
+                <h5 class="modal-title" id="showModalLabel">Branch Detail</h5>
                 <button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -98,9 +109,44 @@
             <div class="modal-body">
                 <form id="showForm">
                     <input type="hidden" id="showId" value="">
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="showName">Nama Kategori</label>
                         <input type="text" class="form-control" id="showName" placeholder="Masukan Nama">
+                    </div> --}}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="showName" class="mb-2">Store Name</label>
+                                <input type="text" class="form-control" id="showName" placeholder="Store">
+                            </div>
+                            <div class="form-group">
+                                <label for="showBranch" class="mb-2 pt-3">Branch Name</label>
+                                <input type="text" class="form-control" id="showBranch" placeholder="Branch">
+                            </div>
+                            <div class="form-group">
+                                <label for="showAddress" class="mb-2 pt-3">Address</label>
+                                <input type="text" class="form-control" id="showAddress" placeholder="Address">
+                            </div>
+                            <div class="form-group mb-2 pt-3">
+                                <label for="showLat" class="mb-2">Latitude</label>
+                                <input type="text" class="form-control" id="showLat" placeholder="Latitude">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="showLang" class="mb-2">Longitude</label>
+                                <input type="text" class="form-control" id="showLang" placeholder="Longitude">
+                            </div>
+                            <div class="form-group">
+                                <label for="showWa" class="mb-2 pt-3">Whatsapp</label>
+                                <input type="text" class="form-control" id="showWa" placeholder="Whatsapp">
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="showBranchImages" class="mb-2">Image</label>
+                                <input type="file" class="form-control-file" id="showBranchImages" onchange="previewImages();">
+                                <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -108,10 +154,10 @@
     </div>
 </div>
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+                <h5 class="modal-title" id="editModalLabel">Edit Branch</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -119,38 +165,40 @@
             <div class="modal-body">
                 <form id="editForm">
                     <input type="hidden" id="editId" value="">
-                    <div class="form-group">
-                        <label for="editName">Nama Toko</label>
-                        <input type="text" class="form-control" id="editName" placeholder="Enter category name">
-                    </div>
-                    <div class="form-group">
-                        <label for="editBranch">Nama Cabang</label>
-                        <input type="text" class="form-control" id="editBranch" placeholder="Enter branch name">
-                    </div>
-                    <div class="form-group">
-                        <label for="editAddress">Alamat</label>
-                        <input type="text" class="form-control" id="editAddress" placeholder="Enter address">
-                    </div>
-                    <div class="form-group">
-                        <label for="editLat">Latitude</label>
-                        <input type="text" class="form-control" id="editLat" placeholder="Enter latitude">
-                    </div>
-                    <div class="form-group">
-                        <label for="editLang">Langtitude</label>
-                        <input type="text" class="form-control" id="editLang" placeholder="Enter langtitude">
-                    </div>
-                    <div class="form-group">
-                        <label for="editWa">Whatsapp</label>
-                        <input type="text" class="form-control" id="editWa" placeholder="Enter whatsapp">
-                    </div>
-                    <div class="form-group">
-                        <label for="editBranchImages">Gambar :</label>
-                        <input type="file" class="form-control-file" id="editBranchImages" onchange="editPreviewImages();">
-                        <div id="editImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="editName" class="mb-2">Store Name</label>
+                                <input type="text" class="form-control" id="editName" placeholder="Store">
+                            </div>
+                            <div class="form-group">
+                                <label for="editBranch" class="mb-2 pt-3">Branch Name</label>
+                                <input type="text" class="form-control" id="editBranch" placeholder="Branch">
+                            </div>
+                            <div class="form-group">
+                                <label for="editAddress" class="mb-2 pt-3">Address</label>
+                                <input type="text" class="form-control" id="editAddress" placeholder="Address">
+                            </div>
+                            <div class="form-group mb-2 pt-3">
+                                <label for="editLat" class="mb-2">Latitude</label>
+                                <input type="text" class="form-control" id="editLat" placeholder="Latitude">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="editLang" class="mb-2">Longitude</label>
+                                <input type="text" class="form-control" id="editLang" placeholder="Longitude">
+                            </div>
+                            <div class="form-group">
+                                <label for="editWa" class="mb-2 pt-3">Whatsapp</label>
+                                <input type="text" class="form-control" id="editWa" placeholder="Whatsapp">
+                            </div>
+                            <div class="form-group pt-5">
+                                <label for="editBranchImages" class="mb-2">Image :</label>
+                                <input type="file" class="form-control-file" id="editBranchImages" onchange="previewImages();">
+                                <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -374,7 +422,13 @@ function showCategory(id) {
         contentType: 'application/json',
         success: function(response) {
             $('#showId').val(response.id);             
-            $('#showName').val(response.name);        
+            $('#showName').val(response.name);  
+
+            $('#showBranch').val(response.branch);             
+            $('#showAddress').val(response.address);             
+            $('#showLat').val(response.lat);             
+            $('#showLang').val(response.lang);             
+            $('#showWa').val(response.wa);       
 
             $('#showModal').modal('show');
         },

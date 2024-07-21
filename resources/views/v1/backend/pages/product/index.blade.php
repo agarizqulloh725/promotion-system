@@ -10,11 +10,11 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h2 class="page-title"> Kategori Produk </h2>
+        <h2 class="page-title"> Product </h2>
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-            <i class="fa fa-plus"></i> Tambah Kategori
+            <i class="fa fa-plus"></i> Create Product
         </button>        
     </div>
     <div class="row">
@@ -25,7 +25,7 @@
                 <thead>
                     <tr>
                     <th> No </th>
-                    <th> name </th>
+                    <th> Name </th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -38,39 +38,39 @@
     </div>
 </div>
 <div class="modal fade" id="createProductModal" tabindex="-1" role="dialog" aria-labelledby="createProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createProductModalLabel">Create New Product</h5>
+                <h5 class="modal-title" id="createProductModalLabel">Create Product</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="createProductForm">
+                {{-- <form id="createProductForm">
                     <div class="form-group">
                         <label for="productName">Name</label>
-                        <input type="text" class="form-control" id="productName" placeholder="Enter product name">
+                        <input type="text" class="form-control" id="productName" placeholder="Name">
                     </div>
                     <div class="form-group">
-                        <label for="productSlug">slug</label>
-                        <input type="text" class="form-control" id="productSlug" placeholder="Enter product name">
+                        <label for="productSlug">Slug</label>
+                        <input type="text" class="form-control" id="productSlug" placeholder="Name">
                     </div>
                     <div class="form-group">
                         <label for="productDescription">Description</label>
-                        <textarea class="form-control" id="productDescription" placeholder="Enter description"></textarea>
+                        <textarea class="form-control" id="productDescription" placeholder="Description"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="productPrice">Price</label>
-                        <input type="number" step="0.01" class="form-control" id="productPrice" placeholder="Enter price">
+                        <input type="number" step="0.01" class="form-control" id="productPrice" placeholder="Price">
                     </div>
                     <div class="form-group">
                         <label for="productVideoLink">Video Link</label>
-                        <input type="url" class="form-control" id="productVideoLink" placeholder="Enter video URL">
+                        <input type="url" class="form-control" id="productVideoLink" placeholder="Video URL">
                     </div>
                     <div class="form-group">
                         <label for="productTokopediaLink">Tokopedia Link</label>
-                        <input type="url" class="form-control" id="productTokopediaLink" placeholder="Enter Tokopedia URL">
+                        <input type="url" class="form-control" id="productTokopediaLink" placeholder="Tokopedia URL">
                     </div>
                     <div class="form-group">
                         <label for="createProductImages">Product Image</label>
@@ -89,14 +89,81 @@
                         <button type="submit" class="btn btn-primary">Save</button>
                         <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
                     </div>
+                </form> --}}
+
+                <form id="createProductForm">
+                    <div class="row">
+                        <!-- Kolom Kiri -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="productName" class="mb-2">Name</label>
+                                <input type="text" class="form-control" id="productName" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="productSlug" class="mb-2 pt-3">Slug</label>
+                                <input type="text" class="form-control" id="productSlug" placeholder="Name">
+                            </div>
+                            <div class="form-group m-2" >
+                                <label for="productPrice" class="mb-2">Price</label>
+                                <input type="number" step="0.01" class="form-control" id="productPrice" placeholder="Price">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="productDescription" class="mb-2">Description</label>
+                                <textarea class="form-control" id="productDescription" placeholder="Description"></textarea>
+                            </div>
+                           
+                        </div>
+                
+                        <!-- Kolom Kanan -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="productVideoLink" class="mb-2">Video Link</label>
+                                <input type="url" class="form-control" id="productVideoLink" placeholder="Video URL">
+                            </div>
+                            <div class="form-group">
+                                <label for="productTokopediaLink" class="mb-2 pt-3">Tokopedia Link</label>
+                                <input type="url" class="form-control" id="productTokopediaLink" placeholder="Tokopedia URL">
+                            </div>
+                            <div class="form-group pt-5">
+                                <label for="createProductImages">Product Image</label>
+                                <input type="file" class="form-control-file" id="createProductImages" multiple onchange="previewImages();">
+                                <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>
+                            {{-- <div class="form-check pt-3">
+                                <input type="checkbox" class="form-check-input" id="productShow">
+                                <label class="form-check-label" for="productShow">Show Product?</label>
+                            </div>
+                            <div class="form-check pt-3">
+                                <input type="checkbox" class="form-check-input" id="productPopular">
+                                <label class="form-check-label" for="productPopular">Mark as Popular?</label>
+                            </div> --}}
+
+                            <div class="form-group d-flex align-items-center pt-4">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="productShow">
+                                    <label class="form-check-label" style="margin-left: 5px" for="productShow">Show Product?</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" style="margin-left: 5px" id="productPopular">
+                                    <label class="form-check-label" for="productPopular">Mark as Popular?</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
+                    </div>
                 </form>
+                
             </div>
         </div>
     </div>
 </div>
 
 <div class="modal fade" id="showProductModal" tabindex="-1" role="dialog" aria-labelledby="showProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="showProductModalLabel">Product Details</h5>
@@ -143,10 +210,57 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
+
+
+
+<script>
+function showProduct(id) {
+    $.ajax({
+        url: '/api/v1/admin/product/' + id,
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        contentType: 'application/json',
+        success: function(response) {
+            $('#showProductName').val(response.name);
+            $('#showProductSlug').val(response.slug);
+            $('#showProductDescription').val(response.description);
+            $('#showProductPrice').val(response.price);
+            $('#showProductVideoLink').attr('href', response.link_video).text(response.link_video);
+            $('#showProductTokopediaLink').attr('href', response.link_tokopedia).text(response.link_tokopedia);
+            $('#showProductIsShow').val(response.is_show ? 'Yes' : 'No');
+            $('#showProductIsPopular').val(response.is_popular ? 'Yes' : 'No');
+
+            $('#showImagePreviewContainer').empty();
+            if (response.images) {
+                let images = Array.isArray(response.images) ? response.images : [response.images];
+                images.forEach(function(imageUrl) {
+                    var fullPath = '/images/product/' + imageUrl;
+                    var img = $('<img>').attr("src", fullPath);
+                    img.css({ "max-width": "150px", "height": "auto" });
+                    $("#showImagePreviewContainer").append(img);
+                });
+            }
+            $('#showProductModal').modal('show');
+        },
+        error: function(error) {
+            console.log('Error fetching product:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to fetch product details. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}
+</script>
+
 
 <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
@@ -157,38 +271,67 @@
             <div class="modal-body">
                 <form id="editProductForm">
                     <input type="hidden" id="editProductId">
-                    <div class="form-group">
-                        <label for="editProductName">Name</label>
-                        <input type="text" class="form-control" id="editProductName" placeholder="Enter product name">
-                    </div>
-                    <div class="form-group">
-                        <label for="editProductSlug">Slug</label>
-                        <input type="text" class="form-control" id="editProductSlug" placeholder="Enter product Slug">
-                    </div>
-                    <div class="form-group">
-                        <label for="editProductDescription">Description</label>
-                        <textarea class="form-control" id="editProductDescription" placeholder="Enter description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="editProductPrice">Price</label>
-                        <input type="number" step="0.01" class="form-control" id="editProductPrice" placeholder="Enter price">
-                    </div>
-                    <div class="form-group">
-                        <label for="editProductVideoLink">Video Link</label>
-                        <input type="url" class="form-control" id="editProductVideoLink" placeholder="Enter video URL">
-                    </div>
-                    <div class="form-group">
-                        <label for="editProductTokopediaLink">Tokopedia Link</label>
-                        <input type="url" class="form-control" id="editProductTokopediaLink" placeholder="Enter Tokopedia URL">
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="editProductShow">
-                        <label class="form-check-label" for="editProductShow">Show Product?</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="editProductPopular">
-                        <label class="form-check-label" for="editProductPopular">Mark as Popular?</label>
-                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="editProductName" class="mb-2">Name</label>
+                                <input type="text" class="form-control" id="editProductName" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="editProductSlug" class="mb-2 pt-3">Slug</label>
+                                <input type="text" class="form-control" id="editProductSlug" placeholder="Slug">
+                            </div>
+                            <div class="form-group">
+                                <label for="editProductPrice" class="mb-2 pt-3">Price</label>
+                                <input type="number" step="0.01" class="form-control" id="editProductPrice" placeholder="Price">
+                            </div>
+                            <div class="form-group pt-3 mb-3">
+                                <label for="editProductDescription" class="mb-2">Description</label>
+                                <textarea class="form-control" id="editProductDescription" placeholder="Description"></textarea>
+                            </div>
+
+                        </div>
+
+                        {{-- Kolom kanan--}}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="editProductVideoLink" class="mb-2">Video Link</label>
+                                <input type="url" class="form-control" id="editProductVideoLink" placeholder="Video URL">
+                            </div>
+                            <div class="form-group">
+                                <label for="editProductTokopediaLink" class="mb-2 pt-3">Tokopedia Link</label>
+                                <input type="url" class="form-control" id="editProductTokopediaLink" placeholder="Tokopedia URL">
+                            </div>
+                            {{-- <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="editProductShow">
+                                <label class="form-check-label" for="editProductShow">Show Product?</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="editProductPopular">
+                                <label class="form-check-label" for="editProductPopular">Mark as Popular?</label>
+                            </div> --}}
+
+                            <div class="form-group pt-4">
+                                <label for="editProductImages" class="mb-2 pt-3">Product Image</label>
+                                <input type="file" class="form-control-file" id="editProductImages" multiple onchange="editPreviewImages();">
+                                <div id="editImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>
+
+                            <div class="form-group d-flex align-items-center pt-4">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="editProductShow">
+                                    <label class="form-check-label" style="margin-left: 5px" for="editProductShow">Show Product?</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" style="margin-left: 5px" id="editProductPopular">
+                                    <label class="form-check-label" for="editProductPopular">Mark as Popular?</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>                   
+                    
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Update</button>
                         <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
@@ -198,6 +341,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -408,6 +552,8 @@ $(document).ready(function() {
             });
         }
     });
+
+   
 });
 
 
@@ -418,48 +564,49 @@ $(document).ready(function() {
         $('#showProductModal').modal('hide');
     });
 });
-function showProduct(id) {
-    $.ajax({
-        url: '/api/v1/admin/product/' + id, 
-        type: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
-        contentType: 'application/json',
-        success: function(response) {
-            $('#showProductId').val(response.id);
-            $('#showProductName').text(response.name);
-            $('#showProductSlug').text(response.slug);
-            $('#showProductDescription').text(response.description);
-            $('#showProductPrice').text(response.price);
-            $('#showProductVideoLink').attr('href', response.link_video).text(response.link_video);
-            $('#showProductTokopediaLink').attr('href', response.link_tokopedia).text(response.link_tokopedia);
-            $('#showProductIsShow').text(response.is_show ? 'Yes' : 'No');
-            $('#showProductIsPopular').text(response.is_popular ? 'Yes' : 'No');
 
-            $('#showImagePreviewContainer').empty();
-            if (response.images) {
-                let images = Array.isArray(response.images) ? response.images : [response.images];
-                images.forEach(function(imageUrl) {
-                    var fullPath = '/images/product/' + imageUrl;
-                    var img = $('<img>').attr("src", fullPath);
-                    img.css({ "max-width": "150px", "height": "auto" });
-                    $("#showImagePreviewContainer").append(img);
+    function showProduct(id) {
+        $.ajax({
+            url: '/api/v1/admin/product/' + id, 
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            contentType: 'application/json',
+            success: function(response) {
+                $('#showProductId').val(response.id);
+                $('#showProductName').text(response.name);
+                $('#showProductSlug').text(response.slug);
+                $('#showProductDescription').text(response.description);
+                $('#showProductPrice').text(response.price);
+                $('#showProductVideoLink').attr('href', response.link_video).text(response.link_video);
+                $('#showProductTokopediaLink').attr('href', response.link_tokopedia).text(response.link_tokopedia);
+                $('#showProductIsShow').text(response.is_show ? 'Yes' : 'No');
+                $('#showProductIsPopular').text(response.is_popular ? 'Yes' : 'No');
+
+                $('#showImagePreviewContainer').empty();
+                if (response.images) {
+                    let images = Array.isArray(response.images) ? response.images : [response.images];
+                    images.forEach(function(imageUrl) {
+                        var fullPath = '/images/product/' + imageUrl;
+                        var img = $('<img>').attr("src", fullPath);
+                        img.css({ "max-width": "150px", "height": "auto" });
+                        $("#showImagePreviewContainer").append(img);
+                    });
+                }
+                $('#showProductModal').modal('show');
+            },
+            error: function(error) {
+                console.log('Error fetching product:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to fetch product details. Please try again.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
                 });
             }
-            $('#showProductModal').modal('show');
-        },
-        error: function(error) {
-            console.log('Error fetching product:', error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed to fetch product details. Please try again.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
-    });
-}
+        });
+    }
 
 function editProduct(id) {
     $.ajax({
@@ -480,11 +627,13 @@ function editProduct(id) {
             $('#editProductShow').prop('checked', response.is_show);
             $('#editProductPopular').prop('checked', response.is_popular);
 
+            console.log(response.images);
+
             if (response.images) {
                 $("#editImagePreviewContainer").empty();
                 let images = Array.isArray(response.images) ? response.images : [response.images];
                 images.forEach(function(imageUrl) {
-                    var fullPath = '/images/product/' + imageUrl;
+                    var fullPath = '/images/product-image/' + imageUrl.name;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     $("#editImagePreviewContainer").append(img);
@@ -521,6 +670,7 @@ function previewImages() {
         });
     }
 }
+
 function editPreviewImages() {
     var files = $("#editProductImages").get(0).files; 
     var container = $("#editImagePreviewContainer");
