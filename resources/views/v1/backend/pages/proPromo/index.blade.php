@@ -7,15 +7,37 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
+<!-- CSS untuk Select2 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet" />
+
+<style>
+.select2-container--default .select2-selection--single {
+    height: 38px !important;
+    border: 1px solid #e7e7e7 !important; 
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px !important;
+    border-color: #e7e7e7 !important;
+    outline: none;
+}
+
+.select2-container .select2-selection--single .select2-selection__arrow {
+    height: 38px !important;
+    border-color: #e7e7e7 !important; 
+}
+
+</style>
+    
 
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-        <h2 class="page-title"> Brand Produk </h2>
+        <h2 class="page-title"> Promo Product </h2>
     </div>
     <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-            <i class="fa fa-plus"></i> Tambah Brand
+            <i class="fa fa-plus"></i> Create Promo Product
         </button>        
     </div>
     <div class="row">
@@ -27,7 +49,7 @@
                     <tr>
                     <th> No </th>
                     <th> Product </th>
-                    <th> name</th>
+                    <th> Name</th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -43,42 +65,60 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Brand</h5>
+                <h5 class="modal-title" id="createModalLabel">Create Promo Product</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form id="createForm">
-                    <div class="form-group">
-                        <label for="createBrandName">Name Brand</label>
-                        <input type="text" class="form-control" id="createBrandName" placeholder="Enter Brand name">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="createBrandName" class="mb-2">Name</label>
+                                <input type="text" class="form-control" id="createBrandName" placeholder="Name">
+                            </div>
+
+                            <div class="form-group">
+                                {{-- <label for="createProduct" class="mb-2 pt-3">Product</label> --}}
+                                <label for="createProduct" class="mb-2 pt-3">Product</label>
+
+                                <select class="form-control select2" id="createProduct" style="width: 100%; height:100%">
+                                    <option disabled value="" selected>Choose Product</option>
+                                    @foreach ($product as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="createDiscount" class="mb-2 pt-3">Discount</label>
+                                <input type="number" class="form-control" id="createDiscount" placeholder="Discount" step="0.01">
+                            </div>
+                           
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label for="createCashback" class="mb-2">Cashback</label>
+                                <input type="number" class="form-control" id="createCashback" placeholder="Cashback" step="0.01">
+                            </div>
+                          
+                          
+                            <div class="form-group">
+                                <label for="createBonus" class="mb-2 pt-3">Bonus</label>
+                                <input type="number" class="form-control" id="createBonus" placeholder="Bonus" step="0.01">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="createBrandDescription" class="mb-2 pt-3">Description</label>
+                                <input type="text" class="form-control" id="createBrandDescription" placeholder="Description">
+                            </div>
+                            
+                        </div>
+
                     </div>
-                    <div class="form-group">
-                        <label for="createProduct">Product Promo</label>
-                        <select class="form-control select2" id="createProduct">
-                            <option disabled value="" selected>Pilih Product</option>
-                            @foreach ($product as $cat)
-                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="createDiscount">Discount</label>
-                        <input type="number" class="form-control" id="createDiscount" placeholder="Enter discount value" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label for="createCashback">Cashback</label>
-                        <input type="number" class="form-control" id="createCashback" placeholder="Enter cashback value" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label for="createBonus">Bonus</label>
-                        <input type="number" class="form-control" id="createBonus" placeholder="Enter bonus value" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label for="createBrandDescription">Deskripsi Brand</label>
-                        <input type="text" class="form-control" id="createBrandDescription" placeholder="Masukan Deskripsi">
-                    </div>
+                 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save</button>
                         <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
@@ -94,7 +134,7 @@
   <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="showModalLabel">Edit Brand</h5>
+              <h5 class="modal-title" id="showModalLabel">Show Promo Product</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
@@ -116,7 +156,7 @@
                   </div>
                   <div class="form-group">
                       <label for="showDescription">Description</label>
-                      <input type="text" class="form-control" id="showDescription" placeholder="Masukan deskripsi">
+                      <input type="text" class="form-control" id="showDescription" placeholder="Description">
                   </div>
                   <div class="form-group">
                       <label for="showImagePreviewContainer">Brand Image</label>
@@ -136,7 +176,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Brand</h5>
+                <h5 class="modal-title" id="editModalLabel">Edit Promo Product</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -144,14 +184,60 @@
             <div class="modal-body">
                 <form id="editForm">
                     <input type="hidden" id="editId" value="">
-                    <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="editName" class="mb-2">Name</label>
+                                <input type="text" class="form-control" id="editName" placeholder="Name">
+                            </div>
+
+                            <div class="form-group">
+                                {{-- <label for="editProduct" class="mb-2 pt-3">Product</label> --}}
+                                <label for="editProduct" class="mb-2 pt-3">Product</label>
+                                <select class="form-control select2" id="editProduct" style="width: 100%; height:100%">
+                                    <option disabled value="" selected>Choose Product</option>
+                                    @foreach ($product as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="editDiscount" class="mb-2 pt-3">Discount</label>
+                                <input type="number" class="form-control" id="editDiscount" placeholder="Discount" step="0.01">
+                            </div>
+                           
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label for="editCashback" class="mb-2">Cashback</label>
+                                <input type="number" class="form-control" id="editCashback" placeholder="Cashback" step="0.01">
+                            </div>
+                          
+                          
+                            <div class="form-group">
+                                <label for="editBonus" class="mb-2 pt-3">Bonus</label>
+                                <input type="number" class="form-control" id="editBonus" placeholder="Bonus" step="0.01">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="editBrandDescription" class="mb-2 pt-3">Description</label>
+                                <input type="text" class="form-control" id="editBrandDescription" placeholder="Description">
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                 
+                    {{-- <div class="form-group">
                         <label for="editName">Nama Brand</label>
                         <input type="text" class="form-control" id="editName" placeholder="Masukan Nama">
                     </div>
                     <div class="form-group">
                         <label for="editProduct">Product Promo</label>
                         <select class="form-control select2" id="editProduct">
-                            <option disabled value="" selected>Pilih Product</option>
+                            <option disabled value="" selected>Choose Product</option>
                             @foreach ($product as $cat)
                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                             @endforeach
@@ -159,20 +245,20 @@
                     </div>
                     <div class="form-group">
                         <label for="editDiscount">Discount</label>
-                        <input type="number" class="form-control" id="editDiscount" placeholder="Enter discount value" step="0.01">
+                        <input type="number" class="form-control" id="editDiscount" placeholder="Discount" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="editCashback">Cashback</label>
-                        <input type="number" class="form-control" id="editCashback" placeholder="Enter cashback value" step="0.01">
+                        <input type="number" class="form-control" id="editCashback" placeholder="Cashback" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="editBonus">Bonus</label>
-                        <input type="number" class="form-control" id="editBonus" placeholder="Enter bonus value" step="0.01">
+                        <input type="number" class="form-control" id="editBonus" placeholder="Bonus" step="0.01">
                     </div>        
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Update</button>
                         <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
-                    </div>
+                    </div> --}}
                 </form>
             </div>
         </div>
@@ -206,6 +292,7 @@
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('utils.js') }}"></script>
 <script>
@@ -213,7 +300,12 @@ const token = getCookieValue('access_token');
 $(document).ready(function() {
     $('#createProduct').select2({
         dropdownParent: $("#createModal")              
-    });
+    }); 
+
+    $('#editProduct').select2({
+        dropdownParent: $("#editModal")              
+    }); 
+
 
     var table = $('#dataTable').DataTable({
         responsive: true,
@@ -432,7 +524,10 @@ function editBrand(id) {
             $('#editDiscount').val(response.discount);
             $('#editCashback').val(response.cashback);
             $('#editBonus').val(response.bonus);
+            $('#editDescription').val(response.description);
             $('#editModal').modal('show');
+
+            console.log(response);
         },
         error: function(error) {
             console.log('Error fetching Brand:', error);
