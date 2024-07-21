@@ -3,7 +3,7 @@
       <li class="nav-item nav-profile">
         <a href='/' class="nav-link">
           <div class="nav-profile-image">
-            <img src={{asset('backend/assets/images/faces/face1.jpg')}} alt="profile" />
+            <img src={{asset('backend/assets/images/faces/face2.jpg')}} alt="profile" />
             <span class="login-status online"></span>
             <!--change to offline or busy as needed-->
           </div>
@@ -22,7 +22,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href='/admin/pro-category'>
-          <span class="menu-title">Kategori Produk</span>
+          <span class="menu-title">Product Category</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
@@ -52,7 +52,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href='/admin/branch'>
-          <span class="menu-title">Toko Cabang</span>
+          <span class="menu-title">Branch</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>

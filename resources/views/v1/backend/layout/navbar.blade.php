@@ -1,7 +1,9 @@
 <nav class="navbar pt-0 mt-0 default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-      <a class="navbar-brand brand-logo" href='/'><img src={{asset('backend/assets/images/logo.svg')}} alt="logo" /></a>
-      <a class="navbar-brand brand-logo-mini" href='/'><img src={{asset('backend/assets/images/logo-mini.svg')}} alt="logo" /></a>
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start" style="flex-direction: column;">
+      {{-- <a class="navbar-brand brand-logo" href='/'><img src={{asset('backend/assets/images/logo-limawaktu.png')}} alt="logo" /></a> --}}
+      <h3 class="pl-5 pt-2" style="color: red">Lima waktu</h3>
+      <h6  class="p-0 mt-0 mb-2" style="color: rgb(11, 11, 11); font-weight: 800px">#jujur harganya</h6>
+      {{-- <a class="navbar-brand brand-logo-mini" href='/'><img src={{asset('backend/assets/images/logo-mini.svg')}} alt="logo" /></a> --}}
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-stretch">
       <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
