@@ -200,6 +200,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
+                    </div>
                 </form>
             </div>
         </div>
