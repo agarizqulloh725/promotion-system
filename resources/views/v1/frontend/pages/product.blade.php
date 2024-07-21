@@ -37,7 +37,13 @@
     background-color: #dc3545;
     color: white;
 }
-
+.slug {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+}
 @media (min-width: 200px) { 
     .t-desc {
         font-size: 13px;
@@ -494,16 +500,20 @@ function updateProductList(products) {
     const productListContainer = document.getElementById('productListContainer');
     productListContainer.innerHTML = '';
     products.forEach(product => {
+    if(product){
+        const imagePath = product.images.length > 0 ? product.images[0].name : 'default.jpg';
+        const discountBadge = product.promo && product.promo.length > 0 && product.promo[0].discount ? 
+            `<span class="badge bg-danger">${parseInt(product.promo[0].discount)}% Off</span>` : '';
         productListContainer.innerHTML += `
             <div class="col-md-4 mb-4">
                 <div class="card border-1 rounded-4 shadow">
-                    <img class="card-img-top pt-2" src="${product.image}" alt="${product.name}">
+                    <img class="card-img-top pt-2" src="/images/product-image/${imagePath}" alt="${product.name}">
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>
-                        <p class="card-text mb-4">${product.description}</p>
+                        <p class="card-text mb-4 slug">${product.slug}</p>
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="fw-bold m-0">${product.price}</h5>
-                            <span class="badge bg-danger">${product.discount}</span>
+                            <h5 class="fw-bold m-0">Rp. ${parseInt(product.price)}</h5>
+                            ${discountBadge}
                         </div>
                         <hr>
                         <div class="d-flex justify-content-center align-items-center gap-2">
@@ -516,8 +526,10 @@ function updateProductList(products) {
                 </div>
             </div>
         `;
+        }
     });
 }
+
 function updatePagination(links) {
     const paginationContainer = document.getElementById('paginationContainer');
     paginationContainer.innerHTML = '';

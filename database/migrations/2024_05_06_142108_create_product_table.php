@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('product', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('brand_id')->nullable();
             $table->string('name')->nullable();
+            $table->string('year')->nullable();
             $table->string('slug')->nullable();
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2)->nullable();
@@ -22,6 +24,8 @@ return new class extends Migration
             $table->boolean('is_show')->nullable();
             $table->boolean('is_popular')->nullable();
             $table->timestamps();
+
+            $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade');
         });
     }
 
