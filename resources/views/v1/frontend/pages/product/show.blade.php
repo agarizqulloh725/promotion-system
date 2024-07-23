@@ -437,19 +437,19 @@
         });
     });
 
-        function toggleText() {
-            const hiddenTexts = document.querySelectorAll('.hidden-text');
-            const showMoreText = document.querySelector('.show-more');
-            hiddenTexts.forEach(item => {
-                if (item.style.display === 'none' || item.style.display === '') {
-                    item.style.display = 'inline';
-                    showMoreText.textContent = 'Lihat Lebih Sedikit';
-                } else {
-                    item.style.display = 'none';
-                    showMoreText.textContent = 'Lihat Selengkapnya';
-                }
-            });
-        }
+    function toggleText() {
+        const hiddenTexts = document.querySelectorAll('.hidden-text');
+        const showMoreText = document.querySelector('.show-more');
+        hiddenTexts.forEach(item => {
+            if (item.style.display === 'none' || item.style.display === '') {
+                item.style.display = 'inline';
+                showMoreText.textContent = 'Lihat Lebih Sedikit';
+            } else {
+                item.style.display = 'none';
+                showMoreText.textContent = 'Lihat Selengkapnya';
+            }
+        });
+    }
     function changeImage(element) {
         var mainImage = document.getElementById('main-image');
         mainImage.src = element.src;

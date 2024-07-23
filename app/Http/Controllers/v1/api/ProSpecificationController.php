@@ -58,7 +58,7 @@ class ProSpecificationController extends Controller
             ->exists();
 
             if ($exists) {
-                return response()->json(['error' => 'Produk sudah ada!'], Response::HTTP_CONFLICT);
+                return response()->json(['error' => 'Product already added!'], Response::HTTP_CONFLICT);
             }
 
             $specification = ProductSpecification::create($validatedData);

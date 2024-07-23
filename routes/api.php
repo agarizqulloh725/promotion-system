@@ -52,6 +52,8 @@ Route::prefix('v1')->group(function () {
                 'pro-stock' => ProStockController::class,
                 'user' => UserController::class,
                 'pro-branch' => ProBranchController::class,
+                'dashboard' => DashboardController::class,
+
             ]);
         });
     });    

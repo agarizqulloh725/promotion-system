@@ -309,8 +309,8 @@ $(document).ready(function() {
     e.preventDefault();
 
     var formData = new FormData(this);
-    formData.append('name', $('#createPromoName').val());
-    formData.append('description', $('#createPromoDescription').val());
+    formData.append('name', $('#createPromoName').val(''));
+    formData.append('description', $('#createPromoDescription').val(''));
     formData.append('start_time', $('#createStartTime').val());
     formData.append('end_time', $('#createEndTime').val());
     formData.append('discount', $('#createDiscount').val());

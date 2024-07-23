@@ -34,7 +34,7 @@ class ProBranchController extends Controller
             ->first();
 
             if ($existingEntry) {
-            return response()->json(['error' => 'Produk sudah ada!'], Response::HTTP_CONFLICT);
+            return response()->json(['error' => 'Produk already added!'], Response::HTTP_CONFLICT);
             }
             $branchProduct = BranchProduct::create($request->all());
             return response()->json($branchProduct, Response::HTTP_CREATED);

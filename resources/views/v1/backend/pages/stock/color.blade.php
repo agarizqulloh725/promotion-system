@@ -6,7 +6,25 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+
 @endpush
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 38px !important;
+        border: 1px solid #e7e7e7 !important; 
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 38px !important;
+        border-color: #e7e7e7 !important;
+        outline: none;
+    }
+    
+    .select2-container .select2-selection--single .select2-selection__arrow {
+        height: 38px !important;
+        border-color: #e7e7e7 !important; 
+    }
+</style>
 
 @section('content')
 <div class="content-wrapper">
@@ -17,7 +35,7 @@
         </div>
         <div class="d-flex justify-content-end">
             <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-                <i class="fa fa-plus"></i> Tambah Kategori
+                <i class="fa fa-plus"></i> Add Color
             </button>        
         </div>
     </div>
@@ -48,7 +66,7 @@
                 <thead>
                     <tr>
                     <th> No </th>
-                    <th> name </th>
+                    <th> Color Code </th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -71,27 +89,29 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Category</h5>
+                <h5 class="modal-title" id="createModalLabel">Add Color</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form id="createForm">
-                    <div class="form-group">
-                        <label for="createColor">Color Promo</label>
-                        <select class="form-control select2" id="createColor">
-                            <option disabled value="" selected>Pilih Color</option>
+
+                    <div class="form-group mb-2">
+                        <label for="createColor" class="mb-2">Color</label>
+                        <select class="form-control select2" id="createColor" style="width: 100%; height:100%">
+                            <option disabled value="" selected>Choose Color</option>
                             @foreach ($color as $cat)
                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="createColor">Jumlah Stock</label>
+
+                    <div class="form-group mb-3 pt-2">
+                        <label for="createColor" >Total Stock</label>
                         <input type="number" name="amountStock" id="amountStock">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="createBrandImages">Brand Image</label>
                         <input type="file" class="form-control-file" id="createBrandImages" multiple onchange="previewImages();">
                         <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
@@ -191,7 +211,7 @@ console.log('branchPro', idProd);
 console.log('idBranch', idBranch);
 console.log('idSpec', idSpec);
 $(document).ready(function() {
-    $('#createProduct').select2({
+    $('#createColor').select2({
         dropdownParent: $("#createModal")              
     });
     var table = $('#dataTable').DataTable({

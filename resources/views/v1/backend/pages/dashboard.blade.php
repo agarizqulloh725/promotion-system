@@ -19,17 +19,29 @@
     </nav>
   </div>
   <div class="row">
-    <div class="col-md-4 stretch-card grid-margin">
+    {{-- <div class="col-md-4 stretch-card grid-margin">
       <div class="card bg-gradient-danger card-img-holder text-white">
         <div class="card-body">
           <img src={{asset('backend/assets/images/dashboard/circle.svg')}} class="card-img-absolute" alt="circle-image" />
-          <h4 class="font-weight-normal mb-3">Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+          <h4 class="font-weight-normal mb-3">Total Branch <i class="mdi mdi-chart-line mdi-24px float-end"></i>
           </h4>
           <h2 class="mb-5">$ 15,0000</h2>
           <h6 class="card-text">Increased by 60%</h6>
         </div>
       </div>
-    </div>
+    </div> --}}
+
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-gradient-danger card-img-holder text-white">
+         <div class="card-body">
+            <img src="{{ asset('backend/assets/images/dashboard/circle.svg') }}" class="card-img-absolute" alt="circle-image" />
+            <h4 class="font-weight-normal mb-3">Total Branch <i class="mdi mdi-chart-line mdi-24px float-end"></i></h4>
+            <h2 class="mb-5" id="total-branches">Loading...</h2>
+            <h6 class="card-text">Increased by 60%</h6>
+         </div>
+      </div>
+   </div>
+   
     <div class="col-md-4 stretch-card grid-margin">
       <div class="card bg-gradient-info card-img-holder text-white">
         <div class="card-body">
@@ -336,3 +348,22 @@
 
 {{-- @push('scripts')
 @endpush --}}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+      fetch('http://127.0.0.1:8000/api/v1/admin/dashboard')
+          .then(response => response.json())
+          .then(data => {
+              if (data.total !== undefined) {
+                  document.getElementById('total-branches').textContent = data.total;
+              } else {
+                  document.getElementById('total-branches').textContent = 'Error loading data';
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching branch data:', error);
+              document.getElementById('total-branches').textContent = 'Error loading data';
+          });
+  });
+</script>
+
