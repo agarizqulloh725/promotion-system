@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\v1;
 
 use App\Models\Color;
+use App\Models\Branch;
 use App\Models\Product;
 use App\Models\Permission;
+use App\Models\ProductColor;
+use App\Models\ProductStock;
 use Illuminate\Http\Request;
 use App\Models\Specification;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\ProductStock;
-use App\Models\ProductColor;
 use App\Models\ProductSpecification;
 use Illuminate\Support\Facades\Auth;
 
