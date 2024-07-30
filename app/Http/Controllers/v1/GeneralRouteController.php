@@ -108,6 +108,11 @@ class GeneralRouteController extends Controller
     }
     public function productShow(string $id)
     {
+        $product = Product::find($id);
+        if ($product) {
+            $product->increment('is_popular');
+            $product->save();
+        }
         $product = ProductStock::select(
             'product_stock.product_id',
             'product.name',
@@ -143,7 +148,7 @@ class GeneralRouteController extends Controller
                 ];
             });
 
-          
+
             return [
                 "id"=>$v->product_id,
                 "name"=>$v->name,

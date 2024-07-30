@@ -505,7 +505,7 @@ function updateProductList(products) {
         const discountBadge = product.promo && product.promo.length > 0 && product.promo[0].discount ? 
             `<span class="badge bg-danger">${parseInt(product.promo[0].discount)}% Off</span>` : '';
         productListContainer.innerHTML += `
-            <div class="col-md-4 mb-4">
+            <a class="col-md-4 mb-4 text-secondary text-decoration-none " href="/product/${product.id}">
                 <div class="card border-1 rounded-4 shadow">
                     <img class="card-img-top pt-2" src="/images/product-image/${imagePath}" alt="${product.name}">
                     <div class="card-body">
@@ -524,7 +524,7 @@ function updateProductList(products) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         `;
         }
     });
