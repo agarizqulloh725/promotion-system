@@ -33,6 +33,7 @@ class UserController extends Controller
     {
         try {
             $validatedData = $request->validate([
+                'branch_id' => 'nullable',
                 'name' => 'required|string',
                 'email' => 'required|string|email|unique:users,email',
                 'password' => 'required|string|min:6',
@@ -87,6 +88,7 @@ class UserController extends Controller
     {
         try {
             $validatedData = $request->validate([
+                'branch_id' => 'nullable',
                 'name' => 'required|string',
                 'email' => 'required|string|email|unique:users,email,' . $id,
                 'password' => 'nullable|string|min:6',

@@ -15,6 +15,7 @@ use App\Http\Controllers\v1\api\ProImageController;
 use App\Http\Controllers\v1\api\ProPromoController;
 use App\Http\Controllers\v1\api\ProStockController;
 use App\Http\Controllers\v1\api\WishlistController;
+use App\Http\Controllers\v1\api\DashboardController;
 use App\Http\Controllers\v1\api\ProBranchController;
 use App\Http\Controllers\v1\api\PermissionController;
 use App\Http\Controllers\v1\api\ProCategoryController;

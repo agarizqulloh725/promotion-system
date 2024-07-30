@@ -179,4 +179,7 @@ class GeneralRouteController extends Controller
     {
         return view('v1.frontend.pages.profile');
     }
+    public function noakses(){
+        return view('v1.badview');
+    }
 }

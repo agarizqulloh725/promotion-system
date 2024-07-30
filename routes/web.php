@@ -16,18 +16,19 @@ Route::get('/promo', [GeneralRouteController::class, 'promo']);
 Route::get('/about', [GeneralRouteController::class, 'about']);
 Route::get('/branch', [GeneralRouteController::class, 'branch']);
 Route::get('/profile', [GeneralRouteController::class, 'profile']);
+Route::get('/no-akses', [GeneralRouteController::class, 'noakses']);
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [GeneralRouteController::class, 'adminDashboard'])->middleware('isAdmin');
-    Route::get('/pro-category', [GeneralRouteController::class, 'ProCategory'])->middleware('isAdmin');
-    Route::get('/brand', [GeneralRouteController::class, 'adminBrand'])->middleware('isAdmin');
-    Route::get('/products', [GeneralRouteController::class, 'adminProduct'])->middleware('isAdmin');
-    Route::get('/color', [GeneralRouteController::class, 'adminColor'])->middleware('isAdmin');
-    Route::get('/promo', [GeneralRouteController::class, 'adminPromo'])->middleware('isAdmin');
-    Route::get('/user-role', [GeneralRouteController::class, 'adminUser'])->middleware('isAdmin');
-    Route::get('/product-promo', [GeneralRouteController::class, 'adminProductPromo'])->middleware('isAdmin');
-    Route::get('/spesification', [GeneralRouteController::class, 'adminSpesification'])->middleware('isAdmin');
-    Route::get('/branch', [GeneralRouteController::class, 'adminBranch'])->middleware('isAdmin');
+    Route::get('/pro-category', [GeneralRouteController::class, 'ProCategory'])->middleware('isSuperAdmin');
+    Route::get('/brand', [GeneralRouteController::class, 'adminBrand'])->middleware('isSuperAdmin');
+    Route::get('/products', [GeneralRouteController::class, 'adminProduct'])->middleware('isSuperAdmin');
+    Route::get('/color', [GeneralRouteController::class, 'adminColor'])->middleware('isSuperAdmin');
+    Route::get('/promo', [GeneralRouteController::class, 'adminPromo'])->middleware('isSuperAdmin');
+    Route::get('/user-role', [GeneralRouteController::class, 'adminUser'])->middleware('isSuperAdmin');
+    Route::get('/product-promo', [GeneralRouteController::class, 'adminProductPromo'])->middleware('isSuperAdmin');
+    Route::get('/spesification', [GeneralRouteController::class, 'adminSpesification'])->middleware('isSuperAdmin');
+    Route::get('/branch', [GeneralRouteController::class, 'adminBranch'])->middleware('isSuperAdmin');
     Route::get('/stock', [GeneralRouteController::class, 'adminStock'])->middleware('isAdmin')->name('stockAdmin');
     Route::get('/stock/{branch}/{product}/{specification}', [GeneralRouteController::class, 'adminShowStockSpecification'])->middleware('isAdmin');
     Route::get('/stock/{branch}/{product}', [GeneralRouteController::class, 'adminShowStockProduct'])->middleware('isAdmin');

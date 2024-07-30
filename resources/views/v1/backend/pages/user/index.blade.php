@@ -65,6 +65,11 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group" id="branchHandleContainer" style="display: none;">
+                    <label for="handleBranch">Handle Cabang</label>
+                    <select class="form-control" id="handleBranch">
+                    </select>
+                </div>                
                   <div class="form-group">
                       <label for="createUserPassword">Password</label>
                       <input type="password" class="form-control" id="createUserPassword" placeholder="Enter password">
@@ -151,6 +156,12 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group" id="editBranchHandleContainer" style="display: none;">
+                        <label for="editHandleBranch">Handle Cabang</label>
+                        <select class="form-control" id="editHandleBranch">
+                            <!-- Options will be dynamically added here -->
+                        </select>
+                    </div>                    
                     <div class="form-group">
                         <label for="editPassword">Password</label>
                         <input type="password" class="form-control" id="editPassword" placeholder="Enter new password (leave blank if unchanged)">
@@ -228,13 +239,47 @@ $(document).ready(function() {
             { data: "name" },
             { data: "email" },
             { data: null, render: function (data, type, row) {
-                console.log(data);
                 return `<button onclick="showUser(${row.id})" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
                         <button onclick="editUser(${row.id}, '${row.name}')" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                         <button class="btn btn-danger btn-sm delete-btn" data-id="${row.id}"><i class="fa fa-trash"></i></button>`;
             }}
         ]
     });
+
+    $('#createPermission').change(function() {
+        var selectedRole = $(this).val();
+        if (selectedRole !== '1') {
+            $.ajax({
+                url: '/api/v1/admin/branch', 
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function(response) {
+                    var select = $('#handleBranch');
+                    select.empty(); 
+                    
+                    response.forEach(function(branch) {
+                        select.append($('<option>', {
+                            value: branch.id,
+                            text: branch.name
+                        }));
+                    });
+                    $('#branchHandleContainer').show();
+                },
+                error: function() {
+                    $('#branchHandleContainer').hide();
+                }
+            });
+        } else {
+            $('#branchHandleContainer').hide();
+        }
+    });
+
+    // $('#editPermission').change(function() {
+    //     handleBranchSelector($(this).val(), 'edit');
+    // });
+
 
     $('#btnCreate').click(function() {
         $('#createModal').modal('show');
@@ -247,6 +292,12 @@ $(document).ready(function() {
     formData.append('email', $('#createUserEmail').val());
     formData.append('password', $('#createUserPassword').val());
     formData.append('permission_id', $('#createPermission').val());
+
+    var idBranch = $('#handleBranch').val();
+    if (idBranch) {
+        formData.append('branch_id', idBranch);
+    }
+
     var files = $('#createUserImages').get(0).files;
     if (files.length > 0) {
         for (var i = 0; i < files.length; i++) {
@@ -334,8 +385,13 @@ $(document).ready(function() {
 
     if (files.length > 0) {
         $.each(files, function(i, file) {
-            formData.append('image', file);  // Assuming you are handling a single image update
+            formData.append('image', file);  
         });
+    }
+
+    var idBranchEdit = $('#editHandleBranch').val();
+    if (idBranchEdit) {
+        formData.append('branch_id', idBranchEdit);
     }
 
     formData.append('name', $('#editName').val());
@@ -344,7 +400,7 @@ $(document).ready(function() {
     if (password) {
         formData.append('password', password);
     }
-    formData.append('permission_id', $('#editPermission').val()); // Assuming permission needs to be updated
+    formData.append('permission_id', $('#editPermission').val());
     formData.append('is_show', $('#editIsShow').is(':checked') ? 1 : 0);
 
     $.ajax({
@@ -430,6 +486,41 @@ function showUser(id) {
         }
     });
 }
+function handleBranchSelector(selectedRole,selectedBranch, mode) {
+        var url = '/api/v1/admin/branch';
+        var branchSelectId = mode === 'edit' ? '#editHandleBranch' : '#handleBranch';
+        var branchContainerId = mode === 'edit' ? '#editBranchHandleContainer' : '#branchHandleContainer';
+
+
+        console.log(selectedRole);
+        if (selectedRole !== 1) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function(response) {
+                    var select = $(branchSelectId);
+                    select.empty();
+                    response.forEach(function(branch) {
+                        select.append($('<option>', {
+                            value: branch.id,
+                            text: branch.name,
+                            selected: branch.id == selectedBranch
+                        }));
+                    });
+                    $(branchContainerId).show();
+                },
+                error: function() {
+                    $(branchContainerId).hide();
+                    console.log('Error fetching branches');
+                }
+            });
+        } else {
+            $(branchContainerId).hide();
+        }
+    }
 function editUser(id) {
     $.ajax({
         url: '/api/v1/admin/user/' + id, 
@@ -439,7 +530,7 @@ function editUser(id) {
         },
         contentType: 'application/json',
         success: function(response) {
-            console.log(response.image);
+            handleBranchSelector(response.role_permissions[0].permission_id,response.branch_id, 'edit');
             $('#editId').val(response.id);
             $('#editName').val(response.name);
             $('#editEmail').val(response.email);

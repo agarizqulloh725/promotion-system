@@ -55,6 +55,7 @@
                 },
                 contentType: 'application/json',
                 success: function(response) {
+                  myuserr = response.user.id;
 
                   const profileNames = document.querySelectorAll('.nameProfile');
                   const userName = response.user.name;

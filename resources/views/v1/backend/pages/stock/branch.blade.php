@@ -35,38 +35,81 @@
 @endsection
 
 @push('script')
-<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{ asset('utils.js') }}"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+<script src="{{ asset('utils.js') }}" defer></script>
 <script>
 const token = getCookieValue('access_token');
-$(document).ready(function() {
-    var table = $('#dataTable').DataTable({
-        responsive: true,
-        ajax: {
-            url: '/api/v1/admin/branch/',
-            type:'GET',
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+document.addEventListener('DOMContentLoaded', function () {
+    async function fetchMe() {
+        try {
+            const response = await $.ajax({
+                url: '/api/v1/me/',
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                contentType: 'application/json',
+            });
+            console.log(response.user.branch_id);
+            return response.user.branch_id;
+        } catch (error) {
+            console.log('Error fetching user details:', error);
+            return null;
+        }
+    }
+
+    async function initializeTable(userHandle) {
+        $('#dataTable').DataTable({
+            responsive: true,
+            ajax: {
+                url: '/api/v1/admin/branch/',
+                type: 'GET',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                },
+                dataSrc: ''
             },
-            dataSrc: ''
-        },
-        columnDefs: [{
-            "searchable": false,
-            "orderable": false,
-            "targets": 0
-        }],
-        columns: [
-            { data: null, render: function (data, type, full, meta) {
-                return meta.row + 1;
-            }},
-            { data: "name" },
-            { data: null, render: function (data, type, row) {
-                return `<a href='/admin/stock/${row.id}' class="btn btn-primary btn-sm">Stock</a>`;
-            }}
-        ]
-    });
+            columnDefs: [{
+                "searchable": false,
+                "orderable": false,
+                "targets": 0
+            }],
+            columns: [
+                { data: null, render: function (data, type, full, meta) {
+                    return meta.row + 1;
+                }},
+                { data: "name" },
+                { data: null, render: function (data, type, row) {
+                    if (userHandle == row.id) {
+                        return `<a href='/admin/stock/${row.id}' class="btn btn-primary btn-sm">Stock</a>`;
+                    } else {
+                        return `<button class="btn btn-secondary btn-sm" onclick="showAccessDeniedAlert()">No Access</button>`;
+                    }
+                }}
+            ]
+        });
+    }
+
+    async function main() {
+        const token = getCookieValue('access_token');
+        const userHandle = await fetchMe();
+        if (userHandle) {
+            initializeTable(userHandle);
+        }
+    }
+
+    main();
 });
+
+function showAccessDeniedAlert() {
+    Swal.fire({
+        icon: 'error',
+        title: 'Akses dilarang!',
+        text: 'kamu tidak memiliki akses ke halaman ini, harap hubungi admin',
+        confirmButtonText: 'OK'
+    });
+}
 </script>
 @endpush
