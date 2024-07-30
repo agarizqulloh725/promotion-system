@@ -5,7 +5,27 @@
 @push('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
+
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 38px !important;
+        border: 1px solid #e7e7e7 !important; 
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 38px !important;
+        border-color: #e7e7e7 !important;
+        outline: none;
+    }
+    
+    .select2-container .select2-selection--single .select2-selection__arrow {
+        height: 38px !important;
+        border-color: #e7e7e7 !important; 
+    }
+</style>
+    
 
 @section('content')
 <div class="content-wrapper">
@@ -16,7 +36,7 @@
         </div>
         <div class="d-flex justify-content-end">
             <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-                <i class="fa fa-plus"></i> Tambah Kategori
+                <i class="fa fa-plus"></i> Add Spesification
             </button>        
         </div>
     </div>
@@ -36,7 +56,7 @@
                 <thead>
                     <tr>
                     <th> No </th>
-                    <th> name </th>
+                    <th> Spesification </th>
                     <th> Action </th>
                     </tr>
                 </thead>
@@ -59,30 +79,34 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Entry</h5>
+                <h5 class="modal-title" id="createModalLabel">Add Spesification</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form id="createForm">
-                    <select class="form-control select2" id="createSpecification">
-                        <option disabled value="" selected>Pilih Spesification</option>
-                        @foreach ($specification as $cat)
+                    <div class="form-group mb-2">
+                        <label for="createSpecification" class="mb-2">Spesification</label>
+                        <select class="form-control select2" id="createSpecification" style="width: 100%; height:100%">
+                            <option disabled value="" selected>Pilih Spesification</option>
+                            @foreach ($specification as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                         @endforeach
-                    </select>
-                    <div class="form-group">
-                        <label for="entryName">Name</label>
-                        <input type="text" class="form-control" id="createName" placeholder="Enter Name">
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="createPrice">Price</label>
-                        <input type="number" class="form-control" id="createPrice" placeholder="Enter Price">
+
+                    <div class="form-group mb-2">
+                        <label for="entryName" class="mb-2">Name</label>
+                        <input type="text" class="form-control" id="createName" placeholder="Name">
                     </div>
-                    <div class="form-group">
-                        <label for="createDescription">Description</label>
-                        <textarea class="form-control" id="createDescription" placeholder="Enter Description"></textarea>
+                    <div class="form-group mb-2">
+                        <label for="createPrice" class="mb-2">Price</label>
+                        <input type="number" class="form-control" id="createPrice" placeholder="Price">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="createDescription" class="mb-2">Description</label>
+                        <textarea class="form-control" id="createDescription" placeholder="Description"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -182,6 +206,8 @@
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script src="{{ asset('utils.js') }}"></script>
 <script>
 const token = getCookieValue('access_token');
@@ -191,6 +217,9 @@ const idBranch = urlParts[urlParts.length - 2];
 const idBranchProduct = urlParts[urlParts.length - 1];
 
 $(document).ready(function() {
+    $('#createSpecification').select2({
+        dropdownParent: $("#createModal")              
+    });
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {

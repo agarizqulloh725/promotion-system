@@ -8,6 +8,25 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 @endpush
 
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 38px !important;
+        border: 1px solid #e7e7e7 !important; 
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 38px !important;
+        border-color: #e7e7e7 !important;
+        outline: none;
+    }
+    
+    .select2-container .select2-selection--single .select2-selection__arrow {
+        height: 38px !important;
+        border-color: #e7e7e7 !important; 
+    }
+    
+</style>
+
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
@@ -19,7 +38,7 @@
         </div>
         <div class="d-flex justify-content-end">
             <button type="button" id="btnCreate" class="btn btn-primary mb-2">
-                <i class="fa fa-plus"></i> Tambah Product
+                <i class="fa fa-plus"></i> Add Product
             </button>        
         </div>
     </div>
@@ -62,16 +81,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Category</h5>
+                <h5 class="modal-title" id="createModalLabel">Add Product </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form id="createForm">
-                    <div class="form-group">
-                        <label for="createProduct">Product Promo</label>
-                        <select class="form-control select2" id="createProduct">
+                    <div class="form-group mb-3">
+                        <label for="createProduct" class="mb-2">Product Promo</label>
+                        <select class="form-control select2" id="createProduct" style="width: 100%; height:100%">
                             <option disabled value="" selected>Pilih Product</option>
                             @foreach ($product as $cat)
                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -221,13 +240,13 @@ $(document).ready(function() {
                 $('#createModal').modal('hide');
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Category created successfully!',
+                    text: 'Product added successfully!',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 });
             },
             error: function(request, msg, error) {
-                console.log('Error creating category:', request.responseJSON.error);
+                console.log('Error when add product:', request.responseJSON.error);
                 $('#createModal').modal('hide');
                 Swal.fire({
                     title: 'Error!',
