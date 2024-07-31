@@ -32,7 +32,10 @@ class GeneralRouteController extends Controller
     }
     //admin
     public function adminDashboard(){
-        return view('v1.backend.pages.dashboard');
+        $product = Product::count();
+        $branch = Branch::count();        
+        $stock = DB::table('product_stock')->sum('stock');
+        return view('v1.backend.pages.dashboard', compact(['product','branch','stock']));
     }
     public function ProCategory(){
         return view('v1.backend.pages.proCategory.index');
