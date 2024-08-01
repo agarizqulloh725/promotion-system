@@ -9,7 +9,8 @@
     text-align: center;
 }
 .image-backgroundfoot {
-    background-image: url({{asset('frontend/img/bg-nav2.jpg')}});
+    /* background-image: url({{asset('frontend/img/bg-nav2.jpg')}}); */
+    background-color: red;
     background-size: cover;
     background-position: center;
 }
@@ -68,6 +69,20 @@
     font-size: 0.8rem; /* Menyesuaikan ukuran font */
     border-radius: 5px; /* Memberikan border bulat */
     display: inline-block; /* Membuat span berperilaku seperti elemen inline block */
+}
+
+.btn-custom {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    border-radius: 25px;
+}
+.btn-custom:hover {
+    background-color: red;
+    color: white;
+}
+.btn-custom .whatsapp-icon {
+    margin-right: 8px;
 }
 
 @media (min-width: 200px) { 
@@ -195,16 +210,14 @@ ul li {
     <div class="row pt-5 mt-5">
         <div class="col">
             <h2 class="poppins-semibold text-danger" >Temukan Inovasi Terkini dalam Gadget Pengalaman Belanja yang Tanpa Batas!</h2>
-            <p class="poppins-regular pt-3" style="font-size: 18px">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <p class="poppins-regular pt-3" style="font-size: 18px">Nikmati berbagai inovasi terbaru dalam gadget yang akan memberikan Anda pengalaman berbelanja yang tiada tanding. Temukan beragam produk berkualitas yang siap memenuhi kebutuhan teknologi Anda dengan jaminan layanan terbaik.
             </p>
             <div class="d-flex gap3 justify-content-between pb-4">
                 <div class="poppins-medium"> <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt=""> 100% Terpercaya </div>
                 <div class="poppins-medium"> <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt="">Bahan Berkualitas</div>
                 <div class="poppins-medium"> <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt="">Layanan Terbaik</div>
             </div>
-            <button class="btn btn-danger p-2 poppins-medium" >Hubungi Kami Sekarang</button>
+            <button class="btn btn-danger p-2 poppins-medium" style="">Hubungi Kami Sekarang</button>
         </div>
         <div class="col d-flex justify-content-center align-items-center">
             <img src="{{asset('frontend/img/phone.png')}}" alt="Phone">
@@ -274,9 +287,7 @@ ul li {
         <span class="brand-line"></span>Brand Pilihan
     </h3>
     <p class="poppins-regular" style="width: 900px">
-        Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit, sed do eiusmod tempor incididunt ut labore et 
-        dolore magna aliqua. Ut enim ad minim veniam, quis nost
+        Kami menyediakan berbagai pilihan brand terkemuka yang terkenal akan kualitas dan inovasinya. Temukan produk terbaik dari brand-brand berikut yang siap memenuhi kebutuhan Anda dengan teknologi terbaru dan desain modern.
     </p>
     <img class="img-fluid" src="{{asset('frontend/img/merk.png')}}" alt="Phone">
 </div>
@@ -288,9 +299,9 @@ ul li {
             <span class="brand-line-white"></span>Produk Populer Bulan Ini
         </h3>
         <p class="poppins-regular text-white pt-3" style="width: 900px">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+            Temukan produk-produk terpopuler yang banyak diminati oleh pelanggan kami bulan ini. Jangan lewatkan kesempatan untuk mendapatkan produk berkualitas dengan harga terbaik
         </p>
-        <div class="row pb-4 pt-2">
+        <div class="row pb-4 pt-2" id="productPromo">
             <div class="col-md-3 d-flex justify-content-center">
                 <div class="card border rounded-4">
                     <img src="{{asset('frontend/img/pop.png')}}" class="card-img-top" alt="Samsung Galaxy A25 5G">
@@ -340,7 +351,7 @@ ul li {
         <span class="brand-line"></span>Testimonial
     </h3>
     <p class="poppins-regular" style="width: 900px">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.
+        Dengarkan apa yang pelanggan kami katakan tentang produk dan layanan kami. Kami selalu berusaha memberikan yang terbaik untuk kepuasan Anda.
     </p>
     <div class="row text-center g-4">
         <div class="col-md-4">
@@ -348,7 +359,7 @@ ul li {
             <div class=" card p-3 border-0 mt-3">
                 <div class="card-body">
                     <h5 class="poppins-semibold card-title">Angga Anugerah</h5>
-                    <p class="poppins-regular card-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"</p>
+                    <p class="poppins-regular card-text">"Pengalaman berbelanja di sini sangat memuaskan. Produk asli dan layanan sangat cepat!"</p>
                 </div>
             </div>
         </div>
@@ -357,7 +368,7 @@ ul li {
             <div class=" card p-3 border-0 mt-3">
                 <div class="card-body">
                     <h5 class="poppins-semibold card-title">Dimas Anggara</h5>
-                    <p class="poppins-regular card-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"</p>
+                    <p class="poppins-regular card-text">"Harga yang ditawarkan sangat kompetitif dan banyak promo menarik. Sangat direkomendasikan!"</p>
                 </div>
             </div>
         </div>
@@ -366,7 +377,7 @@ ul li {
             <div class=" card p-3 border-0 mt-3">
                 <div class="card-body">
                     <h5 class="poppins-semibold card-title">Farah Nabila</h5>
-                    <p class="poppins-regular card-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut"</p>
+                    <p class="poppins-regular card-text">"Pelayanan pelanggan yang ramah dan profesional. Saya sangat puas dengan produk yang saya beli."</p>
                 </div>
             </div>
         </div>
@@ -385,7 +396,7 @@ ul li {
             <h4 class="text-danger poppins-semibold">
                 <span class="brand-line"></span>Kenapa Harus Di LimaWaktu?
             </h4>
-            <p class="poppins-regular">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p class="poppins-regular">Kami menyediakan berbagai keuntungan dan jaminan bagi Anda yang berbelanja di toko kami. Berikut beberapa alasan mengapa Anda harus memilih kami:</p>
             <div class="list-unstyled">
                 <div class="border border-1 rounded-4 p-2 mb-3 shadow d-flex align-items-center justify-content-start p-2">
                     <img class="p-2" width="70px" src="{{asset('frontend/img/icon/whycek.png')}}" alt="">
@@ -426,9 +437,11 @@ ul li {
             <div class="pt-5 mt-5"></div>
             <h3 class="text-white mt-5 pt-5">Masih ragu dan bingung dengan layanan kami ?</h3>
             <p class="text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Jangan khawatir, kami siap membantu Anda! Hubungi kami sekarang juga untuk mendapatkan penawaran terbaik dan layanan yang memuaskan. Temukan berbagai promo menarik dan kemudahan dalam bertransaksi hanya di toko kami.
             </p>
-            <button class="btn btn-primary">Hubungi Kami</button>
+            <button class="btn btn-custom">
+                <i class="fa fa-whatsapp whatsapp-icon"></i> Hubungi Kami
+            </button>
         </div>
     </div>
 </div>
@@ -449,4 +462,56 @@ ul li {
 @endsection
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>
+
+<script>
+
+async function fetchProducts(pageUrl) {
+    pageUrl = pageUrl || 'http://127.0.0.1:8000/api/v1/get-products';
+    try {
+        const response = await fetch(pageUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        updateProductList(result.data.data);
+        updatePagination(result.data.links);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+    }
+}
+
+function updateProductList(products) {
+    const productListContainer = document.getElementById('productPromo');
+    productListContainer.innerHTML = '';
+    products.forEach(product => {
+    if(product){
+        const imagePath = product.images.length > 0 ? product.images[0].name : 'default.jpg';
+        const discountBadge = product.promo && product.promo.length > 0 && product.promo[0].discount ? 
+            `<span class="badge bg-danger">${parseInt(product.promo[0].discount)}% Off</span>` : '';
+        productListContainer.innerHTML += `
+            <a class="col-md-4 mb-4 text-secondary text-decoration-none " href="/product/${product.id}">
+                <div class="card border-1 rounded-4 shadow">
+                    <img class="card-img-top pt-2" src="/images/product-image/${imagePath}" alt="${product.name}">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.name}</h5>
+                        <p class="card-text mb-4 slug">${product.slug}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold m-0">Rp. ${parseInt(product.price)}</h5>
+                            ${discountBadge}
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-center align-items-center gap-2">
+                            <button class="btn btn-danger rounded-pill w-100">View Product</button>
+                            <button class="btn btn-outline-danger rounded-circle">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        `;
+        }
+    });
+}
+</script>
 @endpush
