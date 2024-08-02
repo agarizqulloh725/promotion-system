@@ -47,50 +47,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{-- <form id="createProductForm">
-                    <div class="form-group">
-                        <label for="productName">Name</label>
-                        <input type="text" class="form-control" id="productName" placeholder="Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="productSlug">Slug</label>
-                        <input type="text" class="form-control" id="productSlug" placeholder="Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="productDescription">Description</label>
-                        <textarea class="form-control" id="productDescription" placeholder="Description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="productPrice">Price</label>
-                        <input type="number" step="0.01" class="form-control" id="productPrice" placeholder="Price">
-                    </div>
-                    <div class="form-group">
-                        <label for="productVideoLink">Video Link</label>
-                        <input type="url" class="form-control" id="productVideoLink" placeholder="Video URL">
-                    </div>
-                    <div class="form-group">
-                        <label for="productTokopediaLink">Tokopedia Link</label>
-                        <input type="url" class="form-control" id="productTokopediaLink" placeholder="Tokopedia URL">
-                    </div>
-                    <div class="form-group">
-                        <label for="createProductImages">Product Image</label>
-                        <input type="file" class="form-control-file" id="createProductImages" multiple onchange="previewImages();">
-                        <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="productShow">
-                        <label class="form-check-label" for="productShow">Show Product?</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="productPopular">
-                        <label class="form-check-label" for="productPopular">Mark as Popular?</label>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
-                    </div>
-                </form> --}}
-
                 <form id="createProductForm">
                     <div class="row">
                         <!-- Kolom Kiri -->
@@ -111,7 +67,6 @@
                                 <label for="productDescription" class="mb-2">Description</label>
                                 <textarea class="form-control" id="productDescription" placeholder="Description"></textarea>
                             </div>
-                           
                         </div>
                 
                         <!-- Kolom Kanan -->
@@ -124,6 +79,10 @@
                                 <label for="productTokopediaLink" class="mb-2 pt-3">Tokopedia Link</label>
                                 <input type="url" class="form-control" id="productTokopediaLink" placeholder="Tokopedia URL">
                             </div>
+                            <div class="form-group">
+                                <label for="cYearProduct" class="mb-2 pt-3">Tahun</label>
+                                <input type="number" class="form-control" id="cYearProduct" placeholder="Tahun Terbit" min="1000" max="9999">
+                            </div>                            
                             <div class="form-group pt-5">
                                 <label for="createProductImages">Product Image</label>
                                 <input type="file" class="form-control-file" id="createProductImages" multiple onchange="previewImages();">
@@ -197,6 +156,10 @@
                     <a id="showProductTokopediaLink" href="" target="_blank">View on Tokopedia</a>
                 </div>
                 <div class="form-group">
+                    <label for="sYearProduct" class="mb-2 pt-3">Tahun</label>
+                    <input type="number" class="form-control" id="sYearProduct" placeholder="Tahun Terbit" min="1000" max="9999">
+                </div> 
+                <div class="form-group">
                     <label>Visibility:</label>
                     <div id="showProductIsShow" class="form-text"></div>
                 </div>
@@ -211,53 +174,6 @@
         </div>
     </div>
 </div> 
-
-
-
-<script>
-function showProduct(id) {
-    $.ajax({
-        url: '/api/v1/admin/product/' + id,
-        type: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
-        contentType: 'application/json',
-        success: function(response) {
-            $('#showProductName').val(response.name);
-            $('#showProductSlug').val(response.slug);
-            $('#showProductDescription').val(response.description);
-            $('#showProductPrice').val(response.price);
-            $('#showProductVideoLink').attr('href', response.link_video).text(response.link_video);
-            $('#showProductTokopediaLink').attr('href', response.link_tokopedia).text(response.link_tokopedia);
-            $('#showProductIsShow').val(response.is_show ? 'Yes' : 'No');
-            $('#showProductIsPopular').val(response.is_popular ? 'Yes' : 'No');
-
-            $('#showImagePreviewContainer').empty();
-            if (response.images) {
-                let images = Array.isArray(response.images) ? response.images : [response.images];
-                images.forEach(function(imageUrl) {
-                    var fullPath = '/images/product/' + imageUrl;
-                    var img = $('<img>').attr("src", fullPath);
-                    img.css({ "max-width": "150px", "height": "auto" });
-                    $("#showImagePreviewContainer").append(img);
-                });
-            }
-            $('#showProductModal').modal('show');
-        },
-        error: function(error) {
-            console.log('Error fetching product:', error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed to fetch product details. Please try again.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
-    });
-}
-</script>
-
 
 <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -311,6 +227,11 @@ function showProduct(id) {
                                 <input type="checkbox" class="form-check-input" id="editProductPopular">
                                 <label class="form-check-label" for="editProductPopular">Mark as Popular?</label>
                             </div> --}}
+
+                            <div class="form-group">
+                                <label for="uYearProduct" class="mb-2 pt-3">Tahun</label>
+                                <input type="number" class="form-control" id="uYearProduct" placeholder="Tahun Terbit" min="1000" max="9999">
+                            </div> 
 
                             <div class="form-group pt-4">
                                 <label for="editProductImages" class="mb-2 pt-3">Product Image</label>
@@ -415,6 +336,7 @@ $(document).ready(function() {
     formData.append('link_tokopedia', $('#productTokopediaLink').val());
     formData.append('is_show', $('#productShow').is(':checked') ? 1 : 0);
     formData.append('is_popular', $('#productPopular').is(':checked') ? 1 : 0);
+    formData.append('year', $('#cYearProduct').val());
 
     // Handle file uploads for images, if any
     // var files = $('#createProductImages').get(0).files;  // Ensure this ID matches your actual file input's ID
@@ -512,13 +434,14 @@ $(document).ready(function() {
     formData.append('link_tokopedia', $('#editProductTokopediaLink').val());
     formData.append('is_show', $('#editProductShow').is(':checked') ? 1 : 0);
     formData.append('is_popular', $('#editProductPopular').is(':checked') ? 1 : 0);
+    formData.append('year', $('#uYearProduct').val());
 
-    // var files = $('#editProductImages').get(0).files; 
-    // if (files.length > 0) {
-    //     $.each(files, function(i, file) {
-    //         formData.append('images[]', file);
-    //     });
-    // }
+    var files = $('#editProductImages').get(0).files; 
+    if (files.length > 0) {
+        $.each(files, function(i, file) {
+            formData.append('product_images[]', file);
+        });
+    }
 
     $.ajax({
         url: '/api/v1/admin/product/' + $('#editProductId').val(), 
@@ -583,6 +506,7 @@ $(document).ready(function() {
                 $('#showProductTokopediaLink').attr('href', response.link_tokopedia).text(response.link_tokopedia);
                 $('#showProductIsShow').text(response.is_show ? 'Yes' : 'No');
                 $('#showProductIsPopular').text(response.is_popular ? 'Yes' : 'No');
+                $('#sYearProduct').val(response.year);
 
                 $('#showImagePreviewContainer').empty();
                 if (response.images) {
@@ -626,8 +550,9 @@ function editProduct(id) {
             $('#editProductTokopediaLink').val(response.link_tokopedia);
             $('#editProductShow').prop('checked', response.is_show);
             $('#editProductPopular').prop('checked', response.is_popular);
+            $('#uYearProduct').val(response.year);
 
-            console.log(response.images);
+            console.log(response.year);
 
             if (response.images) {
                 $("#editImagePreviewContainer").empty();
@@ -689,6 +614,47 @@ function editPreviewImages() {
             reader.readAsDataURL(file);
         });
     }
+}
+function showProduct(id) {
+    $.ajax({
+        url: '/api/v1/admin/product/' + id,
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        contentType: 'application/json',
+        success: function(response) {
+            $('#showProductName').val(response.name);
+            $('#showProductSlug').val(response.slug);
+            $('#showProductDescription').val(response.description);
+            $('#showProductPrice').val(response.price);
+            $('#showProductVideoLink').attr('href', response.link_video).text(response.link_video);
+            $('#showProductTokopediaLink').attr('href', response.link_tokopedia).text(response.link_tokopedia);
+            $('#showProductIsShow').val(response.is_show ? 'Yes' : 'No');
+            $('#showProductIsPopular').val(response.is_popular ? 'Yes' : 'No');
+
+            $('#showImagePreviewContainer').empty();
+            if (response.images) {
+                let images = Array.isArray(response.images) ? response.images : [response.images];
+                images.forEach(function(imageUrl) {
+                    var fullPath = '/images/product/' + imageUrl;
+                    var img = $('<img>').attr("src", fullPath);
+                    img.css({ "max-width": "150px", "height": "auto" });
+                    $("#showImagePreviewContainer").append(img);
+                });
+            }
+            $('#showProductModal').modal('show');
+        },
+        error: function(error) {
+            console.log('Error fetching product:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to fetch product details. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
 }
 
 </script>

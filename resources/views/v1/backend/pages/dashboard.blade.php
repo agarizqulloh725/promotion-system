@@ -54,7 +54,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  {{-- <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
@@ -65,7 +65,7 @@
           <canvas id="visit-sale-chart" class="mt-4"></canvas>
         </div>
       </div>
-    </div>
+    </div> --}}
     {{-- <div class="col-md-5 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">

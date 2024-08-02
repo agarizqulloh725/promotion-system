@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductController extends Controller
@@ -98,10 +99,36 @@ class ProductController extends Controller
                 'link_tokopedia' => 'nullable|string',
                 'is_show' => 'nullable|boolean',
                 'is_popular' => 'nullable|boolean',
+                'year' => 'nullable'
             ]);
 
             $product = Product::findOrFail($id);
             $product->update($validatedData);
+            if($product){
+                if ($request->hasFile('product_images')) {
+                    $images = $request->file('product_images');
+                    $imageNames = [];
+
+                    $productImages = DB::table('product_image')->where('product_id', $product->id)->get();
+                    foreach ($productImages as $image) {
+                        $filePath = public_path('images/product-image/' . $image->name);
+                        if (File::exists($filePath)) {
+                            File::delete($filePath);
+                        }
+                        DB::table('product_image')->where('id', $image->id)->delete();
+                    }
+                    foreach ($images as $image) {
+                        if ($image->isValid()) {
+                            $randomFileName = uniqid('product-image_') . '.' . $image->extension();
+                            $image->move(public_path('images/product-image'), $randomFileName);
+                            DB::table('product_image')->insert([
+                                'product_id' => $product->id,
+                                'name' => $randomFileName
+                            ]);
+                        }
+                    }
+                }
+            }
             return response()->json($product, 200);
 
         } catch (ValidationException $e) {
