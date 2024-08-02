@@ -8,10 +8,15 @@
     background-position: center;
     text-align: center;
 }
+
+
 .image-backgroundfoot {
-    background-image: url({{asset('frontend/img/bg-nav2.jpg')}});
-    background-size: cover;
+    /* background-image: url({{asset('frontend/img/bg-nav2.jpg')}}); */
+    background-color: red;
+    /* background-size: cover; */
     background-position: center;
+    height: 370px;
+    
 }
 .image-backgroundfooter {
     background-image: url({{asset('frontend/img/bg-nav.jpg')}});
@@ -80,6 +85,21 @@
 
 .stat-item:last-child {
     border-right: none; 
+}
+
+
+.btn-custom {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    border-radius: 25px;
+}
+.btn-custom:hover {
+    background-color: red;
+    color: white;
+}
+.btn-custom .whatsapp-icon {
+    margin-right: 8px;
 }
 
 @media (max-width: 768px) {
@@ -222,9 +242,10 @@ ul li {
         <div class="col">
             <h2 class="poppins-semibold text-danger" >LIMAWAKTU - Jujur Harganya</h2>
             <p class="poppins-regular pt-3" style="font-size: 18px">
-                LIMAWAKTU adalah Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim 
-                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+                LIMAWAKTU  adalah solusi terbaik untuk kebutuhan gadget Anda. Kami 
+                menawarkan produk dengan harga yang jujur dan transparan, sehingga 
+                Anda selalu mendapatkan nilai terbaik. Dengan lebih dari 5 tahun pengalaman, 
+                kami telah melayani ribuan pelanggan dengan produk-produk berkualitas tinggi.
             </p>
             <div class="row stat-row">
                 <div class="col-md-3 text-center stat-item">
@@ -257,9 +278,9 @@ ul li {
     <div class="row pt-5 mt-5">
         <div class="col">
             <h2 class="poppins-semibold text-danger" >Temukan Inovasi Terkini dalam Gadget Pengalaman Belanja yang Tanpa Batas!</h2>
-            <p class="poppins-regular pt-3" style="font-size: 18px">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <p class="poppins-regular pt-3" style="font-size: 18px">Nikmati berbagai inovasi terbaru dalam gadget
+                 yang akan memberikan Anda pengalaman berbelanja yang tiada tanding. Temukan beragam produk berkualitas 
+                 yang siap memenuhi kebutuhan teknologi Anda dengan jaminan layanan terbaik.
             </p>
             <div class="d-flex gap3 justify-content-between pb-4">
                 <div class="poppins-medium"> <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt=""> 100% Terpercaya </div>
@@ -278,14 +299,15 @@ ul li {
     <div class="row">
         <div class="col-md-6 mt-5">
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                {{-- <iframe class="embed-responsive-item" src="https://youtu.be/xXh3M8EFPV4?si=PXyHBebHVuB_1UAv" allowfullscreen></iframe> --}}
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/xXh3M8EFPV4?si=PXyHBebHVuB_1UAv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </div>
         <div class="col-md-6">
             <h4 class="text-danger poppins-semibold">
                 <span class="brand-line"></span>Kenapa Harus Di LimaWaktu?
             </h4>
-            <p class="poppins-regular">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p class="poppins-regular">Kami menyediakan berbagai keuntungan dan jaminan bagi Anda yang berbelanja di toko kami. Berikut beberapa alasan mengapa Anda harus memilih kami:</p>
             <div class="list-unstyled">
                 <div class="border border-1 rounded-4 p-2 mb-3 shadow d-flex align-items-center justify-content-start p-2">
                     <img class="p-2" width="70px" src="{{asset('frontend/img/icon/whycek.png')}}" alt="">
@@ -313,35 +335,26 @@ ul li {
     </div>
 </div>
 
-<div class="image-backgroundfoot p-3">
+<div class="image-backgroundfoot pt-5" style="margin-top:100px">
     <div class="row">
-        <div class="col text-center">
-            <img src="{{asset('frontend/img/hubme.png')}}" alt="">
+        <div class="col-md-6" style="position: relative;">
+            <img src="{{asset('frontend/img/hubme.png')}}" alt="Gambar Layanan" class="img-fluid" style="position: absolute; top: -150px; left: 200px">
         </div>
-        <div class="col">
-            <div class="pt-5 mt-5"></div>
-            <h3 class="text-white mt-5 pt-5">Masih ragu dan bingung dengan layanan kami ?</h3>
+        <div class="col-md-6 text-white">
+            <h3 class="mt-5 pt-5">Masih ragu dan bingung dengan layanan kami?</h3>
             <p class="text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Jangan khawatir, kami siap membantu Anda! Hubungi kami sekarang juga untuk <br> mendapatkan penawaran terbaik dan layanan yang memuaskan. 
+                 Temukan berbagai <br> promo menarik dan kemudahan dalam bertransaksi hanya di toko kami.
             </p>
-            <button class="btn btn-primary">Hubungi Kami</button>
+            <button class="btn btn-custom">
+                <i class="fa fa-whatsapp whatsapp-icon"></i> Hubungi Kami
+            </button>
         </div>
+
+       
     </div>
 </div>
-<div class="container pt-4 pb-3">
-    <div class="mx-auto">
-        <div class="d-flex justify-content-between">
-            <img class="mt-2" width="80px" height="35px" src="{{asset('frontend/img/pay/ipay.png')}}" alt="">
-            <img width="120px" height="60px" src="{{asset('frontend/img/pay/gpay.png')}}" alt="">
-            <img class="mt-2" width="70px" height="40px" src="{{asset('frontend/img/pay/samsungpay.png')}}" alt="">
-            <img class="mt-0" width="100px" height="70px" src="{{asset('frontend/img/pay/alipay.png')}}" alt="">
-            <img class="mt-2" width="70px" height="50px" src="{{asset('frontend/img/pay/visa.png')}}" alt="">
-            <img class="mt-2" width="70px" height="40px" src="{{asset('frontend/img/pay/maestro.png')}}" alt="">
-            <img class="mt-2" width="70px" height="40px" src="{{asset('frontend/img/pay/mastercard.png')}}" alt="">
-            <img class="mt-2" width="70px" height="40px" src="{{asset('frontend/img/pay/cirrus.png')}}" alt="">
-        </div>
-    </div>
-</div>
+
 @endsection
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>
