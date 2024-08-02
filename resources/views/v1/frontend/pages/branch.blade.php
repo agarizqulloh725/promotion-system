@@ -9,9 +9,11 @@
     text-align: center;
 }
 .image-backgroundfoot {
-    background-image: url({{asset('frontend/img/bg-nav2.jpg')}});
-    background-size: cover;
-    background-position: center;
+    /* background-image: url({{asset('frontend/img/bg-nav2.jpg')}}); */
+    background-color: red;
+    height:400px;
+    /* background-size: cover; */
+    /* background-position: center; */
 }
 .image-backgroundfooter {
     background-image: url({{asset('frontend/img/bg-nav.jpg')}});
@@ -32,6 +34,20 @@
 }
 .spacing-1{
     letter-spacing: 1px;
+}
+
+.btn-custom {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    border-radius: 25px;
+}
+.btn-custom:hover {
+    background-color: red;
+    color: white;
+}
+.btn-custom .whatsapp-icon {
+    margin-right: 8px;
 }
 @media (min-width: 200px) { 
     .t-desc {
@@ -130,21 +146,25 @@
 
 {{-- content header --}}
 <div class="image-background p-3">
-    <h3 class="text-white poppins-semibold title">Toko Cabang</h3>
-    <p class="text-white poppins-regular t-desc spacing-1 mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-    sed do eiusmod tempor <br> incididunt ut labore et dolore magna aliqua.
-    </p>
-    <nav aria-label="breadcrumb mt-2">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item poppins-light"><a href="#">Beranda</a></li>
-            <li class="breadcrumb-item poppins-medium active text-white" aria-current="page">Toko Cabang</li>
-        </ol>
-    </nav>
+    <div class="container">
+        <h3 class="text-white poppins-semibold title">Toko Cabang</h3>
+        <p class="text-white poppins-regular t-desc spacing-1 mt-4">Kunjungi berbagai cabang toko kami yang tersebar di seluruh wilayah untuk mendapatkan produk
+            <br> unggulan kami. Setiap cabang menawarkan pengalaman berbelanja yang 
+            <br> nyaman dan pelayanan terbaik untuk memenuhi kebutuhan Anda.
+        
+        </p>
+        <nav aria-label="breadcrumb mt-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item poppins-light"><a href="#">Beranda</a></li>
+                <li class="breadcrumb-item poppins-medium active text-white" aria-current="page">Toko Cabang</li>
+            </ol>
+        </nav>
+    </div>
 </div>
 
 @foreach ($branch as $mybranch)
 {{-- content body --}}
-<div class="container my-4">
+<div class="container my-4 pt-5">
     <div class="card border-1 shadow rounded-3">
         <div class="row g-0">
             <div class="col-md-4 d-flex justify-content-between align-items-center">
@@ -177,22 +197,26 @@
 @endforeach
 
 
-<div class="image-backgroundfoot p-3">
+<div class="image-backgroundfoot pt-5" style="margin-top:200px">
     <div class="row">
-        <div class="col text-center">
-            <img src="{{asset('frontend/img/hubme.png')}}" alt="">
+        <div class="col-md-6" style="position: relative;">
+            <img src="{{asset('frontend/img/hubme.png')}}" alt="Gambar Layanan" class="img-fluid" style="position: absolute; top: -150px; left: 150px">
         </div>
-        <div class="col">
-            <div class="pt-5 mt-5"></div>
-            <h3 class="text-white mt-5 pt-5">Masih ragu dan bingung dengan layanan kami ?</h3>
+        <div class="col-md-6 text-white">
+            <h3 class="mt-5 pt-5">Masih ragu dan bingung dengan layanan kami?</h3>
             <p class="text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Jangan khawatir, kami siap membantu Anda! Hubungi kami sekarang juga untuk mendapatkan penawaran terbaik dan layanan yang memuaskan. Temukan berbagai promo menarik dan kemudahan dalam bertransaksi hanya di toko kami.
             </p>
-            <button class="btn btn-primary">Hubungi Kami</button>
+            <button class="btn btn-custom">
+                <i class="fa fa-whatsapp whatsapp-icon"></i> Hubungi Kami
+            </button>
         </div>
+
+       
     </div>
 </div>
-<div class="container pt-4 pb-3">
+
+{{-- <div class="container pt-4 pb-3">
     <div class="mx-auto">
         <div class="d-flex justify-content-between">
             <img class="mt-2" width="80px" height="35px" src="{{asset('frontend/img/pay/ipay.png')}}" alt="">
@@ -205,7 +229,7 @@
             <img class="mt-2" width="70px" height="40px" src="{{asset('frontend/img/pay/cirrus.png')}}" alt="">
         </div>
     </div>
-</div>
+</div> --}}
 @endsection
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>

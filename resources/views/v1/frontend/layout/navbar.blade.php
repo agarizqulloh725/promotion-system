@@ -22,7 +22,7 @@
                         <a class="nav-link poppins-regular text-white {{ request()->is('branch') ? 'active' : '' }}" href="/branch">Cabang</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link poppins-regular text-white {{ request()->is('about') ? 'active' : '' }}" href="/about">About</a>
+                        <a class="nav-link poppins-regular text-white {{ request()->is('about') ? 'active' : '' }}" href="/about">Tentang Kami</a>
                     </li>
                 </ul>                
                 <button class="btn btn-outline-danger poppins-regular btn-custom-nav ms-2" type="button">Hubungi Kami</button>

@@ -304,41 +304,41 @@ ul li {
         <div class="row pb-4 pt-2" id="productPromo">
             <div class="col-md-3 d-flex justify-content-center">
                 <div class="card border rounded-4">
-                    <img src="{{asset('frontend/img/pop.png')}}" class="card-img-top" alt="Samsung Galaxy A25 5G">
+                    <img src="{{asset('frontend/img/samsung a54.jpeg')}}" class="card-img-top" alt="Samsung Galaxy A25 5G">
                     <div class="card-body">
-                        <h5 class="card-title poppins-semibold">SAMSUNG GALAXY A25 5G</h5>
+                        <h5 class="card-title poppins-semibold">Samsung Galaxy A54 5G</h5>
                         <p style="color: #828282; font-size: 12px" class="card-text poppins-regular">Triple Camera 50MP + OIS | Layar Super Amoled + 120Hz | Baterai 5000mAh</p>
-                        <p class=" poppins-bold"><strong>Rp 4.999.000</strong> <span class="discount-tag poppins-medium">35% Off</span></p>
+                        <p class=" poppins-bold"><strong>Rp 5.999.000</strong> <span class="discount-tag poppins-medium">35% Off</span></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 d-flex justify-content-center">
                 <div class="card border rounded-4">
-                    <img src="{{asset('frontend/img/pop.png')}}" class="card-img-top" alt="Samsung Galaxy A25 5G">
+                    <img src="{{asset('frontend/img/XIOMI.jpeg')}}" class="card-img-top" alt="Samsung Galaxy A25 5G">
                     <div class="card-body">
-                        <h5 class="card-title poppins-semibold">SAMSUNG GALAXY A25 5G</h5>
+                        <h5 class="card-title poppins-semibold">Xiaomi Redmi Note 11</h5>
                         <p style="color: #828282; font-size: 12px" class="card-text poppins-regular">Triple Camera 50MP + OIS | Layar Super Amoled + 120Hz | Baterai 5000mAh</p>
-                        <p class=" poppins-bold"><strong>Rp 4.999.000</strong> <span class="discount-tag poppins-medium">35% Off</span></p>
+                        <p class=" poppins-bold"><strong>Rp 4.999.000</strong></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 d-flex justify-content-center">
                 <div class="card border rounded-4">
-                    <img src="{{asset('frontend/img/pop.png')}}" class="card-img-top" alt="Samsung Galaxy A25 5G">
+                    <img src="{{asset('frontend/img/A54 BLACK.jpeg')}}" class="card-img-top" alt="Samsung Galaxy A25 5G" width="50%">
                     <div class="card-body">
-                        <h5 class="card-title poppins-semibold">SAMSUNG GALAXY A25 5G</h5>
+                        <h5 class="card-title poppins-semibold">Samsung Galaxy A55 11</h5>
                         <p style="color: #828282; font-size: 12px" class="card-text poppins-regular">Triple Camera 50MP + OIS | Layar Super Amoled + 120Hz | Baterai 5000mAh</p>
-                        <p class=" poppins-bold"><strong>Rp 4.999.000</strong> <span class="discount-tag poppins-medium">35% Off</span></p>
+                        <p class=" poppins-bold"><strong>Rp 6.999.000</strong> <span class="discount-tag poppins-medium">35% Off</span></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 d-flex justify-content-center">
                 <div class="card border rounded-4">
-                    <img src="{{asset('frontend/img/pop.png')}}" class="card-img-top" alt="Samsung Galaxy A25 5G">
+                    <img src="{{asset('frontend/img/111.jpg')}}" class="card-img-top" alt="Samsung Galaxy A25 5G">
                     <div class="card-body">
-                        <h5 class="card-title poppins-semibold">SAMSUNG GALAXY A25 5G</h5>
+                        <h5 class="card-title poppins-semibold">Iphone 11</h5>
                         <p style="color: #828282; font-size: 12px" class="card-text poppins-regular">Triple Camera 50MP + OIS | Layar Super Amoled + 120Hz | Baterai 5000mAh</p>
-                        <p class=" poppins-bold"><strong>Rp 4.999.000</strong> <span class="discount-tag poppins-medium">35% Off</span></p>
+                        <p class=" poppins-bold"><strong>Rp 7.999.000</strong> </p>
                     </div>
                 </div>
             </div>
@@ -355,7 +355,7 @@ ul li {
     </p>
     <div class="row text-center g-4">
         <div class="col-md-4">
-            <img src="{{asset('frontend/img/pop.png')}}" class=" rounded-circle mx-auto" style="width: 100px; height: 100px;" alt="Angga Anugerah">
+            <img src="{{asset('frontend\img\pelanggan\3.jpeg')}}" class=" rounded-circle mx-auto" style="width: 150px; height: 160px;" alt="Angga Anugerah">
             <div class=" card p-3 border-0 mt-3">
                 <div class="card-body">
                     <h5 class="poppins-semibold card-title">Angga Anugerah</h5>
@@ -364,7 +364,7 @@ ul li {
             </div>
         </div>
         <div class="col-md-4">
-            <img src="{{asset('frontend/img/pop.png')}}" class=" rounded-circle mx-auto" style="width: 100px; height: 100px;" alt="Dimas Anggara">
+            <img src="{{asset('frontend\img\pelanggan\2.jpeg')}}" class=" rounded-circle mx-auto" style="width: 150px; height: 160px;" alt="Dimas Anggara">
             <div class=" card p-3 border-0 mt-3">
                 <div class="card-body">
                     <h5 class="poppins-semibold card-title">Dimas Anggara</h5>
@@ -373,7 +373,7 @@ ul li {
             </div>
         </div>
         <div class="col-md-4">
-            <img src="{{asset('frontend/img/pop.png')}}" class=" rounded-circle mx-auto" style="width: 100px; height: 100px;" alt="Farah Nabila">
+            <img src="{{asset('frontend\img\pelanggan\4.jpeg')}}" class=" rounded-circle mx-auto" style="width: 150px; height: 160px;" alt="Farah Nabila">
             <div class=" card p-3 border-0 mt-3">
                 <div class="card-body">
                     <h5 class="poppins-semibold card-title">Farah Nabila</h5>
