@@ -12,6 +12,8 @@ Route::get('/test', [GeneralRouteController::class, 'testToken']);
 Route::get('/homepage', [GeneralRouteController::class, 'homePage']);
 Route::get('/product', [GeneralRouteController::class, 'product']);
 Route::get('/product/{id}', [GeneralRouteController::class, 'productShow'])->name('productDetail');
+Route::get('/product-bicycle', [GeneralRouteController::class, 'productBicycle']);
+Route::get('/product-bicycle/{id}', [GeneralRouteController::class, 'productBicycleShow'])->name('productDetail');
 Route::get('/promo', [GeneralRouteController::class, 'promo']);
 Route::get('/about', [GeneralRouteController::class, 'about']);
 Route::get('/branch', [GeneralRouteController::class, 'branch']);

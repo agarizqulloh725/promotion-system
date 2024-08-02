@@ -12,9 +12,15 @@
                     <li class="nav-item">
                         <a class="nav-link poppins-regular text-white {{ request()->is('/') ? 'active' : '' }}" aria-current="page" href="/">Beranda</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link poppins-regular text-white {{ request()->is('product') ? 'active' : '' }}" href="/product">Produk</a>
-                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle poppins-regular text-white {{ request()->is('product') || request()->is('product-bicycle') ? 'active' : '' }}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Produk
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item {{ request()->is('product') ? 'active' : '' }}" href="/product">Handphone</a></li>
+                            <li><a class="dropdown-item {{ request()->is('product-bicycle') ? 'active' : '' }}" href="/product-bicycle">Sepeda Listrik</a></li>
+                        </ul>                        
+                    </li>                                       
                     <li class="nav-item">
                         <a class="nav-link poppins-regular text-white {{ request()->is('promo') ? 'active' : '' }}" href="/promo">Promo</a>
                     </li>
