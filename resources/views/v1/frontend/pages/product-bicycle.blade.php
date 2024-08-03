@@ -159,19 +159,19 @@
         <div class="col-md-3">
             <h5 class="poppins-semibold mb-3 mt-2">Filter</h5>
             <div class="border border-1 rounded-4 p-4 shadow">
-                <div class="dropdown">
+                {{-- <div class="dropdown">
                     <a class="text-reset text-body text-decoration-none bg-primary" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="d-flex align-items-center justify-content-between">
                             <p class="mb-0 poppins-regular">Semua Merek</p>
                             <i class="fas fa-chevron-right"></i>
                         </div>
                     </a>
-                    {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="#">iPhone 13</a></li>
                         <li><a class="dropdown-item" href="#">iPhone 13 Pro</a></li>
                         <li><a class="dropdown-item" href="#">iPhone 12</a></li>
-                    </ul> --}}
-                </div>
+                    </ul>
+                </div> --}}
                 <div id="brandUI"></div>
                 <hr>
                 <div class="dropdown mt-2">
@@ -424,7 +424,7 @@ var searchh = "";
 
 async function fetchBrand() {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/get-brand');
+        const response = await fetch('http://127.0.0.1:8000/api/v1/get-brand-bicycle');
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -451,7 +451,7 @@ async function fetchTahun() {
     }
 } 
 async function fetchProducts(pageUrl) {
-    pageUrl = pageUrl || 'http://127.0.0.1:8000/api/v1/get-products';
+    pageUrl = pageUrl || 'http://127.0.0.1:8000/api/v1/get-bicycle';
     try {
         const response = await fetch(pageUrl);
         if (!response.ok) {
@@ -477,7 +477,7 @@ async function applyFilters() {
         promos: promos.join(','),
     }).toString();
 
-    const url = `http://127.0.0.1:8000/api/v1/get-products?${queryParams}`;
+    const url = `http://127.0.0.1:8000/api/v1/get-bicycle?${queryParams}`;
 
     try {
         const response = await fetch(url);
@@ -518,9 +518,6 @@ function updateProductList(products) {
                         <hr>
                         <div class="d-flex justify-content-center align-items-center gap-2">
                             <button class="btn btn-danger rounded-pill w-100">View Product</button>
-                            <button class="btn btn-outline-danger rounded-circle">
-                                <i class="fas fa-heart"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -673,7 +670,7 @@ function setSortOption(option, event) {
         queryParams.append('search', encodeURIComponent(searchh));
     }
 
-    const apiUrl = `http://127.0.0.1:8000/api/v1/get-products?${queryParams.toString()}`;
+    const apiUrl = `http://127.0.0.1:8000/api/v1/get-bicycle?${queryParams.toString()}`;
     fetchProducts(apiUrl);
 }
 
@@ -683,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // searchButton.addEventListener('click', function(event) {
     //     event.preventDefault();
     //     const query = searchInput.value;
-    //     fetchProducts(`http://127.0.0.1:8000/api/v1/get-products?search=${encodeURIComponent(query)}`);
+    //     fetchProducts(`http://127.0.0.1:8000/api/v1/get-bicycle?search=${encodeURIComponent(query)}`);
     // });
 
     const debounce = (func, delay) => {
@@ -713,7 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filterSort) {
         queryParams.append('sort', filterSort);
     }
-        const apiUrl = `http://127.0.0.1:8000/api/v1/get-products?${queryParams.toString()}`;
+        const apiUrl = `http://127.0.0.1:8000/api/v1/get-bicycle?${queryParams.toString()}`;
         fetchProducts(apiUrl);
     }, 250));
 

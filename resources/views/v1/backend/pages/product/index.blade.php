@@ -63,6 +63,14 @@
                                 <label for="productPrice" class="mb-2">Price</label>
                                 <input type="number" step="0.01" class="form-control" id="productPrice" placeholder="Price">
                             </div>
+                            <div class="form-group">
+                                <label for="createBrand" class="mb-2 pt-3">Brand</label>
+                                <select class="form-control" id="createBrand">
+                                    @foreach ($brand as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>                           
                             <div class="form-group mb-3">
                                 <label for="productDescription" class="mb-2">Description</label>
                                 <textarea class="form-control" id="productDescription" placeholder="Description"></textarea>
@@ -160,6 +168,14 @@
                     <input type="number" class="form-control" id="sYearProduct" placeholder="Tahun Terbit" min="1000" max="9999">
                 </div> 
                 <div class="form-group">
+                    <label for="showBrand" class="mb-2 pt-3">Brand</label>
+                    <select class="form-control" id="showBrand">
+                        @foreach ($brand as $cat)
+                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Visibility:</label>
                     <div id="showProductIsShow" class="form-text"></div>
                 </div>
@@ -167,6 +183,10 @@
                     <label>Popularity:</label>
                     <div id="showProductIsPopular" class="form-text"></div>
                 </div>
+            </div>
+            <div class="form-group pt-4">
+                <label for="showImagePreviewContainer" class="mb-2 pt-3">Product Image</label>
+                <div id="showImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Close</button>
@@ -201,6 +221,14 @@
                             <div class="form-group">
                                 <label for="editProductPrice" class="mb-2 pt-3">Price</label>
                                 <input type="number" step="0.01" class="form-control" id="editProductPrice" placeholder="Price">
+                            </div>
+                            <div class="form-group">
+                                <label for="editBrand" class="mb-2 pt-3">Brand :</label>
+                                <select class="form-control" id="editBrand">
+                                    @foreach ($brand as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group pt-3 mb-3">
                                 <label for="editProductDescription" class="mb-2">Description</label>
@@ -337,6 +365,7 @@ $(document).ready(function() {
     formData.append('is_show', $('#productShow').is(':checked') ? 1 : 0);
     formData.append('is_popular', $('#productPopular').is(':checked') ? 1 : 0);
     formData.append('year', $('#cYearProduct').val());
+    formData.append('brand_id', $('#createBrand').val());
 
     // Handle file uploads for images, if any
     // var files = $('#createProductImages').get(0).files;  // Ensure this ID matches your actual file input's ID
@@ -435,6 +464,7 @@ $(document).ready(function() {
     formData.append('is_show', $('#editProductShow').is(':checked') ? 1 : 0);
     formData.append('is_popular', $('#editProductPopular').is(':checked') ? 1 : 0);
     formData.append('year', $('#uYearProduct').val());
+    formData.append('brand_id', $('#editBrand').val());
 
     var files = $('#editProductImages').get(0).files; 
     if (files.length > 0) {
@@ -475,8 +505,6 @@ $(document).ready(function() {
             });
         }
     });
-
-   
 });
 
 
@@ -507,17 +535,20 @@ $(document).ready(function() {
                 $('#showProductIsShow').text(response.is_show ? 'Yes' : 'No');
                 $('#showProductIsPopular').text(response.is_popular ? 'Yes' : 'No');
                 $('#sYearProduct').val(response.year);
+                $('#showBrand').val(response.brand_id).prop('disabled', true);
+                console.log(response);
 
-                $('#showImagePreviewContainer').empty();
-                if (response.images) {
-                    let images = Array.isArray(response.images) ? response.images : [response.images];
-                    images.forEach(function(imageUrl) {
-                        var fullPath = '/images/product/' + imageUrl;
-                        var img = $('<img>').attr("src", fullPath);
-                        img.css({ "max-width": "150px", "height": "auto" });
-                        $("#showImagePreviewContainer").append(img);
-                    });
-                }
+                
+            if (response.images) {
+                $("#showImagePreviewContainer").empty();
+                let images = Array.isArray(response.images) ? response.images : [response.images];
+                images.forEach(function(imageUrl) {
+                    var fullPath = '/images/product-image/' + imageUrl.name;
+                    var img = $('<img>').attr("src", fullPath);
+                    img.css({ "max-width": "150px", "height": "auto" });
+                    $("#showImagePreviewContainer").append(img);
+                });
+            }
                 $('#showProductModal').modal('show');
             },
             error: function(error) {
@@ -551,6 +582,7 @@ function editProduct(id) {
             $('#editProductShow').prop('checked', response.is_show);
             $('#editProductPopular').prop('checked', response.is_popular);
             $('#uYearProduct').val(response.year);
+            $('#editBrand').val(response.brand_id).prop('disabled', true);
 
             console.log(response.year);
 
@@ -624,20 +656,23 @@ function showProduct(id) {
         },
         contentType: 'application/json',
         success: function(response) {
-            $('#showProductName').val(response.name);
-            $('#showProductSlug').val(response.slug);
-            $('#showProductDescription').val(response.description);
-            $('#showProductPrice').val(response.price);
+            console.log(response);
+            $('#showProductName').text(response.name);
+            $('#showProductSlug').text(response.slug);
+            $('#showProductDescription').text(response.description);
+            $('#showProductPrice').text(response.price);
             $('#showProductVideoLink').attr('href', response.link_video).text(response.link_video);
             $('#showProductTokopediaLink').attr('href', response.link_tokopedia).text(response.link_tokopedia);
-            $('#showProductIsShow').val(response.is_show ? 'Yes' : 'No');
-            $('#showProductIsPopular').val(response.is_popular ? 'Yes' : 'No');
+            $('#showProductIsShow').text(response.is_show ? 'Yes' : 'No');
+            $('#showProductIsPopular').text(response.is_popular ? 'Yes' : 'No');
+            $('#sYearProduct').val(response.year);
+            $('#showBrand').val(response.brand_id).prop('disabled', true);
 
             $('#showImagePreviewContainer').empty();
             if (response.images) {
                 let images = Array.isArray(response.images) ? response.images : [response.images];
                 images.forEach(function(imageUrl) {
-                    var fullPath = '/images/product/' + imageUrl;
+                    var fullPath = '/images/product-image/' + imageUrl.name;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     $("#showImagePreviewContainer").append(img);

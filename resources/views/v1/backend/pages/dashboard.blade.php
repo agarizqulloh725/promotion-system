@@ -332,13 +332,13 @@
       </div>
     </div>
   </div> --}}
-</div>
+{{-- </div> --}}
 @endsection
 
 {{-- @push('scripts')
 @endpush --}}
 
-<script>
+{{-- <script>
   document.addEventListener('DOMContentLoaded', () => {
       fetch('http://127.0.0.1:8000/api/v1/admin/dashboard')
           .then(response => response.json())
@@ -354,5 +354,5 @@
               document.getElementById('total-branches').textContent = 'Error loading data';
           });
   });
-</script>
+</script> --}}
 

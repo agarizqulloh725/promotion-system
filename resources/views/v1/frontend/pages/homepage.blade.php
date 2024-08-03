@@ -14,6 +14,13 @@
     background-size: cover;
     background-position: center;
 }
+.slug {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+}
 .image-backgroundfooter {
     background-image: url({{asset('frontend/img/bg-nav.jpg')}});
     background-size: cover;
@@ -389,8 +396,10 @@ ul li {
         <div class="col-md-6 mt-5">
             <!-- Embed YouTube Video -->
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/BZ4P6iPCQGs" allowfullscreen></iframe>
             </div>
+            
+
         </div>
         <div class="col-md-6">
             <h4 class="text-danger poppins-semibold">
@@ -462,56 +471,61 @@ ul li {
 @endsection
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>
-
 <script>
+    const assetPath = "{{ asset('images/product-image') }}";
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchPopularProducts();
+    });
 
-async function fetchProducts(pageUrl) {
-    pageUrl = pageUrl || 'http://127.0.0.1:8000/api/v1/get-products';
-    try {
-        const response = await fetch(pageUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const result = await response.json();
-        updateProductList(result.data.data);
-        updatePagination(result.data.links);
-    } catch (error) {
-        console.error('Error fetching products:', error);
+    function fetchPopularProducts() {
+        fetch('/api/v1/product-popular')
+            .then(response => {
+                if (response.ok) {
+                    console.log(response);
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(products => {
+                setPopularProducts(products);
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
     }
-}
 
-function updateProductList(products) {
-    const productListContainer = document.getElementById('productPromo');
-    productListContainer.innerHTML = '';
-    products.forEach(product => {
-    if(product){
-        const imagePath = product.images.length > 0 ? product.images[0].name : 'default.jpg';
-        const discountBadge = product.promo && product.promo.length > 0 && product.promo[0].discount ? 
-            `<span class="badge bg-danger">${parseInt(product.promo[0].discount)}% Off</span>` : '';
-        productListContainer.innerHTML += `
-            <a class="col-md-4 mb-4 text-secondary text-decoration-none " href="/product/${product.id}">
-                <div class="card border-1 rounded-4 shadow">
-                    <img class="card-img-top pt-2" src="/images/product-image/${imagePath}" alt="${product.name}">
-                    <div class="card-body">
-                        <h5 class="card-title">${product.name}</h5>
-                        <p class="card-text mb-4 slug">${product.slug}</p>
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="fw-bold m-0">Rp. ${parseInt(product.price)}</h5>
-                            ${discountBadge}
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-center align-items-center gap-2">
-                            <button class="btn btn-danger rounded-pill w-100">View Product</button>
-                            <button class="btn btn-outline-danger rounded-circle">
-                                <i class="fas fa-heart"></i>
-                            </button>
+    function setPopularProducts(products) {
+    const container = document.getElementById('productPromo');
+    container.innerHTML = ''; 
+
+    products.data.forEach(product => {
+        if (product.is_show && product.is_popular) { 
+            // const imagesHTML = product.images.map(image => 
+            //     `<img src="/path/to/images/${image.name}" class="card-img-top" alt="${product.name}">`
+            // ).join('');
+            const imagesHTML = product.images.length > 0 ? product.images[0].name : 'default-image.png';
+            let promoDetails = '';
+            if (product.promo) {
+                promoDetails += product.promo.discount ? `<span class="discount-tag poppins-medium">${parseInt(product.promo.discount).toLocaleString()}% Off</span>` : '';
+                // promoDetails += product.promo.cashback ? ` Cashback: ${parseInt(product.promo.cashback).toLocaleString()}` : '';
+            }
+            const productHTML = `
+                <div class="col-md-3 d-flex justify-content-center">
+                    <div class="card border rounded-4">
+                        <img src="${assetPath}/${imagesHTML}" class="card-img-top" alt="${product.name}">
+                        <div class="card-body">
+                            <h5 class="card-title poppins-semibold">${product.name}</h5>
+                            <p class="slug" style="color: #828282; font-size: 12px" class="card-text poppins-regular">${product.slug}</p>
+                            <p class="poppins-bold"><strong>${parseInt(product.price).toLocaleString()}</strong> IDR ${promoDetails}</p>
                         </div>
                     </div>
                 </div>
-            </a>
-        `;
+            `;
+            container.innerHTML += productHTML;
         }
     });
 }
+
 </script>
 @endpush

@@ -159,19 +159,19 @@
         <div class="col-md-3">
             <h5 class="poppins-semibold mb-3 mt-2">Filter</h5>
             <div class="border border-1 rounded-4 p-4 shadow">
-                <div class="dropdown">
+                {{-- <div class="dropdown">
                     <a class="text-reset text-body text-decoration-none bg-primary" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="d-flex align-items-center justify-content-between">
                             <p class="mb-0 poppins-regular">Semua Merek</p>
                             <i class="fas fa-chevron-right"></i>
                         </div>
                     </a>
-                    {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="#">iPhone 13</a></li>
                         <li><a class="dropdown-item" href="#">iPhone 13 Pro</a></li>
                         <li><a class="dropdown-item" href="#">iPhone 12</a></li>
-                    </ul> --}}
-                </div>
+                    </ul>
+                </div> --}}
                 <div id="brandUI"></div>
                 <hr>
                 <div class="dropdown mt-2">
@@ -239,7 +239,7 @@
             
             <div class="row pt-3" id="productListContainer">
                 <!-- Single product -->
-                <div class="col-md-4 mb-4">
+                {{-- <div class="col-md-4 mb-4">
                     <div class="card border-1 rounded-4 shadow">
                         <img class="card-img-top pt-2" src="{{asset('images/product/samsung.png')}}" alt="Samsung Galaxy S24">
                         <div class="card-body">
@@ -370,8 +370,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>--}}
+            </div> 
             <div class="d-flex justify-content-center">
                 <div>
                     <ul class="pagination" id="paginationContainer">
@@ -518,9 +518,6 @@ function updateProductList(products) {
                         <hr>
                         <div class="d-flex justify-content-center align-items-center gap-2">
                             <button class="btn btn-danger rounded-pill w-100">View Product</button>
-                            <button class="btn btn-outline-danger rounded-circle">
-                                <i class="fas fa-heart"></i>
-                            </button>
                         </div>
                     </div>
                 </div>

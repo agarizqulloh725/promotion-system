@@ -13,6 +13,7 @@ use App\Models\Specification;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\ProductSpecification;
 use Illuminate\Support\Facades\Auth;
 
@@ -96,7 +97,8 @@ class GeneralRouteController extends Controller
     }
     public function adminProduct(){
         $category = ProductCategory::all();
-        return view('v1.backend.pages.product.index',compact('category'));
+        $brand = Brand::all();
+        return view('v1.backend.pages.product.index',compact(['category', 'brand']));
     }
     public function adminColor(){
         $category = ProductCategory::all();

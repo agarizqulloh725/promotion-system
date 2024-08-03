@@ -13,7 +13,7 @@ class Product extends Model
     protected $fillable = [
         'name', 'slug', 'description', 'price', 
         'link_video', 'link_tokopedia', 
-        'is_show', 'is_popular','brand', 'year'
+        'is_show', 'is_popular','brand', 'year', 'brand_id'
     ];
 
     public function images()
@@ -23,5 +23,9 @@ class Product extends Model
     public function promo()
     {
         return $this->hasOne(ProductPromo::class);
+    }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 }

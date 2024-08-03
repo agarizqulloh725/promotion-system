@@ -15,19 +15,19 @@
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
-            <div class="card-body">
-                <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                    <th> No </th>
-                    <th> Nama Cabang </th>
-                    <th> Action </th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                </table>
-            </div>
+                <div class="card-body">
+                    <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Cabang</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }},
                 { data: "name" },
                 { data: null, render: function (data, type, row) {
-                    if (userHandle == row.id) {
+                    if (userHandle === null || userHandle == row.id) {
                         return `<a href='/admin/stock/${row.id}' class="btn btn-primary btn-sm">Stock</a>`;
                     } else {
                         return `<button class="btn btn-secondary btn-sm" onclick="showAccessDeniedAlert()">No Access</button>`;
@@ -95,9 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
     async function main() {
         const token = getCookieValue('access_token');
         const userHandle = await fetchMe();
-        if (userHandle) {
-            initializeTable(userHandle);
-        }
+        initializeTable(userHandle);
     }
 
     main();

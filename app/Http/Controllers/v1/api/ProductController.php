@@ -40,6 +40,8 @@ class ProductController extends Controller
                 'link_tokopedia' => 'nullable|string',
                 'is_show' => 'nullable|boolean',
                 'is_popular' => 'nullable|boolean',
+                'year' => 'nullable',
+                'brand_id' => 'nullable'
             ]);
 
             $product = Product::create($validatedData);
@@ -99,7 +101,8 @@ class ProductController extends Controller
                 'link_tokopedia' => 'nullable|string',
                 'is_show' => 'nullable|boolean',
                 'is_popular' => 'nullable|boolean',
-                'year' => 'nullable'
+                'year' => 'nullable',
+                'brand_id' => 'nullable'
             ]);
 
             $product = Product::findOrFail($id);
