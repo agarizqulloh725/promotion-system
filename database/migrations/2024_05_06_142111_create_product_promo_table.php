@@ -19,6 +19,9 @@ return new class extends Migration
             $table->decimal('discount', 8, 2)->nullable();
             $table->decimal('cashback', 8, 2)->nullable();
             $table->decimal('bonus', 8, 2)->nullable();
+            $table->string('promo_front')->nullable();
+            $table->string('promo_start')->nullable();
+            $table->string('promo_end')->nullable();
             $table->timestamps();
             $table->foreign('product_id')->references('id')->on('product')->onDelete('restrict');
         });

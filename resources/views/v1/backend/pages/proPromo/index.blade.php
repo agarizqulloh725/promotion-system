@@ -84,7 +84,7 @@
                                 <label for="createProduct" class="mb-2 pt-3">Product</label>
 
                                 <select class="form-control select2" id="createProduct" style="width: 100%; height:100%">
-                                    <option disabled value="" selected>Choose Product</option>
+                                    <option disabled value="">Choose Product</option>
                                     @foreach ($product as $cat)
                                         <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                     @endforeach
@@ -95,7 +95,6 @@
                                 <label for="createDiscount" class="mb-2 pt-3">Discount</label>
                                 <input type="number" class="form-control" id="createDiscount" placeholder="Discount" step="0.01">
                             </div>
-                           
 
                         </div>
                         <div class="col-md-6">
@@ -104,8 +103,6 @@
                                 <label for="createCashback" class="mb-2">Cashback</label>
                                 <input type="number" class="form-control" id="createCashback" placeholder="Cashback" step="0.01">
                             </div>
-                          
-                          
                             <div class="form-group">
                                 <label for="createBonus" class="mb-2 pt-3">Bonus</label>
                                 <input type="number" class="form-control" id="createBonus" placeholder="Bonus" step="0.01">
@@ -114,11 +111,23 @@
                                 <label for="createBrandDescription" class="mb-2 pt-3">Description</label>
                                 <input type="text" class="form-control" id="createBrandDescription" placeholder="Description">
                             </div>
+                            <div class="form-group">
+                                <label for="createPromoFront" class="mb-2 pt-3">Front Promotion</label>
+                                <input type="text" class="form-control" id="createPromoFront" placeholder="Promotion Text">
+                            </div>
+                            <div class="form-group">
+                                <label for="createPromoStart" class="mb-2 pt-3">Start Date</label>
+                                <input type="date" class="form-control" id="createPromoStart">
+                            </div>
+                            <div class="form-group">
+                                <label for="createPromoEnd" class="mb-2 pt-3">End Date</label>
+                                <input type="date" class="form-control" id="createPromoEnd">
+                            </div>
+                            
                             
                         </div>
 
                     </div>
-                 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save</button>
                         <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
@@ -190,7 +199,6 @@
                                 <label for="editName" class="mb-2">Name</label>
                                 <input type="text" class="form-control" id="editName" placeholder="Name">
                             </div>
-
                             <div class="form-group">
                                 {{-- <label for="editProduct" class="mb-2 pt-3">Product</label> --}}
                                 <label for="editProduct" class="mb-2 pt-3">Product</label>
@@ -201,13 +209,10 @@
                                     @endforeach
                                 </select>
                             </div>
-        
                             <div class="form-group">
                                 <label for="editDiscount" class="mb-2 pt-3">Discount</label>
                                 <input type="number" class="form-control" id="editDiscount" placeholder="Discount" step="0.01">
                             </div>
-                           
-
                         </div>
                         <div class="col-md-6">
 
@@ -215,8 +220,6 @@
                                 <label for="editCashback" class="mb-2">Cashback</label>
                                 <input type="number" class="form-control" id="editCashback" placeholder="Cashback" step="0.01">
                             </div>
-                          
-                          
                             <div class="form-group">
                                 <label for="editBonus" class="mb-2 pt-3">Bonus</label>
                                 <input type="number" class="form-control" id="editBonus" placeholder="Bonus" step="0.01">
@@ -225,40 +228,24 @@
                                 <label for="editBrandDescription" class="mb-2 pt-3">Description</label>
                                 <input type="text" class="form-control" id="editBrandDescription" placeholder="Description">
                             </div>
-                            
+                            <div class="form-group">
+                                <label for="editPromoFront" class="mb-2 pt-3">Front Promotion</label>
+                                <input type="text" class="form-control" id="editPromoFront" placeholder="Promotion Text">
+                            </div>
+                            <div class="form-group">
+                                <label for="editPromoStart" class="mb-2 pt-3">Start Date</label>
+                                <input type="date" class="form-control" id="editPromoStart">
+                            </div>
+                            <div class="form-group">
+                                <label for="editPromoEnd" class="mb-2 pt-3">End Date</label>
+                                <input type="date" class="form-control" id="editPromoEnd">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
+                            </div>                            
                         </div>
-
                     </div>
-                 
-                    {{-- <div class="form-group">
-                        <label for="editName">Nama Brand</label>
-                        <input type="text" class="form-control" id="editName" placeholder="Masukan Nama">
-                    </div>
-                    <div class="form-group">
-                        <label for="editProduct">Product Promo</label>
-                        <select class="form-control select2" id="editProduct">
-                            <option disabled value="" selected>Choose Product</option>
-                            @foreach ($product as $cat)
-                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="editDiscount">Discount</label>
-                        <input type="number" class="form-control" id="editDiscount" placeholder="Discount" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label for="editCashback">Cashback</label>
-                        <input type="number" class="form-control" id="editCashback" placeholder="Cashback" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label for="editBonus">Bonus</label>
-                        <input type="number" class="form-control" id="editBonus" placeholder="Bonus" step="0.01">
-                    </div>        
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
-                    </div> --}}
                 </form>
             </div>
         </div>
@@ -303,8 +290,9 @@ $(document).ready(function() {
     }); 
 
     $('#editProduct').select2({
-        dropdownParent: $("#editModal")              
-    }); 
+    dropdownParent: $("#editModal"),
+    disabled: true
+});
 
 
     var table = $('#dataTable').DataTable({
@@ -349,6 +337,10 @@ $(document).ready(function() {
     formData.append('discount', $('#createDiscount').val());
     formData.append('cashback', $('#createCashback').val());
     formData.append('bonus', $('#createBonus').val());
+    formData.append('promo_front', $('#createPromoFront').val());
+    formData.append('promo_start', $('#createPromoStart').val());
+    formData.append('promo_end', $('#createPromoEnd').val());
+
 
     $.ajax({
         url: '/api/v1/admin/pro-promo/',
@@ -429,6 +421,9 @@ $(document).ready(function() {
     formData.append('discount', $('#editDiscount').val());
     formData.append('cashback', $('#editCashback').val());
     formData.append('bonus', $('#editBonus').val());
+    formData.append('promo_front', $('#editPromoFront').val());
+    formData.append('promo_start', $('#editPromoStart').val());
+    formData.append('promo_end', $('#editPromoEnd').val());
 
     $.ajax({
         url: '/api/v1/admin/pro-promo/' + $('#editId').val(), 
@@ -520,16 +515,17 @@ function editBrand(id) {
         success: function(response) {
             $('#editId').val(response.id);
             $('#editName').val(response.name);
-            $('#editProduct').val(response.product_id);
+            $('#editProduct').val(response.product_id).trigger('change');
             $('#editDiscount').val(response.discount);
             $('#editCashback').val(response.cashback);
             $('#editBonus').val(response.bonus);
             $('#editDescription').val(response.description);
             $('#editModal').modal('show');
-
-            console.log(response);
+            $('#editPromoFront').val(response.promo_front);
+            $('#editPromoStart').val(response.promo_start);
+            $('#editPromoEnd').val(response.promo_end);
         },
-        error: function(error) {
+        error: function(xhr, status, error) {
             console.log('Error fetching Brand:', error);
             Swal.fire({
                 title: 'Error!',

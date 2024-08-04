@@ -35,7 +35,18 @@ class ProPromoController extends Controller
                 'discount' => 'nullable|numeric',
                 'cashback' => 'nullable|numeric',
                 'bonus' => 'nullable|numeric',
+                'promo_front' => 'nullable',
+                'promo_start' => 'nullable',
+                'promo_end' => 'nullable',
             ]);
+
+            if (!empty($validatedData['product_id']) && ProductPromo::where('product_id', $validatedData['product_id'])->exists()) {
+                return response()->json(['error' => 'Product sudah terdaftar', 'message' => 'A promo for this product already exists.'], 409);
+            }
+
+            if (!empty($validatedData['promo_front'])) {
+                ProductPromo::whereNotNull('promo_front')->update(['promo_front' => null]);
+            }
 
             $promo = ProductPromo::create($validatedData);
             return response()->json($promo, 201);
@@ -73,7 +84,14 @@ class ProPromoController extends Controller
                 'discount' => 'nullable|numeric',
                 'cashback' => 'nullable|numeric',
                 'bonus' => 'nullable|numeric',
+                'promo_front' => 'nullable',
+                'promo_start' => 'nullable',
+                'promo_end' => 'nullable',
             ]);
+            
+            if (!empty($validatedData['promo_front'])) {
+                ProductPromo::whereNotNull('promo_front')->update(['promo_front' => null]);
+            }
 
             $promo = ProductPromo::findOrFail($id);
             $promo->update($validatedData);
