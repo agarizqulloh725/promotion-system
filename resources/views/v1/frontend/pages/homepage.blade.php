@@ -235,7 +235,7 @@ ul li {
 <div class="image-background" style="margin-top: 90px; margin-bottom: 90px">
     <div class="container">
         <div class="row p-4">
-            <div class="col-8">
+            <div class="col-8" id="promoContainer">
                 <div class="d-flex justify-content-between">
                     <img src="{{asset('frontend/img/phone2.png')}}" alt="Phone">
                     <div class="text-white text-start ms-4 mt-5">
@@ -263,26 +263,27 @@ ul li {
             </div>
             <div class="col-4 text-white d-flex justify-content-center align-items-center">
                 <div class="text-center">
-                    <img src="{{asset('frontend/img/phone3.png')}}" alt="Phone" class="mb-2">
+                    <img src="{{asset('frontend/img/phone3.png')}}" alt="Phone" class="mb-2" id="imgtwo">
                     <p class="poppins-medium">Promo Akan Berakhir Dalam:</p>
                     <div class="d-flex justify-content-between">
                         <div class="px-2">
-                            <div class="timer-box">13</div>
-                            <small class="poppins-light-italic">Jam</small>
-                        </div>
-                        <div class="px-2">
-                            <div class="timer-box">03</div>
+                            <div class="timer-box" id="days">0</div>
                             <small class="poppins-light-italic">Hari</small>
                         </div>
                         <div class="px-2">
-                            <div class="timer-box">23</div>
+                            <div class="timer-box" id="hours">12</div>
+                            <small class="poppins-light-italic">Jam</small>
+                        </div>
+                        <div class="px-2">
+                            <div class="timer-box" id="minutes">00</div>
                             <small class="poppins-light-italic">Menit</small>
                         </div>
                         <div class="px-2">
-                            <div class="timer-box">30</div>
+                            <div class="timer-box" id="seconds">00</div>
                             <small class="poppins-light-italic">Detik</small>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -475,6 +476,7 @@ ul li {
     const assetPath = "{{ asset('images/product-image') }}";
     document.addEventListener('DOMContentLoaded', function () {
         fetchPopularProducts();
+        fetchPromoProducts();
     });
 
     function fetchPopularProducts() {
@@ -494,6 +496,66 @@ ul li {
                 console.error('There has been a problem with your fetch operation:', error);
             });
     }
+    function fetchPromoProducts() {
+        fetch('/api/v1/first-promo')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(products => {
+                setPromoProductsHTML(products);
+                const promoEndTime = new Date("2024-08-20 08:32:13").getTime();
+                initializeTimer(promoEndTime);
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+    }
+
+    function setPromoProductsHTML(products) {
+    const promoContainer = document.getElementById('promoContainer'); 
+    const imgElement = document.getElementById('imgtwo');
+
+    const imagePath = "{{ asset('frontend/img/') }}";
+    const productImage = products.data.image_name ? `${imagePath}/${products.data.image_name}` : "{{ asset('frontend/img/phone2.png') }}";
+
+    if (products.data.image_name) {
+        imgElement.src = `${imagePath}/${products.data.image_name}`;
+    } else {
+        imgElement.src = "{{asset('frontend/img/phone3.png')}}";
+    }
+
+    const specifications = JSON.parse(products.data.spec_array);
+
+    let promoHTML = `
+        <div class="d-flex justify-content-between">
+            <img src="${productImage}" alt="Phone">
+            <div class="text-white text-start ms-4 mt-5">
+                <h3 class="poppins-semibold">Promo ${products.data.name}</h3>
+                <p class="poppins-medium">
+                    Spesifikasi :
+                </p>
+                <ul class="text-start poppins-regular">
+                    ${specifications.map(spec => `<li>${spec}</li>`).join('')}
+                </ul>
+                <button class="btn btn-danger p-2 poppins-medium" id="pesanSekarangBtn">Pesan Sekarang</button>
+            </div>
+        </div>
+    `;
+
+    promoContainer.innerHTML = promoHTML;
+
+    document.getElementById('pesanSekarangBtn').addEventListener('click', function() {
+        const waMessage = encodeURIComponent(`Halo, saya tertarik dengan promo ${products.data.name} yang memiliki spesifikasi sebagai berikut: ${specifications.join(', ')}. Bisa dibantu?`);
+        const waNumber = '6285232014102';
+        const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
+        window.open(waUrl, '_blank');
+    });
+}
+
 
     function setPopularProducts(products) {
     const container = document.getElementById('productPromo');
@@ -525,6 +587,39 @@ ul li {
             container.innerHTML += productHTML;
         }
     });
+}
+
+function initializeTimer(promoEndTime) {
+    const now = new Date().getTime();
+    let totalSeconds = Math.floor((promoEndTime - now) / 1000);
+
+    const interval = setInterval(() => {
+        if (totalSeconds <= 0) {
+            clearInterval(interval);
+            console.log("Timer completed.");
+            document.getElementById('days').textContent = '00';
+            document.getElementById('hours').textContent = '00';
+            document.getElementById('minutes').textContent = '00';
+            document.getElementById('seconds').textContent = '00';
+            return;
+        }
+
+        totalSeconds--;
+
+        const days = Math.floor(totalSeconds / (3600 * 24));
+        const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        document.getElementById('days').textContent = formatTime(days);
+        document.getElementById('hours').textContent = formatTime(hours);
+        document.getElementById('minutes').textContent = formatTime(minutes);
+        document.getElementById('seconds').textContent = formatTime(seconds);
+    }, 1000);
+}
+
+function formatTime(time) {
+    return time < 10 ? '0' + time : time;
 }
 
 </script>

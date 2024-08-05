@@ -5,7 +5,11 @@ namespace App\Http\Controllers\v1\api;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\ProductPromo;
 use Illuminate\Http\Request;
+
+use DB;
+use PhpParser\Node\Stmt\Return_;
 
 class FeController extends Controller
 {
@@ -360,5 +364,17 @@ class FeController extends Controller
             'data' => $products
         ]);
     }
+
+
+    public function firstPromo() {
+        $promo = ProductPromo::whereNotNull('promo_front')->first();
+    
+        return response()->json([
+            'status' => 'success', 
+            'message' => 'Promo retrieved successfully.',
+            'data' => $promo
+        ]);
+    }
+    
     
 }

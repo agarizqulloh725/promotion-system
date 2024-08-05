@@ -35,6 +35,7 @@ Route::prefix('v1')->group(function () {
     Route::get('get-brand-bicycle', [FeController::class, 'getBrandBicycle']);
     Route::get('get-bicycle', [FeController::class, 'getBicycle']);
     Route::get('product-popular', [FeController::class, 'productPopular']);
+    Route::get('first-promo', [FeController::class, 'firstPromo']);
 
     Route::prefix('admin')->group(function () {
         Route::middleware('auth:sanctum')->group(function () {
