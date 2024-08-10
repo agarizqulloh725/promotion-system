@@ -10,7 +10,7 @@ class ProductPromo extends Model
     use HasFactory;
 
     protected $table = 'product_promo';
-    protected $fillable = ['product_id', 'name', 'discount', 'cashback', 'bonus', 'promo_front', 'promo_start','promo_end'];
+    protected $fillable = ['product_id', 'name', 'discount', 'cashback', 'bonus', 'promo_front', 'promo_start','promo_end','spec_array','img1','img2'];
 
     public function product()
     {

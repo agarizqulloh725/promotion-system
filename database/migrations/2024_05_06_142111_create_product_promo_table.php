@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('promo_front')->nullable();
             $table->string('promo_start')->nullable();
             $table->string('promo_end')->nullable();
+            $table->text('spec_array')->nullable();
+            $table->string('img1')->nullable();
+            $table->string('img2')->nullable();
             $table->timestamps();
             $table->foreign('product_id')->references('id')->on('product')->onDelete('restrict');
         });
