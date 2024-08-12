@@ -414,6 +414,7 @@
 @endsection
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 var selectedYear = [];
@@ -481,14 +482,21 @@ async function applyFilters() {
 
     try {
         const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const result = await response.json();
-        if (result.success) {
+        if (response.ok) {
+            const result = await response.json();
             updateProductList(result.data.data);
+            Swal.fire({
+                icon: 'success',
+                title: 'Filter Berhasil di Terapkan',
+                text: `Produk berhasil diambil. Total produk: ${result.data.total}`
+            });
         } else {
-            console.error('Failed to fetch products:', result.message);
+            const error = await response.json();
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Mengambil Produk',
+                text: error.message || 'Tidak dapat mengambil produk dengan kredensial yang diberikan.'
+            });
         }
     } catch (error) {
         console.error('Error fetching products:', error);
