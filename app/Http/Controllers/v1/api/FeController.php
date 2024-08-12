@@ -445,14 +445,25 @@ class FeController extends Controller
     }
     public function showStockId($id, Request $request){
         try {
-            if($request->spec && $request->color){
-                $totalStock = ProductStock::where('product_id', $id)->where('')->where('')->sum('stock'); 
-            }elseif($request->spec){
-                $totalStock = ProductStock::where('product_id', $id)->sum('stock'); 
-            }elseif($request->color){
-                $totalStock = ProductStock::where('product_id', $id)->sum('stock'); 
-            }else{
-                $totalStock = ProductStock::where('product_id', $id)->sum('stock'); 
+            if ($request->spec || $request->color) {
+                $query = ProductStock::where('product_id', $id);
+            
+                if ($request->spec) {
+                    $specificationIds = ProductSpecification::where('specification_id', $request->spec)->pluck('id');
+                    // dd($specificationIds);
+                    $query->whereIn('product_specification_id', $specificationIds);
+                }
+            
+                if ($request->color) {
+                    $colorIds = ProductColor::where('color_id', $request->color)->pluck('id');
+                    // dd($colorIds);
+                    $query->whereIn('product_color_id', $colorIds);
+                }
+            
+                $totalStock = $query->sum('stock');
+            } else {
+
+                $totalStock = ProductStock::where('product_id', $id)->sum('stock');
             }
 
             return response()->json([
@@ -469,7 +480,9 @@ class FeController extends Controller
     }
     public function clickSpecificationId($id){
         try {
-            $colorIds = ProductColor::where('product_specification_id', $id)
+            $harga = ProductSpecification::where('specification_id', $id)->value('price');
+            $idProSpec = ProductSpecification::where('specification_id', $id)->pluck('id');
+            $colorIds = ProductColor::whereIn('product_specification_id', $idProSpec)
                                                     ->distinct()
                                                     ->pluck('color_id');
             $results = Color::whereIn('id', $colorIds)->get();
@@ -484,7 +497,8 @@ class FeController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Product specifications retrieved successfully.',
-                'data' => $results
+                'data' => $results,
+                'price' => $harga
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -511,6 +525,21 @@ class FeController extends Controller
                 'success' => true,
                 'message' => 'Product specifications retrieved successfully.',
                 'data' => $results
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve product specifications. Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function imgbycolor($id , $colorid){
+        try {
+            $colorId = ProductColor::where('product_id',$id)->where('color_id', $colorid)->first();
+            return response()->json([
+                'success' => true,
+                'message' => 'Product specifications retrieved successfully.',
+                'data' => $colorId
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

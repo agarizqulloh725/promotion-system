@@ -2,6 +2,11 @@
 
 @push('css')
 <style>
+.strikethrough {
+    text-decoration: line-through; 
+    color: #999; 
+}
+
 .image-background {
     background-image: url({{asset('frontend/img/bg-nav.jpg')}});
     background-size: cover;
@@ -204,7 +209,7 @@
     <p class="poppins-regular" style="color: #828282;">
         <a href="/" style="color: #828282; text-decoration: none;">Beranda</a> >
         <a href="/product" style="color: #828282; text-decoration: none;">Product</a> >
-        <a href="/product/samsung-galaxy-a15" class="nameProduct" style="color: #000000; text-decoration: none;">Samsung Galaxy A15</a>
+        <a href="/product/samsung-galaxy-a15" class="nameProduct1" style="color: #000000; text-decoration: none;">Samsung Galaxy A15</a>
     </p>    
 <div class="row pt-3">
     <div class="col-6">
@@ -230,13 +235,13 @@
     <div class="col">
         <h4 class="nameProduct">SAMSUNG GALAXY A15</h4>
         <div class="d-flex align">
-            <h4 class="text-danger poppins-bold dharga">Rp 3.999.000</h4>
-            <p style="" class="poppins-semibold">&nbsp Rp 4.250.000</p>
-            <button class="btn rounded-pill poppins-medium text-danger ddiscount" style="background-color: #ff00000e">-10%</button>
+            <h4 class="text-danger poppins-bold dharga"></h4>
+            <p style="" class="poppins-semibold dhargareal"></p>
+            <button class="btn rounded-pill poppins-medium text-danger ddiscount" style="background-color: #ff00000e"></button>
         </div>
         <hr>
         <p class="poppins-medium">SPESIFIKASI</p>
-        <ul class="poppins-regular">
+        <ul class="poppins-regular specPro">
             <li>
                 Ukuran layar: 6.5 inci, 1080 x 2340 pixels, Super AMOLED, 90Hz
             </li>
@@ -244,7 +249,7 @@
                 Memori: RAM 8 GB, ROM 256 GB.....
             </li>
         </ul>
-        <p class="poppins-semibold text-danger">Lihat Selengkapnya</p>
+        {{-- <p class="poppins-semibold text-danger">Lihat Selengkapnya</p> --}}
         <hr>
         <p class="poppins-regular" style="color: #000000">Pilih Spesifikasi</p>
         <div class="d-flex gap-3 Cspecification">
@@ -265,6 +270,10 @@
         <div class="d-flex">
             <p>Jumlah stock tersedia :&nbsp; </p>
             <p class="stockProduct">0</p>
+        </div>
+        <div class="d-flex">
+            <p>Buy Online :&nbsp; </p>
+            <p class="tokOnline"></p>
         </div>
         <hr>
         <div class="d-flex justify-content-between gap-2">
@@ -386,8 +395,22 @@ function fetchProduct(id) {
             .then(products => {
                 updateImgUI(products);
                 document.querySelector('.nameProduct').textContent = products.data.name;
-                document.querySelector('.dharga').textContent = products.data.price;
-                // document.querySelector('.ddiscount').textContent = products.data.name;
+                document.querySelector('.nameProduct1').textContent = products.data.name;
+                // document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(products.data.price));
+                if (products.data.promo && products.data.promo.discount) {
+                    document.querySelector('.ddiscount').textContent = Math.round(products.data.promo.discount) + '%';
+                    document.querySelector('.dhargareal').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(products.data.price));
+                    document.querySelector('.dhargareal').classList.add('strikethrough');
+
+                    const discountedPrice = products.data.price - (products.data.price * (products.data.promo.discount / 100));
+                    document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(discountedPrice));
+                } else {
+                    document.querySelector('.ddiscount').style.display = 'none';
+                    document.querySelector('.dhargareal').style.display = 'none';
+
+                    document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(products.data.price));
+                }
+
 
                 document.querySelector('.ddesc').textContent = products.data.description;
                 document.querySelector('.dram').textContent = products.data.ram;
@@ -397,12 +420,73 @@ function fetchProduct(id) {
                 document.querySelector('.dpixel').textContent = products.data.kamera;
                 document.querySelector('.dbattre').textContent = products.data.battery;
 
+                if (products.data.spec_array) {
+                    updateSpecificationList(JSON.parse(products.data.spec_array));
+                }
+                updateTokopediaLink(products.data.link_tokopedia)
+
+
                 // document.querySelector('.dvideo').src = products.data.name;
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
         });
 }
+function fetchProductImages(id, colorid) {
+    fetch(`/api/v1/imgbycolor/${id}/${colorid}`)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(products => {
+            console.log('colorimg', products);
+
+            const imageContainer = document.querySelector('.cImg .row');
+            imageContainer.innerHTML = '';
+
+            const imageNames = JSON.parse(products.data.name);
+
+            if (imageNames.length === 1) {
+                for (let i = 0; i < 3; i++) { 
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `/images/color-product/${imageNames[0]}`;
+                    imgElement.alt = 'Product Color Image';
+                    imgElement.className = 'img-fluid thumbnail-img';
+                    imgElement.style.width = '110px';
+                    imgElement.onclick = function() { changeImage(this); };
+
+                    const imgCol = document.createElement('div');
+                    imgCol.className = 'col-12 mb-2';
+                    imgCol.appendChild(imgElement);
+
+                    imageContainer.appendChild(imgCol);
+                }
+            } else {
+                // Create an image element for each name in the array
+                imageNames.forEach(imageName => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `/path/to/images/${imageName}`;
+                    imgElement.alt = 'Product Color Image';
+                    imgElement.className = 'img-fluid thumbnail-img';
+                    imgElement.style.width = '110px';
+                    imgElement.onclick = function() { changeImage(this); };
+
+                    const imgCol = document.createElement('div');
+                    imgCol.className = 'col-12 mb-2';
+                    imgCol.appendChild(imgElement);
+
+                    imageContainer.appendChild(imgCol);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+
 function fetchSpesification(id) {
         fetch(`/api/v1/show-specification/${id}`)
             .then(response => {
@@ -450,6 +534,9 @@ function fetchColor(id) {
                         document.querySelectorAll('.Ccolor .color-circle').forEach(div => div.classList.remove('active-color-circle'));
                         colorDiv.classList.add('active-color-circle');
                         console.log(`Warna ${color.name} dengan ID ${color.id} dipilihhh.`);
+                        idColor = color.id;
+                        fetchStock({{ $id }});
+                        fetchProductImages({{ $id }},color.id);
                     });
                     container.appendChild(colorDiv);
                 });
@@ -501,8 +588,10 @@ function clickSpecification(id) {
                 }
             })
             .then(colors => {
+                console.log(colors);
                 updateColorUI(colors,id)
                 fetchStock({{ $id }});
+                document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(colors.price));;
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
@@ -566,6 +655,9 @@ function updateColorUI(colors, idSpecification) {
             document.querySelectorAll('.Ccolor .color-circle').forEach(div => div.classList.remove('active-color-circle'));
             colorDiv.classList.add('active-color-circle');
             console.log(`Warna ${color.name} dengan ID ${color.id} dipilih.`);
+            idColor = color.id;
+            fetchStock({{ $id }});
+            fetchProductImages({{ $id }},color.id);
         });
         container.appendChild(colorDiv);
     });
@@ -600,6 +692,37 @@ function updateImgUI(products) {
         imageContainer.innerHTML = '<p>No images available.</p>';
     }
 }
+function updateSpecificationList(specifications) {
+    const ulElement = document.querySelector('.specPro');
+    ulElement.innerHTML = '';
+
+    specifications.forEach(spec => {
+        const liElement = document.createElement('li');
+        liElement.textContent = spec;
+        ulElement.appendChild(liElement);
+    });
+}
+function updateTokopediaLink(tokopediaLink) {
+    const tokOnlineDiv = document.querySelector('.tokOnline');
+
+    if (tokopediaLink) {
+        const link = document.createElement('a');
+        link.href = tokopediaLink;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        const img = document.createElement('img');
+        img.src = 'http://127.0.0.1:8000/frontend/tokopedia.png'; 
+        img.alt = 'Tokopedia';
+        img.style = 'height: 30px;';
+
+        link.appendChild(img);
+        tokOnlineDiv.appendChild(link);
+    } else {
+        tokOnlineDiv.textContent = 'Not available';
+    }
+}
+
 document.getElementById('pesanSekarangBtn').addEventListener('click', function() {
     var nama =  document.querySelector('.nameProduct').textContent;
         const waMessage = encodeURIComponent(`Halo, saya tertarik dengan product ${nama} . Bisa dibantu?`);

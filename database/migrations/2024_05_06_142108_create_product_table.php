@@ -23,6 +23,13 @@ return new class extends Migration
             $table->string('link_tokopedia')->nullable();
             $table->boolean('is_show')->nullable();
             $table->boolean('is_popular')->nullable();
+            $table->string('ram')->nullable();
+            $table->string('storage')->nullable();
+            $table->string('cpu')->nullable();
+            $table->string('display')->nullable();
+            $table->string('kamera')->nullable();
+            $table->string('battery')->nullable();
+            $table->string('spec_array')->nullable();
             $table->timestamps();
 
             $table->foreign('brand_id')->references('id')->on('brand')->onDelete('cascade');

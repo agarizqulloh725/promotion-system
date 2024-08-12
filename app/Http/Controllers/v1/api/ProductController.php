@@ -33,7 +33,7 @@ class ProductController extends Controller
         try {
             $validatedData = $request->validate([
                 'name' => 'required|string',
-                'slug' => 'required|string|unique:product,slug',
+                'slug' => 'required|string',
                 'description' => 'nullable|string',
                 'price' => 'nullable|numeric|min:0',
                 'link_video' => 'nullable|string',
@@ -41,7 +41,14 @@ class ProductController extends Controller
                 'is_show' => 'nullable|boolean',
                 'is_popular' => 'nullable|boolean',
                 'year' => 'nullable',
-                'brand_id' => 'nullable'
+                'brand_id' => 'nullable',
+                'ram' => 'nullable|string',          
+                'storage' => 'nullable|string',    
+                'cpu' => 'nullable|string',         
+                'display' => 'nullable|string',     
+                'kamera' => 'nullable|string',      
+                'battery' => 'nullable|string',
+                'spec_array' => 'nullable' 
             ]);
 
             $product = Product::create($validatedData);
@@ -102,7 +109,14 @@ class ProductController extends Controller
                 'is_show' => 'nullable|boolean',
                 'is_popular' => 'nullable|boolean',
                 'year' => 'nullable',
-                'brand_id' => 'nullable'
+                'brand_id' => 'nullable',
+                'ram' => 'nullable|string',          
+                'storage' => 'nullable|string',    
+                'cpu' => 'nullable|string',         
+                'display' => 'nullable|string',     
+                'kamera' => 'nullable|string',      
+                'battery' => 'nullable|string',
+                'spec_array' => 'nullable' 
             ]);
 
             $product = Product::findOrFail($id);
