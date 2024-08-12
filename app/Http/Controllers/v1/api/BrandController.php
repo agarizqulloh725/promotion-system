@@ -8,12 +8,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Validator;
+
+use DB;
 
 class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         try {
@@ -31,12 +35,33 @@ class BrandController extends Controller
     {
         try {
             $validated = $request->validate([
-                'product_category_id' => 'nullable|exists:product_category,id',
                 'name' => 'required|string|max:255',
+                'product_category_id' => 'nullable|exists:product_category,id',
                 'image' => 'nullable',
                 'description' => 'nullable|string',
                 'is_show' => 'nullable|boolean',
             ]);
+
+            //code...
+            $rules = [
+                'name' => 'required|string|max:255',
+                'product_category_id' => 'nullable|exists:product_category,id',
+                'image' => 'nullable',
+                'description' => 'nullable|string',
+                'is_show' => 'nullable|boolean',
+            ];
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) return response([
+                "message" => "error submit", 
+                "errors" => $validator->messages()
+            ])->setStatusCode(400);
+
+            $cek = DB::table('brand')->where('name', $request->name)->first();
+            if ($cek) {
+                throw new \Exception("Data already Exist");
+                
+            }
 
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
@@ -50,7 +75,11 @@ class BrandController extends Controller
             return response()->json($brand, 201);
 
         } catch (ValidationException $e) {
-            return response()->json(['error' => 'Validation failed', 'message' => $e->errors()], 422);
+            return response()->json(['error' => 'Validation failed', 'message' => $e->getMessage()], 422);
+            // return response([
+            //     "message" => "Failed! $e->getMessage() ",
+            //     "errors" =>   $e,
+            // ])->setStatusCode(500);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while creating the brand.', 'message' => $e->getMessage()], 500);
         }

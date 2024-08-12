@@ -274,12 +274,13 @@ $(document).ready(function() {
                   confirmButtonText: 'OK'
               });
           },
-          error: function(request, msg, error) {
+          error: function(xhr,request, msg, error) {
               console.log('Error creating Brand:', error);
               $('#createModal').modal('hide');
+              const res = JSON.parse(xhr.responseText);
               Swal.fire({
                   title: 'Error!',
-                  text: 'Failed to create Brand. Please try again.',
+                  text: res.message,
                   icon: 'error',
                   confirmButtonText: 'OK'
               });
