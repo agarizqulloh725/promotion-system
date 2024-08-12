@@ -404,6 +404,61 @@ function fetchProduct(id) {
                 console.error('There has been a problem with your fetch operation:', error);
         });
 }
+function fetchProductImages(id, colorid) {
+    fetch(`/api/v1/imgbycolor/${id}/${colorid}`)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(products => {
+            console.log('colorimg', products);
+
+            const imageContainer = document.querySelector('.cImg .row');
+            imageContainer.innerHTML = '';
+
+            const imageNames = JSON.parse(products.data.name);
+
+            if (imageNames.length === 1) {
+                for (let i = 0; i < 3; i++) { 
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `/images/color-product/${imageNames[0]}`;
+                    imgElement.alt = 'Product Color Image';
+                    imgElement.className = 'img-fluid thumbnail-img';
+                    imgElement.style.width = '110px';
+                    imgElement.onclick = function() { changeImage(this); };
+
+                    const imgCol = document.createElement('div');
+                    imgCol.className = 'col-12 mb-2';
+                    imgCol.appendChild(imgElement);
+
+                    imageContainer.appendChild(imgCol);
+                }
+            } else {
+                // Create an image element for each name in the array
+                imageNames.forEach(imageName => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `/path/to/images/${imageName}`;
+                    imgElement.alt = 'Product Color Image';
+                    imgElement.className = 'img-fluid thumbnail-img';
+                    imgElement.style.width = '110px';
+                    imgElement.onclick = function() { changeImage(this); };
+
+                    const imgCol = document.createElement('div');
+                    imgCol.className = 'col-12 mb-2';
+                    imgCol.appendChild(imgElement);
+
+                    imageContainer.appendChild(imgCol);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+
 function fetchSpesification(id) {
         fetch(`/api/v1/show-specification/${id}`)
             .then(response => {
@@ -453,6 +508,7 @@ function fetchColor(id) {
                         console.log(`Warna ${color.name} dengan ID ${color.id} dipilihhh.`);
                         idColor = color.id;
                         fetchStock({{ $id }});
+                        fetchProductImages({{ $id }},color.id);
                     });
                     container.appendChild(colorDiv);
                 });
@@ -571,6 +627,7 @@ function updateColorUI(colors, idSpecification) {
             console.log(`Warna ${color.name} dengan ID ${color.id} dipilih.`);
             idColor = color.id;
             fetchStock({{ $id }});
+            fetchProductImages({{ $id }},color.id);
         });
         container.appendChild(colorDiv);
     });

@@ -35,6 +35,7 @@ Route::prefix('v1')->group(function () {
     Route::get('show-specification/{id}', [FeController::class, 'showSpecificationId']);
     Route::get('click-specification/{id}', [FeController::class, 'clickSpecificationId']);
     Route::get('show-color/{id}', [FeController::class, 'clickColorId']);
+    Route::get('imgbycolor/{id}/{colorid}', [FeController::class, 'imgbycolor']);
     Route::get('click-color/{id}', [FeController::class, 'showColorId']);
     Route::get('show-stock/{id}', [FeController::class, 'showStockId']);
     Route::get('get-product-promo', [FeController::class, 'getProductPromo']);

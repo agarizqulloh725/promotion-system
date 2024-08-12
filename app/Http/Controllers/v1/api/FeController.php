@@ -531,5 +531,20 @@ class FeController extends Controller
             ], 500);
         }
     }
+    public function imgbycolor($id , $colorid){
+        try {
+            $colorId = ProductColor::where('product_id',$id)->where('color_id', $colorid)->first();
+            return response()->json([
+                'success' => true,
+                'message' => 'Product specifications retrieved successfully.',
+                'data' => $colorId
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve product specifications. Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
     
 }
