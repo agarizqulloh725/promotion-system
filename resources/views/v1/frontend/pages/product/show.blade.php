@@ -204,7 +204,7 @@
     <p class="poppins-regular" style="color: #828282;">
         <a href="/" style="color: #828282; text-decoration: none;">Beranda</a> >
         <a href="/product" style="color: #828282; text-decoration: none;">Product</a> >
-        <a href="/product/samsung-galaxy-a15" class="nameProduct" style="color: #000000; text-decoration: none;">Samsung Galaxy A15</a>
+        <a href="/product/samsung-galaxy-a15" class="nameProduct1" style="color: #000000; text-decoration: none;">Samsung Galaxy A15</a>
     </p>    
 <div class="row pt-3">
     <div class="col-6">
@@ -386,6 +386,7 @@ function fetchProduct(id) {
             .then(products => {
                 updateImgUI(products);
                 document.querySelector('.nameProduct').textContent = products.data.name;
+                document.querySelector('.nameProduct1').textContent = products.data.name;
                 document.querySelector('.dharga').textContent = products.data.price;
                 // document.querySelector('.ddiscount').textContent = products.data.name;
 
@@ -450,6 +451,8 @@ function fetchColor(id) {
                         document.querySelectorAll('.Ccolor .color-circle').forEach(div => div.classList.remove('active-color-circle'));
                         colorDiv.classList.add('active-color-circle');
                         console.log(`Warna ${color.name} dengan ID ${color.id} dipilihhh.`);
+                        idColor = color.id;
+                        fetchStock({{ $id }});
                     });
                     container.appendChild(colorDiv);
                 });
@@ -566,6 +569,8 @@ function updateColorUI(colors, idSpecification) {
             document.querySelectorAll('.Ccolor .color-circle').forEach(div => div.classList.remove('active-color-circle'));
             colorDiv.classList.add('active-color-circle');
             console.log(`Warna ${color.name} dengan ID ${color.id} dipilih.`);
+            idColor = color.id;
+            fetchStock({{ $id }});
         });
         container.appendChild(colorDiv);
     });
