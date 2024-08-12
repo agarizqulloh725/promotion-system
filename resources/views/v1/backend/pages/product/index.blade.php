@@ -59,7 +59,7 @@
                                 <label for="productSlug" class="mb-2 pt-3">Slug</label>
                                 <input type="text" class="form-control" id="productSlug" placeholder="Name">
                             </div>
-                            <div class="form-group m-2" >
+                            <div class="form-group" >
                                 <label for="productPrice" class="mb-2">Price</label>
                                 <input type="number" step="0.01" class="form-control" id="productPrice" placeholder="Price">
                             </div>
@@ -70,7 +70,24 @@
                                         <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>                           
+                            </div>
+                            <div class="form-group">
+                                <label for="cram" class="mb-2">ram</label>
+                                <input type="text" class="form-control" id="cram" placeholder="ram">
+                            </div>
+                            <div class="form-group">
+                                <label for="cstorage" class="mb-2">storage</label>
+                                <input type="text" class="form-control" id="cstorage" placeholder="storage">
+                            </div>
+                            <div class="form-group">
+                                <label for="ccpu" class="mb-2">cpu</label>
+                                <input type="text" class="form-control" id="ccpu" placeholder="cpu">
+                            </div>
+                            <div class="form-group" id="specArrayContainer">
+                                <button type="button" onclick="addSpecField()">+</button>
+                                <label for="specarray0" class="mb-2">Spesifikasi general</label>
+                                <input type="text" class="form-control spec-input" id="specarray0" name="specarray[]" placeholder="spesifikasi">
+                            </div>                                                                                  
                             <div class="form-group mb-3">
                                 <label for="productDescription" class="mb-2">Description</label>
                                 <textarea class="form-control" id="productDescription" placeholder="Description"></textarea>
@@ -90,7 +107,19 @@
                             <div class="form-group">
                                 <label for="cYearProduct" class="mb-2 pt-3">Tahun</label>
                                 <input type="number" class="form-control" id="cYearProduct" placeholder="Tahun Terbit" min="1000" max="9999">
-                            </div>                            
+                            </div>
+                            <div class="form-group">
+                                <label for="cdisplay" class="mb-2">display</label>
+                                <input type="text" class="form-control" id="cdisplay" placeholder="display">
+                            </div>
+                            <div class="form-group">
+                                <label for="ckamera" class="mb-2">kamera</label>
+                                <input type="text" class="form-control" id="ckamera" placeholder="kamera">
+                            </div>
+                            <div class="form-group">
+                                <label for="cbattery" class="mb-2">battery</label>
+                                <input type="text" class="form-control" id="cbattery" placeholder="battery">
+                            </div>                           
                             <div class="form-group pt-5">
                                 <label for="createProductImages">Product Image</label>
                                 <input type="file" class="form-control-file" id="createProductImages" multiple onchange="previewImages();">
@@ -230,6 +259,11 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group" id="editSpecArrayContainer">
+                                <button type="button" onclick="addEditSpecField()">+</button>
+                                <label for="editSpecArray0" class="mb-2">Edit Spesifikasi General</label>
+                                <input type="text" class="form-control spec-input-edit" id="editSpecArray0" name="editSpecarray[]" placeholder="Spesifikasi">
+                            </div>                                                        
                             <div class="form-group pt-3 mb-3">
                                 <label for="editProductDescription" class="mb-2">Description</label>
                                 <textarea class="form-control" id="editProductDescription" placeholder="Description"></textarea>
@@ -319,6 +353,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('utils.js') }}"></script>
 <script>
+let specFieldCount = 0;
+var editSpecFieldCount = 0; 
 const token = getCookieValue('access_token');
 $(document).ready(function() {
     var table = $('#dataTable').DataTable({
@@ -354,8 +390,14 @@ $(document).ready(function() {
     })
     $('#createProductForm').submit(function(e) {
     e.preventDefault();
-    var formData = new FormData(this);
+    let specArray = [];
+    
+    $('.spec-input').each(function() {
+        specArray.push($(this).val());
+    });
 
+    var formData = new FormData(this);
+    formData.append('spec_array', JSON.stringify(specArray)); 
     formData.append('name', $('#productName').val());
     formData.append('slug', $('#productSlug').val());
     formData.append('description', $('#productDescription').val());
@@ -366,6 +408,13 @@ $(document).ready(function() {
     formData.append('is_popular', $('#productPopular').is(':checked') ? 1 : 0);
     formData.append('year', $('#cYearProduct').val());
     formData.append('brand_id', $('#createBrand').val());
+
+    formData.append('ram', $('#cram').val());
+    formData.append('storage', $('#cstorage').val());
+    formData.append('cpu', $('#ccpu').val());
+    formData.append('display', $('#cdisplay').val());
+    formData.append('kamera', $('#ckamera').val());
+    formData.append('battery', $('#cbattery').val());
 
     // Handle file uploads for images, if any
     // var files = $('#createProductImages').get(0).files;  // Ensure this ID matches your actual file input's ID
@@ -465,6 +514,10 @@ $(document).ready(function() {
     formData.append('is_popular', $('#editProductPopular').is(':checked') ? 1 : 0);
     formData.append('year', $('#uYearProduct').val());
     formData.append('brand_id', $('#editBrand').val());
+
+    let specInputs = document.querySelectorAll('.spec-input-edit');
+    let specArray = Array.from(specInputs).map(input => input.value);
+    formData.append('spec_array', JSON.stringify(specArray)); 
 
     var files = $('#editProductImages').get(0).files; 
     if (files.length > 0) {
@@ -583,8 +636,8 @@ function editProduct(id) {
             $('#editProductPopular').prop('checked', response.is_popular);
             $('#uYearProduct').val(response.year);
             $('#editBrand').val(response.brand_id).prop('disabled', true);
-
-            console.log(response.year);
+            console.log(response.spec_array);
+            loadExistingSpecs(JSON.parse(response.spec_array));
 
             if (response.images) {
                 $("#editImagePreviewContainer").empty();
@@ -691,6 +744,58 @@ function showProduct(id) {
         }
     });
 }
+
+function addSpecField() {
+    specFieldCount++;
+    const container = document.getElementById('specArrayContainer');
+    const newField = document.createElement('div');
+    newField.setAttribute('class', 'form-group');
+    newField.innerHTML = `
+        <input type="text" class="form-control spec-input" id="specarray${specFieldCount}" name="specarray[]" placeholder="spesifikasi">
+    `;
+    container.appendChild(newField);
+}
+
+function addEditSpecField() {
+    editSpecFieldCount++;
+    const container = document.getElementById('editSpecArrayContainer');
+    const newField = document.createElement('div');
+    newField.setAttribute('class', 'form-group');
+    newField.innerHTML = `
+        <input type="text" class="form-control spec-input-edit" id="editSpecArray${editSpecFieldCount}" name="editSpecarray[]" placeholder="Spesifikasi">
+    `;
+    container.appendChild(newField);
+}
+
+function loadExistingSpecs(specsArray) {
+    const container = document.getElementById('editSpecArrayContainer');
+    if (!container) {
+        console.error('Edit spec container not found!');
+        return;
+    }
+    
+    while (container.children.length > 1) {
+        container.removeChild(container.lastChild);
+    }
+
+    editSpecFieldCount = 0;
+
+    specsArray.forEach((spec, index) => {
+        if (index === 0) {
+            let firstInput = document.getElementById('editSpecArray0');
+            if (firstInput) {
+                firstInput.value = spec;
+            } else {
+                addEditSpecField();
+                document.getElementById(`editSpecArray${editSpecFieldCount}`).value = spec;
+            }
+        } else {
+            addEditSpecField();
+            document.getElementById(`editSpecArray${editSpecFieldCount}`).value = spec;
+        }
+    });
+}
+
 
 </script>
 @endpush

@@ -13,7 +13,7 @@ class Product extends Model
     protected $fillable = [
         'name', 'slug', 'description', 'price', 
         'link_video', 'link_tokopedia', 
-        'is_show', 'is_popular','brand', 'year', 'brand_id'
+        'is_show', 'is_popular','brand', 'year', 'brand_id', 'ram', 'storage', 'cpu', 'display','kamera','battery','spec_array'
     ];
 
     public function images()
