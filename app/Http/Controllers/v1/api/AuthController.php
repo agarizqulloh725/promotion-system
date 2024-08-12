@@ -58,15 +58,24 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Validation failed',
+                'message' => 'Gagal Validasi',
                 'errors' => $validator->errors()
             ], 422);
         }
 
         if (!Auth::attempt($request->only('email', 'password'))) {
+            $emailExists = User::where('email', $request->input('email'))->exists();
+            
+            if (!$emailExists) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Email Tidak Terdaftar',
+                ], 401);
+            }
+        
             return response()->json([
                 'status' => 'error',
-                'message' => 'Invalid credentials',
+                'message' => 'Password anda salah',
             ], 401);
         }
         $user = Auth::user();

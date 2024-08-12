@@ -52,6 +52,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -81,13 +82,20 @@
                     window.location.href = result.url;
                 } else {
                     const error = await response.json();
-                    console.error('Login gagal:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Failed',
+                        text: error.message || 'Unable to log in with provided credentials.'
+                    });
                 }
             } catch (error) {
-                console.error('Terjadi kesalahan:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Network error or server is unreachable.'
+                });
             }
         });
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>
