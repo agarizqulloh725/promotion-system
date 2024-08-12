@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BranchController extends Controller
@@ -30,26 +31,29 @@ class BranchController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'branch' => 'nullable|string',
-                'address' => 'nullable|string',
-                'wa' => 'nullable|string',
-                'lat' => 'nullable|string',
-                'lang' => 'nullable|string',
-                'image' => 'nullable'
+                'branch' => 'required|string|max:255',
+                'address' => 'required|string|max:1024',
+                'wa' => 'required|regex:/^\+?\d{10,15}$/',
+                'lat' => 'required|string|regex:/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])\.\d{1,6})$/',
+                'lang' => 'required|string|regex:/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])\.\d{1,6})$/',
+                'image' => 'required|image|max:2048'
             ]);
-
+    
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                if ($file[0]->isValid()) {
-                    $randomFileName = uniqid('brand_') . '.' . $file[0]->extension();
-                    $file[0]->move(public_path('images/branch'), $randomFileName);
+                if ($file->isValid()) {
+                    $randomFileName = uniqid('brand_') . '.' . $file->extension();
+                    $file->move(public_path('images/branch'), $randomFileName);
                     $validated['image'] = $randomFileName;
                 }
             }
-
+    
             $branch = Branch::create($validated);
             return response()->json(['message' => 'Branch created successfully', 'branch' => $branch], 201);
-        } catch (Exception $e) {
+    
+        } catch (ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
             return response()->json(['error' => 'Failed to create the branch', 'message' => $e->getMessage()], 400);
         }
@@ -70,35 +74,37 @@ class BranchController extends Controller
     }
 
     // Update the specified resource in storage.
-    public function update(Request $request, Branch $branch )
+    public function update(Request $request, Branch $branch)
     {
         try {
             $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'branch' => 'nullable|string',
-                'address' => 'nullable|string',
-                'wa' => 'nullable|string',
-                'lat' => 'nullable|string',
-                'lang' => 'nullable|string',
-                'image' => 'nullable'
+                'name' => 'sometimes|required|string|max:255',
+                'branch' => 'nullable|string|max:255',
+                'address' => 'nullable|string|max:1024',
+                'wa' => 'nullable|regex:/^\+?\d{10,15}$/',
+                'lat' => 'nullable|string|regex:/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])\.\d{1,6})$/',
+                'lang' => 'nullable|string|regex:/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])\.\d{1,6})$/',
+                'image' => 'nullable|image|max:2048'
             ]);
-            if(isset($request->image)){
-                if(File::exists(public_path('images/branch/'. $branch->image))) {
-                    File::delete(public_path('images/branch/'. $branch->image));
-                }          
-                if ($request->hasFile('image')) {
-                    $file = $request->file('image')[0];  
-                        $randomFileName = uniqid('branch_') . '.' . $file->extension();
-                        $file->move(public_path('images/branch'), $randomFileName);
-                        $validated['image'] = $randomFileName;
-                }  
-            } 
-
-            $branch->update($validated);
+    
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                if(File::exists(public_path('images/branch/' . $branch->image))) {
+                    File::delete(public_path('images/branch/' . $branch->image));
+                }
+                $randomFileName = uniqid('branch_') . '.' . $file->extension();
+                $file->move(public_path('images/branch'), $randomFileName);
+                $validated['image'] = $randomFileName;
+            }
+    
+            $branch->update($validated);  
             return response()->json(['message' => 'Branch updated successfully', 'branch' => $branch], 200);
-        } catch (Exception $e) {
+    
+        } catch (ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return response()->json(['error' => 'Failed to update the branch'], 400);
+            return response()->json(['error' => 'Failed to update the branch', 'message' => $e->getMessage()], 400);
         }
     }
 

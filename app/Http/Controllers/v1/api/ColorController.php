@@ -31,10 +31,10 @@ class ColorController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'name' => 'required|string',
-                'image' => 'nullable',
-                'code' => 'nullable|string',
-            ]);
+                'name' => 'required|string|max:255', 
+                'image' => 'required|image|max:2048', 
+                'code' => 'required|string|max:255'
+            ]);            
             if ($request->hasFile('image')) {
                 $file = $request->file('image')[0];
                 if ($file->isValid()) {
@@ -76,10 +76,10 @@ class ColorController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'name' => 'required|string',
-                'image' => 'nullable',
-                'code' => 'nullable|string',
-            ]);
+                'name' => 'required|string|max:255', 
+                'image' => 'required|image|max:2048', 
+                'code' => 'required|string|max:255'
+            ]);            
             $color = Color::findOrFail($id);
             if(isset($request->image)){
                 if(File::exists(public_path('images/color/'. $color->image))) {
