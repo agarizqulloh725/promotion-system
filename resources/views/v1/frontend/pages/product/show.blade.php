@@ -2,6 +2,11 @@
 
 @push('css')
 <style>
+.strikethrough {
+    text-decoration: line-through; 
+    color: #999; 
+}
+
 .image-background {
     background-image: url({{asset('frontend/img/bg-nav.jpg')}});
     background-size: cover;
@@ -230,13 +235,13 @@
     <div class="col">
         <h4 class="nameProduct">SAMSUNG GALAXY A15</h4>
         <div class="d-flex align">
-            <h4 class="text-danger poppins-bold dharga">Rp 3.999.000</h4>
-            <p style="" class="poppins-semibold">&nbsp Rp 4.250.000</p>
-            <button class="btn rounded-pill poppins-medium text-danger ddiscount" style="background-color: #ff00000e">-10%</button>
+            <h4 class="text-danger poppins-bold dharga"></h4>
+            <p style="" class="poppins-semibold dhargareal"></p>
+            <button class="btn rounded-pill poppins-medium text-danger ddiscount" style="background-color: #ff00000e"></button>
         </div>
         <hr>
         <p class="poppins-medium">SPESIFIKASI</p>
-        <ul class="poppins-regular">
+        <ul class="poppins-regular specPro">
             <li>
                 Ukuran layar: 6.5 inci, 1080 x 2340 pixels, Super AMOLED, 90Hz
             </li>
@@ -244,7 +249,7 @@
                 Memori: RAM 8 GB, ROM 256 GB.....
             </li>
         </ul>
-        <p class="poppins-semibold text-danger">Lihat Selengkapnya</p>
+        {{-- <p class="poppins-semibold text-danger">Lihat Selengkapnya</p> --}}
         <hr>
         <p class="poppins-regular" style="color: #000000">Pilih Spesifikasi</p>
         <div class="d-flex gap-3 Cspecification">
@@ -265,6 +270,10 @@
         <div class="d-flex">
             <p>Jumlah stock tersedia :&nbsp; </p>
             <p class="stockProduct">0</p>
+        </div>
+        <div class="d-flex">
+            <p>Buy Online :&nbsp; </p>
+            <p class="tokOnline"></p>
         </div>
         <hr>
         <div class="d-flex justify-content-between gap-2">
@@ -387,8 +396,21 @@ function fetchProduct(id) {
                 updateImgUI(products);
                 document.querySelector('.nameProduct').textContent = products.data.name;
                 document.querySelector('.nameProduct1').textContent = products.data.name;
-                document.querySelector('.dharga').textContent = products.data.price;
-                // document.querySelector('.ddiscount').textContent = products.data.name;
+                // document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(products.data.price));
+                if (products.data.promo && products.data.promo.discount) {
+                    document.querySelector('.ddiscount').textContent = Math.round(products.data.promo.discount) + '%';
+                    document.querySelector('.dhargareal').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(products.data.price));
+                    document.querySelector('.dhargareal').classList.add('strikethrough');
+
+                    const discountedPrice = products.data.price - (products.data.price * (products.data.promo.discount / 100));
+                    document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(discountedPrice));
+                } else {
+                    document.querySelector('.ddiscount').style.display = 'none';
+                    document.querySelector('.dhargareal').style.display = 'none';
+
+                    document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(products.data.price));
+                }
+
 
                 document.querySelector('.ddesc').textContent = products.data.description;
                 document.querySelector('.dram').textContent = products.data.ram;
@@ -397,6 +419,12 @@ function fetchProduct(id) {
                 document.querySelector('.dlayar').textContent = products.data.display;
                 document.querySelector('.dpixel').textContent = products.data.kamera;
                 document.querySelector('.dbattre').textContent = products.data.battery;
+
+                if (products.data.spec_array) {
+                    updateSpecificationList(JSON.parse(products.data.spec_array));
+                }
+                updateTokopediaLink(products.data.link_tokopedia)
+
 
                 // document.querySelector('.dvideo').src = products.data.name;
             })
@@ -560,8 +588,10 @@ function clickSpecification(id) {
                 }
             })
             .then(colors => {
+                console.log(colors);
                 updateColorUI(colors,id)
                 fetchStock({{ $id }});
+                document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(colors.price));;
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
@@ -662,6 +692,37 @@ function updateImgUI(products) {
         imageContainer.innerHTML = '<p>No images available.</p>';
     }
 }
+function updateSpecificationList(specifications) {
+    const ulElement = document.querySelector('.specPro');
+    ulElement.innerHTML = '';
+
+    specifications.forEach(spec => {
+        const liElement = document.createElement('li');
+        liElement.textContent = spec;
+        ulElement.appendChild(liElement);
+    });
+}
+function updateTokopediaLink(tokopediaLink) {
+    const tokOnlineDiv = document.querySelector('.tokOnline');
+
+    if (tokopediaLink) {
+        const link = document.createElement('a');
+        link.href = tokopediaLink;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        const img = document.createElement('img');
+        img.src = 'http://127.0.0.1:8000/frontend/tokopedia.png'; 
+        img.alt = 'Tokopedia';
+        img.style = 'height: 30px;';
+
+        link.appendChild(img);
+        tokOnlineDiv.appendChild(link);
+    } else {
+        tokOnlineDiv.textContent = 'Not available';
+    }
+}
+
 document.getElementById('pesanSekarangBtn').addEventListener('click', function() {
     var nama =  document.querySelector('.nameProduct').textContent;
         const waMessage = encodeURIComponent(`Halo, saya tertarik dengan product ${nama} . Bisa dibantu?`);

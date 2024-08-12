@@ -480,6 +480,7 @@ class FeController extends Controller
     }
     public function clickSpecificationId($id){
         try {
+            $harga = ProductSpecification::where('specification_id', $id)->value('price');
             $idProSpec = ProductSpecification::where('specification_id', $id)->pluck('id');
             $colorIds = ProductColor::whereIn('product_specification_id', $idProSpec)
                                                     ->distinct()
@@ -496,7 +497,8 @@ class FeController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Product specifications retrieved successfully.',
-                'data' => $results
+                'data' => $results,
+                'price' => $harga
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
