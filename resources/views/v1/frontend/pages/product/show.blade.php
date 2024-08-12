@@ -94,10 +94,6 @@
     background-color: red !important;
     color: white !important;
 }
-.inactiv-spec{
-    background-color: #F0F0F0;
-    color: rgb(0, 0, 0) !important;
-}
 .color-circle {
     width: 40px;
     height: 40px;
@@ -107,16 +103,6 @@
 .active-color-circle {
     border: 2px solid #FF0000;
 }
-
-.show-more {
-    color: red;
-    cursor: pointer;
-    display: none;
-}
-.hidden-text {
-    display: none;
-}
-
 
 @media (min-width: 200px) { 
     .t-desc {
@@ -218,12 +204,12 @@
     <p class="poppins-regular" style="color: #828282;">
         <a href="/" style="color: #828282; text-decoration: none;">Beranda</a> >
         <a href="/product" style="color: #828282; text-decoration: none;">Product</a> >
-        <a href="/product/samsung-galaxy-a15" style="color: #000000; text-decoration: none;">Samsung Galaxy A15</a>
+        <a href="/product/samsung-galaxy-a15" class="nameProduct" style="color: #000000; text-decoration: none;">Samsung Galaxy A15</a>
     </p>    
 <div class="row pt-3">
     <div class="col-6">
         <div class="row">
-            <div class="col-3">
+            <div class="col-3 cImg">
                 <div class="row">
                     <div class="col-12 mb-2">
                         <img class="img-fluid thumbnail-img" src="{{asset('frontend/img/phone2.png')}}" alt="Phone Image" onclick="changeImage(this)" style="width: 110px;">
@@ -242,57 +228,48 @@
         </div>
     </div>
     <div class="col">
-        @foreach ($product as $key => $prd)
-            <h4 class=""  onclick="window.location='{{ route('productDetail', $prd['id']) }}'">{{ $prd['name'] }}</h4>
-            <div class="d-flex align">
-                <h4 class="text-danger poppins-bold">Rp {{ $prd['price'] }}</h4>
-                <p style="" class="poppins-semibold">&nbsp Rp 4.250.000</p>
-                <button class="btn rounded-pill poppins-medium text-danger" style="background-color: #ff00000e">-10%</button>
-            </div>
-        
-            <hr>
-
-            {{-- Spesification --}}
-            <div class="spec">
-                <p class="poppins-medium">SPESIFIKASI</p>
-            <ul class="poppins-regular" id="spec-list">
-                <li>
-                    {{$prd['description']}}
-                </li>
-                <li>
-                    Memori: RAM 8 GB, ROM 256 GB..... Ukuran layar: 6.5 inci, 1080 x 2340 pixels, Super AMOLED, 90Hz Ukuran layar: 6.5 inci, 1080 x 2340 pixels, Super AMOLED, 90Hz
-                </li>
-            </ul>
-            <p class="poppins-semibold text-danger show-more" onclick="toggleText()">Lihat Selengkapnya</p>
-            </div>
-
-            <hr>
-            <p class="poppins-regular" style="color: #000000">Pilih Spesifikasi</p>
-
-            <div class="d-flex gap-3">
-                @foreach ($prd['spec'] as $index => $spec)
-                    <button data-index="{{ $index }}" id="spec-btn-{{ $index }}" class="btn spec-btn inactiv-spec poppins-regular rounded-pill">{{ $spec['spec_name'] }}</button>
-                    
-                    @endforeach
-            </div>
-        @endforeach
+        <h4 class="nameProduct">SAMSUNG GALAXY A15</h4>
+        <div class="d-flex align">
+            <h4 class="text-danger poppins-bold dharga">Rp 3.999.000</h4>
+            <p style="" class="poppins-semibold">&nbsp Rp 4.250.000</p>
+            <button class="btn rounded-pill poppins-medium text-danger ddiscount" style="background-color: #ff00000e">-10%</button>
+        </div>
+        <hr>
+        <p class="poppins-medium">SPESIFIKASI</p>
+        <ul class="poppins-regular">
+            <li>
+                Ukuran layar: 6.5 inci, 1080 x 2340 pixels, Super AMOLED, 90Hz
+            </li>
+            <li>
+                Memori: RAM 8 GB, ROM 256 GB.....
+            </li>
+        </ul>
+        <p class="poppins-semibold text-danger">Lihat Selengkapnya</p>
+        <hr>
+        <p class="poppins-regular" style="color: #000000">Pilih Spesifikasi</p>
+        <div class="d-flex gap-3 Cspecification">
+            <button style="background-color: #F0F0F0" class="btn activ-spec poppins-regular rounded-pill">4/128gb</button>
+            <button style="background-color: #F0F0F0" class="btn poppins-regular rounded-pill">4/128gb</button>
+            <button style="background-color: #F0F0F0" class="btn poppins-regular rounded-pill">4/128gb</button>
+        </div>
         <hr>
         <p class="poppins-regular">Pilih Varian Warna</p>
-        <div class="d-flex justify-content-start gap-2">
-            <div class="color-container " id="color-container">
-                {{-- <div class="d-flex justify-content-start gap-2 color-list" id="color-list-{{ $index }}"
-                    style="display: {{ $index == 0 ? 'flex' : 'none' }};">
-                    @foreach ($spec['col'] as $col)
-                        <img src="{{ asset('images/color/' . $col['color_image'])}}" alt="{{ $col['color_name'] }}">
-                    @endforeach 
-                {{-- </div> --}}
-            </div>
+        <div class="d-flex justify-content-start gap-2 Ccolor">
+            <div class="color-circle active-color-circle" style="background-color: #F9D423;"></div>
+            <div class="color-circle" style="background-color: #4CAF50;"></div>
+            <div class="color-circle" style="background-color: #3F51B5;"></div>
+            <div class="color-circle" style="background-color: #BDBDBD;"></div>
         </div>
         
         <hr>
+        <div class="d-flex">
+            <p>Jumlah stock tersedia :&nbsp; </p>
+            <p class="stockProduct">0</p>
+        </div>
+        <hr>
         <div class="d-flex justify-content-between gap-2">
             <button style="background-color: #31b16466; color: #31B164" class="btn poppins-medium rounded-pill pt-3 pb-3 w-25"> Available</button>
-            <button class="btn btn-danger poppins-medium w-75 rounded-pill pt-3 pb-3">Pesan Sekarang</button>
+            <button class="btn btn-danger poppins-medium w-75 rounded-pill pt-3 pb-3" id="pesanSekarangBtn">Pesan Sekarang</button>
         </div>
     </div>
 </div>
@@ -309,15 +286,15 @@
                 <h5 class="poppins-medium">
                     Deskripsi
                 </h5>
-                <h5 class="poppins-medium" style="color: #7E7E7E">
+                {{-- <h5 class="poppins-medium" style="color: #7E7E7E">
                     Spesifikasi
                 </h5>
                 <h5 class="poppins-medium" style="color: #7E7E7E">
                     Promo
-                </h5>
+                </h5> --}}
             </div>
             <div>
-                <p style="text-align: justify;">
+                <p class="ddesc" style="text-align: justify;">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
                     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
                     nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -329,9 +306,9 @@
                         <th>CPU</th>
                     </tr>
                     <tr>
-                        <td>4gb | 8gb</td>
-                        <td>128gb | 256gb</td>
-                        <td>Mediatek Helio 699</td>
+                        <td class="dram">4gb | 8gb</td>
+                        <td class="dstorage">128gb | 256gb</td>
+                        <td class="dprocessor">Mediatek Helio 699</td>
                     </tr>
                     <tr>
                         <th>Layar</th>
@@ -339,16 +316,16 @@
                         <th>Baterai</th>
                     </tr>
                     <tr>
-                        <td>6.5 inci, AMOLED</td>
-                        <td>50MP</td>
-                        <td>5000mAh</td>
+                        <td class="dlayar">6.5 inci, AMOLED</td>
+                        <td class="dpixel">50MP</td>
+                        <td class="dbattre">5000mAh</td>
                     </tr>
                 </table>
             </div>
         </div>
         <div class="col-md-6">
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+                <iframe class="embed-responsive-item dvideo" src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -374,123 +351,261 @@
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>
 <script>
+var idSpec;
+var idColor;
 
-</script>
-<script >  
-    
-    var imageUrl  = "{{ asset('images/color/') }}";  
-    document.addEventListener("DOMContentLoaded", function() {
-        const listItems = document.querySelectorAll('#spec-list li');
-        const showMoreText = document.querySelector('.show-more');
+document.addEventListener('DOMContentLoaded', function () {
+    fetchProduct({{ $id }});
+    fetchSpesification({{ $id }});
+    fetchColor({{ $id }});
+    fetchStock({{ $id }});
+});
 
-        listItems.forEach(item => {
-            const words = item.textContent.trim().split(/\s+/);
-            if (words.length > 20) {
-                const visibleText = words.slice(0, 10).join(' ');
-                const hiddenText = words.slice(10).join(' ');
-                item.innerHTML = `${visibleText}<span class="hidden-text">${hiddenText}</span>`;
-                showMoreText.style.display = 'block';
-            }
-        });
 
-        const specButtons = document.querySelectorAll('.spec-btn.inactiv-spec');
-        const product = @json($product);
-        const colorContainer = document.querySelector('#color-container');
+function changeImage(element) {
+            var mainImage = document.getElementById('main-image');
+            mainImage.src = element.src;
+            mainImage.alt = element.alt;
 
-        if (specButtons.length > 0) {
-            specButtons[0].classList.remove('inactiv-spec'); 
-            specButtons[0].classList.add('activ-spec');
-            colorContainer.innerHTML = '';
-
-            const spec = product[0].spec[0];
-            spec.col.forEach(color => {
-                const img = document.createElement('img');
-                img.src = imageUrl+'/'+color.color_image;
-                img.alt = color.color_name;
-                colorContainer.appendChild(img);
+            var thumbnails = document.querySelectorAll('.thumbnail-img');
+            thumbnails.forEach(function(thumbnail) {
+                thumbnail.classList.remove('active-thumbnail');
             });
 
+            element.classList.add('active-thumbnail');
+        }
+function fetchProduct(id) {
+        fetch(`/api/v1/show-products/${id}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(products => {
+                updateImgUI(products);
+                document.querySelector('.nameProduct').textContent = products.data.name;
+                document.querySelector('.dharga').textContent = products.data.price;
+                // document.querySelector('.ddiscount').textContent = products.data.name;
+
+                document.querySelector('.ddesc').textContent = products.data.description;
+                document.querySelector('.dram').textContent = products.data.ram;
+                document.querySelector('.dstorage').textContent = products.data.storage;
+                document.querySelector('.dprocessor').textContent = products.data.cpu;
+                document.querySelector('.dlayar').textContent = products.data.display;
+                document.querySelector('.dpixel').textContent = products.data.kamera;
+                document.querySelector('.dbattre').textContent = products.data.battery;
+
+                // document.querySelector('.dvideo').src = products.data.name;
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+function fetchSpesification(id) {
+        fetch(`/api/v1/show-specification/${id}`)
+            .then(response => {
+                if (response.ok) {
+                    console.log(response);
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(specification => {
+                updateSpecificationUI(specification);
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+function fetchColor(id) {
+        fetch(`/api/v1/show-color/${id}`)
+            .then(response => {
+                if (response.ok) {
+                    console.log(response);
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(colors => {
+                const container = document.querySelector('.Ccolor');
+                container.innerHTML = '';
+
+                colors.data.forEach(color => {
+                    const colorDiv = document.createElement('div');
+                    colorDiv.className = 'color-circle';
+                    
+                    if (color.image) {
+                        // colorDiv.style.backgroundImage = `url(${color.image})`;
+                        colorDiv.style.backgroundImage = `url('http://127.0.0.1:8000/images/color/${color.image}')`;
+                        colorDiv.style.backgroundSize = 'cover';
+                    } else {
+                        colorDiv.style.backgroundColor = color.name.toLowerCase();
+                    }
+
+                    colorDiv.addEventListener('click', function() {
+                        document.querySelectorAll('.Ccolor .color-circle').forEach(div => div.classList.remove('active-color-circle'));
+                        colorDiv.classList.add('active-color-circle');
+                        console.log(`Warna ${color.name} dengan ID ${color.id} dipilihhh.`);
+                    });
+                    container.appendChild(colorDiv);
+                });
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+function fetchStock(id) {
+        let apiUrl = `/api/v1/show-stock/${id}`;
+
+        let queryParams = [];
+        if (idSpec) {
+            queryParams.push(`spec=${idSpec}`);
+        }
+        if (idColor) {
+            queryParams.push(`color=${idColor}`);
+        }
+        if (queryParams.length > 0) {
+            apiUrl += '?' + queryParams.join('&');
+        }
+        fetch(apiUrl)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(stock => {
+                document.querySelector('.stockProduct').textContent = stock.data;
+                // console.log(stock);
+                // function updateUIProduct
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+function clickSpecification(id) {
+    console.log("Spesifikasi dengan ID " + id + " diklik.");
+    idSpec = id;
+        fetch(`/api/v1/click-specification/${id}`)
+            .then(response => {
+                if (response.ok) {
+                    console.log(response);
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(colors => {
+                updateColorUI(colors,id)
+                fetchStock({{ $id }});
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+function clickColor(id) {
+        fetch(`/api/v1/show-stock/${id}`)
+            .then(response => {
+                if (response.ok) {
+                    console.log(response);
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(products => {
+                // function updateUIProduct
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+
+function updateSpecificationUI(specifications) {
+    const container = document.querySelector('.Cspecification');
+    container.innerHTML = '';
+
+    specifications.data.forEach(spec => {
+        const button = document.createElement('button');
+        button.className = 'btn poppins-regular rounded-pill';
+        button.style.backgroundColor = '#F0F0F0';
+        button.textContent = spec.name;
+
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.Cspecification .btn').forEach(btn => btn.classList.remove('activ-spec'));
+            button.classList.add('activ-spec');
+            clickSpecification(spec.id);
+        });
+
+        container.appendChild(button);
+    });
+}
+function updateColorUI(colors, idSpecification) {
+    const container = document.querySelector('.Ccolor');
+    container.innerHTML = '';
+
+    colors.data.forEach(color => {
+        const colorDiv = document.createElement('div');
+        colorDiv.className = 'color-circle';
+        
+        if (color.image) {
+            colorDiv.style.backgroundImage = `url(${color.image})`;
+            // colorDiv.style.backgroundImage = `url('http://127.0.0.1:8000/images/product-image/product-image_66b878156aa47.png')`;
+            colorDiv.style.backgroundImage = `url('http://127.0.0.1:8000/images/color/${color.image}')`;
+            colorDiv.style.backgroundSize = 'cover';
+        } else {
+            colorDiv.style.backgroundColor = color.name.toLowerCase();
         }
 
-        // Color spec 
-        specButtons.forEach(function(button, index) {
-            button.addEventListener('click', function() {
-                colorContainer.innerHTML = '';
-
-                const spec = product[0].spec[index];
-                spec.col.forEach(color => {
-                    const img = document.createElement('img');
-                    img.src = imageUrl+'/'+color.color_image;
-                    console.log(img.src);
-                    img.alt = color.color_name;
-                    img.style.marginRight = '8px'; 
-                    colorContainer.appendChild(img);
-                });
-                specButtons.forEach(b => {
-                    b.classList.remove('activ-spec');
-                    b.classList.add('inactiv-spec');
-                });
-
-                this.classList.remove('inactiv-spec');
-                this.classList.add('activ-spec');
-            });
+        colorDiv.addEventListener('click', function() {
+            document.querySelectorAll('.Ccolor .color-circle').forEach(div => div.classList.remove('active-color-circle'));
+            colorDiv.classList.add('active-color-circle');
+            console.log(`Warna ${color.name} dengan ID ${color.id} dipilih.`);
         });
+        container.appendChild(colorDiv);
     });
+}
+function updateImgUI(products) {
+    const imagesData = products.data.images;
+    const imageContainer = document.querySelector('.cImg .row');
 
-    function toggleText() {
-        const hiddenTexts = document.querySelectorAll('.hidden-text');
-        const showMoreText = document.querySelector('.show-more');
-        hiddenTexts.forEach(item => {
-            if (item.style.display === 'none' || item.style.display === '') {
-                item.style.display = 'inline';
-                showMoreText.textContent = 'Lihat Lebih Sedikit';
-            } else {
-                item.style.display = 'none';
-                showMoreText.textContent = 'Lihat Selengkapnya';
+    const mainImage = document.getElementById('main-image');    
+    if (imagesData.length > 0) {
+        mainImage.src = `/images/product-image/${imagesData[0].name}`;
+        mainImage.alt = 'Main Phone Image';
+
+        imageContainer.innerHTML = '';
+
+        imagesData.forEach((img, index) => {
+            if (index < 3) { 
+                const imgCol = document.createElement('div');
+                imgCol.className = 'col-12 mb-2';
+                const image = document.createElement('img');
+                image.className = 'img-fluid thumbnail-img';
+                image.src = `/images/product-image/${img.name}`;
+                image.alt = 'Phone Image';
+                image.style.width = '110px';
+                image.onclick = function() { changeImage(this); };
+
+                imgCol.appendChild(image);
+                imageContainer.appendChild(imgCol);
             }
         });
+    } else {
+        imageContainer.innerHTML = '<p>No images available.</p>';
     }
-    function changeImage(element) {
-        var mainImage = document.getElementById('main-image');
-        mainImage.src = element.src;
-        mainImage.alt = element.alt;
-
-        var thumbnails = document.querySelectorAll('.thumbnail-img');
-        thumbnails.forEach(function(thumbnail) {
-            thumbnail.classList.remove('active-thumbnail');
-        });
-        element.classList.add('active-thumbnail');
-    }
-
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     const listItems = document.querySelectorAll('#spec-list li');
-    //     const showMoreText = document.querySelector('.show-more');
-
-    //     listItems.forEach(item => {
-    //         const words = item.textContent.split(' ');
-    //         if (words.length > 20) {
-    //             const visibleText = words.slice(0, 10).join(' ');
-    //             const hiddenText = words.slice(10).join(' ');
-    //             item.innerHTML = `${visibleText}<span class="hidden-text" style="display:none;"> ${hiddenText}</span>`;
-    //             showMoreText.style.display = 'block';
-    //         }
-    //     });
-    // });
-
-    // function toggleText() {
-    //     const hiddenTexts = document.querySelectorAll('.hidden-text');
-    //     const showMoreText = document.querySelector('.show-more');
-    //     hiddenTexts.forEach(item => {
-    //         if (item.style.display === 'none' || item.style.display === '') {
-    //             item.style.display = 'inline';
-    //             showMoreText.textContent = 'Lihat Lebih Sedikit';
-    //         } else {
-    //             item.style.display = 'none';
-    //             showMoreText.textContent = 'Lihat Selengkapnya';
-    //         }
-    //     });
-    // }
+}
+document.getElementById('pesanSekarangBtn').addEventListener('click', function() {
+    var nama =  document.querySelector('.nameProduct').textContent;
+        const waMessage = encodeURIComponent(`Halo, saya tertarik dengan product ${nama} . Bisa dibantu?`);
+        const waNumber = '6285792125743';
+        const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
+        window.open(waUrl, '_blank');
+    });
 </script>
-
-
 @endpush

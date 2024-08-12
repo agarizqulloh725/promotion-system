@@ -550,7 +550,7 @@ ul li {
 
     document.getElementById('pesanSekarangBtn').addEventListener('click', function() {
         const waMessage = encodeURIComponent(`Halo, saya tertarik dengan promo ${products.data.name} yang memiliki spesifikasi sebagai berikut: ${specifications.join(', ')}. Bisa dibantu?`);
-        const waNumber = '6285232014102';
+        const waNumber = '6285792125743';
         const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
         window.open(waUrl, '_blank');
     });

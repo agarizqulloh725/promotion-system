@@ -176,53 +176,7 @@ class GeneralRouteController extends Controller
             $product->increment('is_popular');
             $product->save();
         }
-        $product = ProductStock::select(
-            'product_stock.product_id',
-            'product.name',
-            'product.price',
-            'product.description',
-        )
-        ->where('product_stock.product_id', $id)
-        ->join('product', 'product.id', '=', 'product_stock.product_id')
-        ->groupBy( 'product_stock.product_id', 'product.name', 'product.price', 'product.description')
-        ->get()
-        ->map(function($v)use($id){
-            $spec = Specification::select(
-                'product_specification.id as spec_id',
-                'specification.name as spec_name',
-            )
-            ->leftjoin('product_specification', 'product_specification.specification_id', '=' ,'specification.id')
-            ->where('product_specification.product_id', $id)
-            ->get()
-            ->map(function($k)use($id){
-                $col = Color::select(
-                    'color.name as color_name',
-                    'color.image as color_image',
-                )
-                ->join('product_color', 'product_color.color_id', '=' ,'color.id')
-                ->join('product_specification as a', 'a.id', '=' ,'product_color.product_specification_id')
-                ->where('product_color.product_specification_id', $k->spec_id)
-                ->get();
-                
-                return [
-                    "id"=>$k->spec_id,
-                    "spec_name"=>$k->spec_name,
-                    "col"=>$col,
-                ];
-            });
-
-
-            return [
-                "id"=>$v->product_id,
-                "name"=>$v->name,
-                "price"=>$v->price,
-                "description"=>$v->description,
-                "spec"=>$spec,
-            ];
-        });
-
-        // return $product;
-        return view('v1.frontend.pages.product.show',  compact('product'));
+        return view('v1.frontend.pages.product.show',  compact('id'));
     }
     public function promo()
     {

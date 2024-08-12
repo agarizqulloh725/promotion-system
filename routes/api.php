@@ -31,6 +31,12 @@ Route::prefix('v1')->group(function () {
 
     Route::get('get-brand', [FeController::class, 'getBrand']);
     Route::get('get-products', [FeController::class, 'getProduct']);
+    Route::get('show-products/{id}', [FeController::class, 'showProductId']);
+    Route::get('show-specification/{id}', [FeController::class, 'showSpecificationId']);
+    Route::get('click-specification/{id}', [FeController::class, 'clickSpecificationId']);
+    Route::get('show-color/{id}', [FeController::class, 'clickColorId']);
+    Route::get('click-color/{id}', [FeController::class, 'showColorId']);
+    Route::get('show-stock/{id}', [FeController::class, 'showStockId']);
     Route::get('get-product-promo', [FeController::class, 'getProductPromo']);
     Route::get('get-brand-bicycle', [FeController::class, 'getBrandBicycle']);
     Route::get('get-bicycle', [FeController::class, 'getBicycle']);

@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\v1\api;
 
-use App\Http\Controllers\Controller;
+use DB;
 use App\Models\Brand;
+use App\Models\Color;
 use App\Models\Product;
+use App\Models\ProductColor;
 use App\Models\ProductPromo;
 use Illuminate\Http\Request;
+use App\Models\Specification;
 
-use DB;
 use PhpParser\Node\Stmt\Return_;
+use App\Http\Controllers\Controller;
+use App\Models\ProductSpecification;
+use App\Models\ProductStock;
 
 class FeController extends Controller
 {
@@ -49,7 +54,6 @@ class FeController extends Controller
             ], 500);
         }
     }
-
     public function getProduct(Request $request) {
         try {
             $query = Product::where('is_show', 1)->whereHas('brand.productCategory', function ($query) {
@@ -57,6 +61,7 @@ class FeController extends Controller
             });
             
             $years = isset($request->years) ? explode(',', $request->years) : [];
+            
             if (!empty($years)) {
                 $query->whereIn('year', $years);
             }
@@ -150,7 +155,6 @@ class FeController extends Controller
             ], 500);
         }
     }
-
     public function getBicycle(Request $request){
         try {
             $query = Product::where('is_show', 1)->whereHas('brand.productCategory', function ($query) {
@@ -251,7 +255,6 @@ class FeController extends Controller
             ], 500);
         }
     }
-
     public function getProductPromo(Request $request){
         try {
             $query = Product::where('is_show', 1)->whereHas('promo')->with('promo');
@@ -350,8 +353,6 @@ class FeController extends Controller
             ], 500);
         }
     }
-
-
     public function productPopular() {
         $products = Product::with(['images', 'promo'])  
                         ->orderBy('is_popular', 'desc')
@@ -364,8 +365,6 @@ class FeController extends Controller
             'data' => $products
         ]);
     }
-
-
     public function firstPromo() {
         $promo = ProductPromo::whereNotNull('promo_front')->first();
     
@@ -375,6 +374,150 @@ class FeController extends Controller
             'data' => $promo
         ]);
     }
+    public function showProductId($id) {
+        try {
+            $results = Product::with(['images', 'promo', 'brand'])->find($id);
+            return response()->json([
+                'success' => true,
+                'message' => 'Products retrieved successfully.',
+                'data' => $results
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve products. Error: ' . $e->getMessage(),
+            ], 500);
+        }
+}
+    public function showSpecificationId($id){
+        try {
+            $specificationIds = ProductSpecification::where('product_id', $id)
+                                                    ->distinct()
+                                                    ->pluck('specification_id');
+
+                                                    
+            $results = Specification::whereIn('id', $specificationIds)->get();
+
+            if ($results->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No specifications found for this product.',
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product specifications retrieved successfully.',
+                'data' => $results
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve product specifications. Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function showColorId($id){
+        try {
+            $colorIds = ProductColor::where('product_id', $id)
+                                                    ->distinct()
+                                                    ->pluck('color_id');
+            $results = Color::whereIn('id', $colorIds)->get();
+
+            if ($results->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No specifications found for this product.',
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product specifications retrieved successfully.',
+                'data' => $results
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve product specifications. Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function showStockId($id, Request $request){
+        try {
+            if($request->spec && $request->color){
+                $totalStock = ProductStock::where('product_id', $id)->where('')->where('')->sum('stock'); 
+            }elseif($request->spec){
+                $totalStock = ProductStock::where('product_id', $id)->sum('stock'); 
+            }elseif($request->color){
+                $totalStock = ProductStock::where('product_id', $id)->sum('stock'); 
+            }else{
+                $totalStock = ProductStock::where('product_id', $id)->sum('stock'); 
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Products retrieved successfully.',
+                'data' => $totalStock
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve products. Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function clickSpecificationId($id){
+        try {
+            $colorIds = ProductColor::where('product_specification_id', $id)
+                                                    ->distinct()
+                                                    ->pluck('color_id');
+            $results = Color::whereIn('id', $colorIds)->get();
     
+            if ($results->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No specifications found for this product.',
+                ], 404);
+            }
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Product specifications retrieved successfully.',
+                'data' => $results
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve product specifications. Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function clickColorId($id){
+        try {
+            $colorIds = ProductColor::where('product_id', $id)
+                                                    ->distinct()
+                                                    ->pluck('color_id');
+            $results = Color::whereIn('id', $colorIds)->get();
+    
+            if ($results->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No specifications found for this product.',
+                ], 404);
+            }
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Product specifications retrieved successfully.',
+                'data' => $results
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve product specifications. Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
     
 }
