@@ -484,7 +484,7 @@ const loadingModal = (args, text = null) => {
 
 async function fetchBrand() {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/get-brand');
+        const response = await fetch('https://lima-waktu.my.id/api/v1/get-brand');
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -511,7 +511,7 @@ async function fetchTahun() {
     }
 } 
 async function fetchProducts(pageUrl) {
-    pageUrl = pageUrl || 'http://127.0.0.1:8000/api/v1/get-products';
+    pageUrl = pageUrl || 'https://lima-waktu.my.id/api/v1/get-products';
     try {
         const response = await fetch(pageUrl);
         if (!response.ok) {
@@ -537,7 +537,7 @@ async function applyFilters() {
         promos: promos.join(','),
     }).toString();
     
-    const url = `http://127.0.0.1:8000/api/v1/get-products?${queryParams}`;
+    const url = `https://lima-waktu.my.id/api/v1/get-products?${queryParams}`;
     loadingModal('show', 'Load Data...');
 
     try {
@@ -781,7 +781,7 @@ function setSortOption(option, event) {
         queryParams.append('search', encodeURIComponent(searchh));
     }
 
-    const apiUrl = `http://127.0.0.1:8000/api/v1/get-products?${queryParams.toString()}`;
+    const apiUrl = `https://lima-waktu.my.id/api/v1/get-products?${queryParams.toString()}`;
     fetchProducts(apiUrl);
 }
 
@@ -791,7 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // searchButton.addEventListener('click', function(event) {
     //     event.preventDefault();
     //     const query = searchInput.value;
-    //     fetchProducts(`http://127.0.0.1:8000/api/v1/get-products?search=${encodeURIComponent(query)}`);
+    //     fetchProducts(`https://lima-waktu.my.id/api/v1/get-products?search=${encodeURIComponent(query)}`);
     // });
 
     const debounce = (func, delay) => {
@@ -821,7 +821,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filterSort) {
         queryParams.append('sort', filterSort);
     }
-        const apiUrl = `http://127.0.0.1:8000/api/v1/get-products?${queryParams.toString()}`;
+        const apiUrl = `https://lima-waktu.my.id/api/v1/get-products?${queryParams.toString()}`;
         fetchProducts(apiUrl);
     }, 250));
 

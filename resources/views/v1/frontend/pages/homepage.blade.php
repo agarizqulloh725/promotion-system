@@ -562,18 +562,16 @@ ul li {
     container.innerHTML = ''; 
 
     products.data.forEach(product => {
-        if (product.is_show && product.is_popular) { 
-            // const imagesHTML = product.images.map(image => 
-            //     `<img src="/path/to/images/${image.name}" class="card-img-top" alt="${product.name}">`
-            // ).join('');
-            const imagesHTML = product.images.length > 0 ? product.images[0].name : 'default-image.png';
-            let promoDetails = '';
-            if (product.promo) {
-                promoDetails += product.promo.discount ? `<span class="discount-tag poppins-medium">${parseInt(product.promo.discount).toLocaleString()}% Off</span>` : '';
-                // promoDetails += product.promo.cashback ? ` Cashback: ${parseInt(product.promo.cashback).toLocaleString()}` : '';
-            }
-            const productHTML = `
-                <div class="col-md-3 d-flex justify-content-center">
+    if (product.is_show && product.is_popular) { 
+        const imagesHTML = product.images.length > 0 ? product.images[0].name : 'default-image.png';
+        let promoDetails = '';
+        if (product.promo) {
+            promoDetails += product.promo.discount ? `<span class="discount-tag poppins-medium">${parseInt(product.promo.discount).toLocaleString()}% Off</span>` : '';
+        }
+        const productURL = `/product/${product.id}`;
+        const productHTML = `
+            <div class="col-md-3 d-flex justify-content-center">
+                <a href="${productURL}" class="text-decoration-none text-dark"> <!-- Membungkus kartu dengan a href -->
                     <div class="card border rounded-4">
                         <img src="${assetPath}/${imagesHTML}" class="card-img-top" alt="${product.name}">
                         <div class="card-body">
@@ -582,11 +580,13 @@ ul li {
                             <p class="poppins-bold"><strong>${parseInt(product.price).toLocaleString()}</strong> IDR ${promoDetails}</p>
                         </div>
                     </div>
-                </div>
-            `;
-            container.innerHTML += productHTML;
-        }
-    });
+                </a> <!-- Penutup a href -->
+            </div>
+        `;
+        container.innerHTML += productHTML;
+    }
+});
+
 }
 
 function initializeTimer(promoEndTime) {

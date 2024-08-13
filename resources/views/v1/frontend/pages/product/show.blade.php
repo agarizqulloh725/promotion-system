@@ -396,7 +396,6 @@ function fetchProduct(id) {
                 updateImgUI(products);
                 document.querySelector('.nameProduct').textContent = products.data.name;
                 document.querySelector('.nameProduct1').textContent = products.data.name;
-                // document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(products.data.price));
                 if (products.data.promo && products.data.promo.discount) {
                     document.querySelector('.ddiscount').textContent = Math.round(products.data.promo.discount) + '%';
                     document.querySelector('.dhargareal').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(products.data.price));
@@ -412,13 +411,17 @@ function fetchProduct(id) {
                 }
 
 
+                if(products.data.brand.product_category_id == 1){
+                    document.querySelector('.dram').textContent = products.data.ram;
+                    document.querySelector('.dstorage').textContent = products.data.storage;
+                    document.querySelector('.dprocessor').textContent = products.data.cpu;
+                    document.querySelector('.dlayar').textContent = products.data.display;
+                    document.querySelector('.dpixel').textContent = products.data.kamera;
+                    document.querySelector('.dbattre').textContent = products.data.battery;
+                }else{
+                    document.querySelector('.specs-table').style.display = 'none';
+                }
                 document.querySelector('.ddesc').textContent = products.data.description;
-                document.querySelector('.dram').textContent = products.data.ram;
-                document.querySelector('.dstorage').textContent = products.data.storage;
-                document.querySelector('.dprocessor').textContent = products.data.cpu;
-                document.querySelector('.dlayar').textContent = products.data.display;
-                document.querySelector('.dpixel').textContent = products.data.kamera;
-                document.querySelector('.dbattre').textContent = products.data.battery;
 
                 if (products.data.spec_array) {
                     updateSpecificationList(JSON.parse(products.data.spec_array));
@@ -524,7 +527,7 @@ function fetchColor(id) {
                     
                     if (color.image) {
                         // colorDiv.style.backgroundImage = `url(${color.image})`;
-                        colorDiv.style.backgroundImage = `url('http://127.0.0.1:8000/images/color/${color.image}')`;
+                        colorDiv.style.backgroundImage = `url('https://lima-waktu.my.id/images/color/${color.image}')`;
                         colorDiv.style.backgroundSize = 'cover';
                     } else {
                         colorDiv.style.backgroundColor = color.name.toLowerCase();
@@ -591,7 +594,19 @@ function clickSpecification(id) {
                 console.log(colors);
                 updateColorUI(colors,id)
                 fetchStock({{ $id }});
-                document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(colors.price));;
+                if (colors.discount) {
+                    document.querySelector('.ddiscount').textContent = Math.round(colors.discount) + '%';
+                    document.querySelector('.dhargareal').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(colors.price));
+                    document.querySelector('.dhargareal').classList.add('strikethrough');
+
+                    const discountedPrice = colors.price - (colors.price * (colors.discount / 100));
+                    document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(discountedPrice));
+                } else {
+                    document.querySelector('.ddiscount').style.display = 'none';
+                    document.querySelector('.dhargareal').style.display = 'none';
+
+                    document.querySelector('.dharga').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(colors.price));
+                }
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
@@ -644,8 +659,8 @@ function updateColorUI(colors, idSpecification) {
         
         if (color.image) {
             colorDiv.style.backgroundImage = `url(${color.image})`;
-            // colorDiv.style.backgroundImage = `url('http://127.0.0.1:8000/images/product-image/product-image_66b878156aa47.png')`;
-            colorDiv.style.backgroundImage = `url('http://127.0.0.1:8000/images/color/${color.image}')`;
+            // colorDiv.style.backgroundImage = `url('https://lima-waktu.my.id/images/product-image/product-image_66b878156aa47.png')`;
+            colorDiv.style.backgroundImage = `url('https://lima-waktu.my.id/images/color/${color.image}')`;
             colorDiv.style.backgroundSize = 'cover';
         } else {
             colorDiv.style.backgroundColor = color.name.toLowerCase();
@@ -712,7 +727,7 @@ function updateTokopediaLink(tokopediaLink) {
         link.rel = 'noopener noreferrer';
         
         const img = document.createElement('img');
-        img.src = 'http://127.0.0.1:8000/frontend/tokopedia.png'; 
+        img.src = 'https://lima-waktu.my.id/frontend/tokopedia.png'; 
         img.alt = 'Tokopedia';
         img.style = 'height: 30px;';
 

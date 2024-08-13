@@ -289,7 +289,7 @@ async function fetchTahun() {
     }
 } 
 async function fetchProducts(pageUrl) {
-    pageUrl = pageUrl || 'http://127.0.0.1:8000/api/v1/get-product-promo';
+    pageUrl = pageUrl || 'https://lima-waktu.my.id/api/v1/get-product-promo';
     try {
         const response = await fetch(pageUrl);
         if (!response.ok) {
@@ -315,7 +315,7 @@ async function applyFilters() {
         promos: promos.join(','),
     }).toString();
 
-    const url = `http://127.0.0.1:8000/api/v1/get-product-promo?${queryParams}`;
+    const url = `https://lima-waktu.my.id/api/v1/get-product-promo?${queryParams}`;
 
     try {
         const response = await fetch(url);
@@ -498,7 +498,7 @@ function setSortOption(option, event) {
         queryParams.append('search', encodeURIComponent(searchh));
     }
 
-    const apiUrl = `http://127.0.0.1:8000/api/v1/get-product-promo?${queryParams.toString()}`;
+    const apiUrl = `https://lima-waktu.my.id/api/v1/get-product-promo?${queryParams.toString()}`;
     fetchProducts(apiUrl);
 }
 
@@ -533,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filterSort) {
         queryParams.append('sort', filterSort);
     }
-        const apiUrl = `http://127.0.0.1:8000/api/v1/get-product-promo?${queryParams.toString()}`;
+        const apiUrl = `https://lima-waktu.my.id/api/v1/get-product-promo?${queryParams.toString()}`;
         fetchProducts(apiUrl);
     }, 250));
     fetchProducts();

@@ -12,11 +12,11 @@
     <div class="page-header">
         <h2 class="page-title"> Product Category </h2>
     </div>
-    <div class="d-flex justify-content-end">
+    {{-- <div class="d-flex justify-content-end">
         <button type="button" id="btnCreate" class="btn btn-primary mb-2">
             <i class="fa fa-plus"></i> Create Category
         </button>        
-    </div>
+    </div> --}}
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
@@ -26,7 +26,7 @@
                     <tr>
                     <th> No </th>
                     <th> Name </th>
-                    <th> Action </th>
+                    {{-- <th> Action </th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -169,11 +169,11 @@ $(document).ready(function() {
                 return meta.row + 1;
             }},
             { data: "name" },
-            { data: null, render: function (data, type, row) {
-                return `<button onclick="showCategory(${row.id})" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
-                        <button onclick="editCategory(${row.id}, '${row.name}')" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm delete-btn" data-id="${row.id}"><i class="fa fa-trash"></i></button>`;
-            }}
+            // { data: null, render: function (data, type, row) {
+            //     return `<button onclick="showCategory(${row.id})" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>
+            //             <button onclick="editCategory(${row.id}, '${row.name}')" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
+            //             <button class="btn btn-danger btn-sm delete-btn" data-id="${row.id}"><i class="fa fa-trash"></i></button>`;
+            // }}
         ]
     });
 

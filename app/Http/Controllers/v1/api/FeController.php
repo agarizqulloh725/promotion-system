@@ -492,7 +492,11 @@ class FeController extends Controller
     public function clickSpecificationId($id){
         try {
             $harga = ProductSpecification::where('specification_id', $id)->value('price');
+            $idProduct = ProductSpecification::where('specification_id', $id)->first();
+            $discount = ProductPromo::where('product_id', $idProduct->product_id)->value('discount');
             $idProSpec = ProductSpecification::where('specification_id', $id)->pluck('id');
+            
+            
             $colorIds = ProductColor::whereIn('product_specification_id', $idProSpec)
                                                     ->distinct()
                                                     ->pluck('color_id');
@@ -509,7 +513,8 @@ class FeController extends Controller
                 'success' => true,
                 'message' => 'Product specifications retrieved successfully.',
                 'data' => $results,
-                'price' => $harga
+                'price' => $harga,
+                'discount' => $discount
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

@@ -340,7 +340,7 @@
 
 {{-- <script>
   document.addEventListener('DOMContentLoaded', () => {
-      fetch('http://127.0.0.1:8000/api/v1/admin/dashboard')
+      fetch('https://lima-waktu.my.id/api/v1/admin/dashboard')
           .then(response => response.json())
           .then(data => {
               if (data.total !== undefined) {
