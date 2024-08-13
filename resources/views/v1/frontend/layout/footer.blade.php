@@ -2,7 +2,7 @@
     <div class="image-backgroundfooter p-3">
         <div class="text-center pt-4">
             <img class="pb-4" src="{{asset('frontend/img/logolima.png')}}" alt="">
-            <div class="mx-auto mt-4 " style="width: 450px">
+            <div class="mx-auto mt-4 mysosmed">
                 <div class="d-flex justify-content-between ">
                     <a class="text-white" href="https://www.linkedin.com" target="_blank"><i class="fs-4 fab fa-linkedin"></i></a>
                     <a class="text-white" href="https://www.facebook.com" target="_blank"><i class="fs-4 fab fa-facebook-f"></i></a>
@@ -12,12 +12,12 @@
                 </div>
             </div>
             
-            <div class="mx-auto pt-4" style="width: 450px">
+            <div class="mx-auto pt-4 mynav">
                 <div class="d-flex justify-content-between mt-3">
-                    <p class="text-white poppins-medium" style="font-size: 18px;">Branda</p>
-                    <p class="text-white poppins-medium" style="font-size: 18px;">Product</p>
-                    <p class="text-white poppins-medium" style="font-size: 18px;">Promo</p>
-                    <p class="text-white poppins-medium" style="font-size: 18px;">Cabang</p>
+                    <p class="text-white poppins-medium textnav">Branda</p>
+                    <p class="text-white poppins-medium textnav">Product</p>
+                    <p class="text-white poppins-medium textnav">Promo</p>
+                    <p class="text-white poppins-medium textnav">Cabang</p>
                 </div>
             </div>
             <div class="w-100 text-center pt-4">
