@@ -95,6 +95,11 @@
                                 <label for="createDiscount" class="mb-2 pt-3">Discount</label>
                                 <input type="number" class="form-control" id="createDiscount" placeholder="Discount" step="0.01">
                             </div>
+                            <div class="form-group" id="specArrayContainer">
+                                <button type="button" onclick="addSpecField()">+</button>
+                                <label for="specarray0" class="mb-2">Spesifikasi general</label>
+                                <input type="text" class="form-control spec-input" id="specarray0" name="specarray[]" placeholder="spesifikasi">
+                            </div> 
 
                         </div>
                         <div class="col-md-6">
@@ -123,8 +128,16 @@
                                 <label for="createPromoEnd" class="mb-2 pt-3">End Date</label>
                                 <input type="date" class="form-control" id="createPromoEnd">
                             </div>
-                            
-                            
+                            <div class="form-group pt-5">
+                                <label for="createProductImages1">gambar 1</label>
+                                <input type="file" class="form-control-file" id="createProductImages1" onchange="previewImages(1);">
+                                <div id="imagePreviewContainer1" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>
+                            <div class="form-group pt-5">
+                                <label for="createProductImages2">gambar 2</label>
+                                <input type="file" class="form-control-file" id="createProductImages2" onchange="previewImages(2);">
+                                <div id="imagePreviewContainer2" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>                            
                         </div>
 
                     </div>
@@ -213,6 +226,11 @@
                                 <label for="editDiscount" class="mb-2 pt-3">Discount</label>
                                 <input type="number" class="form-control" id="editDiscount" placeholder="Discount" step="0.01">
                             </div>
+                            <div class="form-group" id="editSpecArrayContainer">
+                                <button type="button" onclick="addEditSpecField()">+</button>
+                                <label for="editSpecArray0" class="mb-2">Edit Spesifikasi General</label>
+                                <input type="text" class="form-control spec-input-edit" id="editSpecArray0" name="editSpecarray[]" placeholder="Spesifikasi">
+                            </div>   
                         </div>
                         <div class="col-md-6">
 
@@ -240,6 +258,16 @@
                                 <label for="editPromoEnd" class="mb-2 pt-3">End Date</label>
                                 <input type="date" class="form-control" id="editPromoEnd">
                             </div>
+                            <div class="form-group pt-5">
+                                <label for="editProductImages1">Gambar 1</label>
+                                <input type="file" class="form-control-file" id="editProductImages1" onchange="editPreviewImages(1);">
+                                <div id="EimagePreviewContainer1" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>
+                            <div class="form-group pt-5">
+                                <label for="editProductImages2">Gambar 2</label>
+                                <input type="file" class="form-control-file" id="editProductImages2" onchange="editPreviewImages(2);">
+                                <div id="EimagePreviewContainer2" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                            </div>                            
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Save</button>
                                 <button type="button" class="btn btn-secondary closeModal" data-dismiss="modal">Cancel</button>
@@ -283,6 +311,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('utils.js') }}"></script>
 <script>
+let specFieldCount = 0;
+var editSpecFieldCount = 0; 
 const token = getCookieValue('access_token');
 $(document).ready(function() {
     $('#createProduct').select2({
@@ -330,8 +360,14 @@ $(document).ready(function() {
     })
     $('#createForm').submit(function(e) {
     e.preventDefault();
+    let specArray = [];
+    
+    $('.spec-input').each(function() {
+        specArray.push($(this).val());
+    });
 
     var formData = new FormData(this);
+    formData.append('spec_array', JSON.stringify(specArray)); 
     formData.append('name', $('#createBrandName').val());
     formData.append('product_id', $('#createProduct').val());
     formData.append('discount', $('#createDiscount').val());
@@ -341,7 +377,15 @@ $(document).ready(function() {
     formData.append('promo_start', $('#createPromoStart').val());
     formData.append('promo_end', $('#createPromoEnd').val());
 
+    var image1 = $('#createProductImages1').prop('files')[0];
+    if (image1) {
+        formData.append('img1', image1);
+    }
 
+    var image2 = $('#createProductImages2').prop('files')[0];
+    if (image2) {
+        formData.append('img2', image2);
+    }
     $.ajax({
         url: '/api/v1/admin/pro-promo/',
         type: 'POST',
@@ -362,11 +406,11 @@ $(document).ready(function() {
             });
         },
         error: function(request, msg, error) {
-            console.log('Error creating Brand:', error);
+            // console.log('Error creating Brand:', request.responseJSON.error);
             $('#createModal').modal('hide');
             Swal.fire({
                 title: 'Error!',
-                text: 'Failed to create Brand. Please try again.',
+                text: 'Gagal, ' + request.responseJSON.error, 
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
@@ -424,6 +468,20 @@ $(document).ready(function() {
     formData.append('promo_front', $('#editPromoFront').val());
     formData.append('promo_start', $('#editPromoStart').val());
     formData.append('promo_end', $('#editPromoEnd').val());
+
+    let specInputs = document.querySelectorAll('.spec-input-edit');
+    let specArray = Array.from(specInputs).map(input => input.value);
+    formData.append('spec_array', JSON.stringify(specArray)); 
+
+    var image1 = $('#editProductImages1').prop('files')[0];
+    if (image1) {
+        formData.append('img1', image1);
+    }
+
+    var image2 = $('#editProductImages2').prop('files')[0];
+    if (image2) {
+        formData.append('img2', image2);
+    }
 
     $.ajax({
         url: '/api/v1/admin/pro-promo/' + $('#editId').val(), 
@@ -524,6 +582,14 @@ function editBrand(id) {
             $('#editPromoFront').val(response.promo_front);
             $('#editPromoStart').val(response.promo_start);
             $('#editPromoEnd').val(response.promo_end);
+
+            if (response.img1) {
+                $('#EimagePreviewContainer1').attr('src', `/images/homepromo/${response.img1}`);
+            }
+            if (response.img2) {
+                $('#EimagePreviewContainer2').attr('src', `/images/homepromo/${response.img2}`);
+            }
+            loadExistingSpecs(JSON.parse(response.spec_array));
         },
         error: function(xhr, status, error) {
             console.log('Error fetching Brand:', error);
@@ -536,5 +602,93 @@ function editBrand(id) {
         }
     });
 }
+function addSpecField() {
+    specFieldCount++;
+    const container = document.getElementById('specArrayContainer');
+    const newField = document.createElement('div');
+    newField.setAttribute('class', 'form-group');
+    newField.innerHTML = `
+        <input type="text" class="form-control spec-input" id="specarray${specFieldCount}" name="specarray[]" placeholder="spesifikasi">
+    `;
+    container.appendChild(newField);
+}
+
+function addEditSpecField() {
+    editSpecFieldCount++;
+    const container = document.getElementById('editSpecArrayContainer');
+    const newField = document.createElement('div');
+    newField.setAttribute('class', 'form-group');
+    newField.innerHTML = `
+        <input type="text" class="form-control spec-input-edit" id="editSpecArray${editSpecFieldCount}" name="editSpecarray[]" placeholder="Spesifikasi">
+    `;
+    container.appendChild(newField);
+}
+
+function loadExistingSpecs(specsArray) {
+    const container = document.getElementById('editSpecArrayContainer');
+    if (!container) {
+        console.error('Edit spec container not found!');
+        return;
+    }
+    
+    while (container.children.length > 1) {
+        container.removeChild(container.lastChild);
+    }
+
+    editSpecFieldCount = 0;
+
+    specsArray.forEach((spec, index) => {
+        if (index === 0) {
+            let firstInput = document.getElementById('editSpecArray0');
+            if (firstInput) {
+                firstInput.value = spec;
+            } else {
+                addEditSpecField();
+                document.getElementById(`editSpecArray${editSpecFieldCount}`).value = spec;
+            }
+        } else {
+            addEditSpecField();
+            document.getElementById(`editSpecArray${editSpecFieldCount}`).value = spec;
+        }
+    });
+}
+
+function previewImages(index) {
+    var files = $(`#createProductImages${index}`).get(0).files;
+    $(`#imagePreviewContainer${index}`).empty(); 
+    if (files.length > 0) {
+        Array.from(files).forEach(file => {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var img = $('<img>').attr("src", e.target.result);
+                img.css({ "max-width": "150px", "height": "auto" });
+                $(`#imagePreviewContainer${index}`).append(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+}
+
+
+
+function editPreviewImages(index) {
+    var files = $(`#editProductImages${index}`).get(0).files;
+    $(`#EimagePreviewContainer${index}`).empty(); 
+    if (files.length > 0) {
+        Array.from(files).forEach(file => {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var img = $('<img>').attr("src", e.target.result);
+                img.css({ "max-width": "150px", "height": "auto" });
+                $(`#EimagePreviewContainer${index}`).append(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+}
+
+
 </script>
 @endpush

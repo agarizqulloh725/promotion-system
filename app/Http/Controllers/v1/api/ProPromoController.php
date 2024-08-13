@@ -38,7 +38,23 @@ class ProPromoController extends Controller
                 'promo_front' => 'nullable',
                 'promo_start' => 'nullable',
                 'promo_end' => 'nullable',
+                'img1' => 'nullable',
+                'img2' => 'nullable',
+                'spec_array' => 'nullable',
             ]);
+
+            if ($request->hasFile('img1')) {
+                $file = $request->file('img1');  
+                $randomFileName = uniqid('homePromo_') . '.' . $file->extension();
+                $file->move(public_path('images/homepromo'), $randomFileName);
+                $validatedData['img1'] = $randomFileName;
+            }
+            if ($request->hasFile('img2')) {
+                $file = $request->file('img2');  
+                $randomFileName = uniqid('homePromo_') . '.' . $file->extension();
+                $file->move(public_path('images/homepromo'), $randomFileName);
+                $validatedData['img2'] = $randomFileName;
+            }  
 
             if (!empty($validatedData['product_id']) && ProductPromo::where('product_id', $validatedData['product_id'])->exists()) {
                 return response()->json(['error' => 'Product sudah terdaftar', 'message' => 'A promo for this product already exists.'], 409);
@@ -87,6 +103,9 @@ class ProPromoController extends Controller
                 'promo_front' => 'nullable',
                 'promo_start' => 'nullable',
                 'promo_end' => 'nullable',
+                'img1' => 'nullable',
+                'img2' => 'nullable',
+                'spec_array' => 'nullable',
             ]);
             
             if (!empty($validatedData['promo_front'])) {
