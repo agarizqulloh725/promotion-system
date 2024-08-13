@@ -11,13 +11,11 @@
 
 
 .image-backgroundfoot {
-    /* background-image: url({{asset('frontend/img/bg-nav2.jpg')}}); */
-    background-color: red;
-    /* background-size: cover; */
+    background-image: url({{asset('frontend/img/bg-nav2.jpg')}});
+    background-size: cover;
     background-position: center;
-    height: 370px;
-    
 }
+
 .image-backgroundfooter {
     background-image: url({{asset('frontend/img/bg-nav.jpg')}});
     background-size: cover;
@@ -112,6 +110,35 @@
         border-bottom: none;
     }
 }
+@media (max-width: 412px) { 
+    .t-desc {
+        font-size: 13px;
+    }
+    .title{
+        padding-top: 3rem;
+        margin-top:0rem; 
+    }
+    .ctr-urutkan{
+        padding-top: 18px !important;
+    }
+    .image-backgroundfoot{
+        /* width: 250px; */
+    }
+    .image-backgroundfoot img{
+        width: 100%;
+        padding-top: 100%;
+
+    }
+    .image-backgroundfoot.img-layanan {
+        /* width: 200px; */
+        /* padding-top: 1000%; */
+        /* padding-right: 10%; */
+    }
+
+    .image-backgroundfoot .text-white{
+        font-size: 12px;
+    }
+}
 
 
 @media (min-width: 200px) { 
@@ -125,6 +152,7 @@
     .ctr-urutkan{
         padding-top: 18px !important;
     }
+    
 }
 
 
@@ -348,13 +376,13 @@ ul li {
     </div>
 </div>
 
-<div class="image-backgroundfoot pt-5" style="margin-top:100px">
+{{-- <div class="image-backgroundfoot pt-5">
     <div class="row">
-        <div class="col-md-6" style="position: relative;">
-            <img src="{{asset('frontend/img/hubme.png')}}" alt="Gambar Layanan" class="img-fluid" style="position: absolute; top: -150px; left: 200px">
+        <div class="col-md-6" >
+            <img class="img-bn" "{{asset('frontend/img/hubme.png')}}" alt="Gambar Layanan">
         </div>
-        <div class="col-md-6 text-white">
-            <h3 class="mt-5 pt-5">Masih ragu dan bingung dengan layanan kami?</h3>
+        <div class="col-md-6 text-white text-validation">
+            <h3 class="mt-5 pt-5 text-validation">Masih ragu dan bingung dengan layanan kami?</h3>
             <p class="text-white">
                 Jangan khawatir, kami siap membantu Anda! Hubungi kami sekarang juga untuk <br> mendapatkan penawaran terbaik dan layanan yang memuaskan. 
                  Temukan berbagai <br> promo menarik dan kemudahan dalam bertransaksi hanya di toko kami.
@@ -362,9 +390,24 @@ ul li {
             <button class="btn btn-custom">
                 <i class="fa fa-whatsapp whatsapp-icon"></i> Hubungi Kami
             </button>
-        </div>
+        </div>       
+    </div>
+</div> --}}
 
-       
+<div class="image-backgroundfoot p-3">
+    <div class="row">
+        <div class="col text-center">
+            <img class="img-layanan" src="{{asset('frontend/img/hubme.png')}}" alt="">
+        </div>
+        <div class="col">
+            <div class="pt-5 mt-5"></div>
+            <h3 class="text-white mt-5 pt-5">Masih ragu dan bingung dengan layanan kami ?</h3>
+            <p class="text-white">
+                Jangan khawatir, kami siap membantu Anda! Hubungi kami sekarang juga untuk
+                 Temukan berbagai <br> promo menarik dan kemudahan dalam bertransaksi hanya di toko kami.
+            </p>
+            <button class="btn btn-primary">Hubungi Kami</button>
+        </div>
     </div>
 </div>
 
