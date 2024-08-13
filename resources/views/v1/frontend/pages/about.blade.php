@@ -374,7 +374,7 @@ ul li {
             </div>
         </div>
     </div>
-</div>
+</div
 
 {{-- <div class="image-backgroundfoot pt-5">
     <div class="row">
