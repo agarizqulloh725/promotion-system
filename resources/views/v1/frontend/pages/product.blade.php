@@ -134,10 +134,55 @@
         margin-top:3rem; 
     }
 }
+
+#loading-modal {
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Background semi-transparan */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-modal-content {
+    text-align: center;
+    color: white;
+}
+
+.loading-animation {
+    margin-top: 20px;
+    /* Bisa tambahkan CSS animasi loading */
+}
+
+
+.alert {
+    display: block !important;
+    z-index: 9999 !important;
+    transition: opacity 0.5s ease-out;
+    width: 20%;
+    font-size: 18px;
+    font-weight: 500px;
+}
 </style>
 @endpush
 
 @section('content')
+
+<div id="alert-form" class="pt-2" style="padding-left: 20px;"></div>
+
+<div id="loading-modal" style="display: none;">
+    <div class="loading-modal-content">
+        <p id="loading-text">Loading...</p>
+        <div class="loading-animation"> 
+            <!-- Bisa tambahkan animasi loading di sini -->
+        </div>
+    </div>
+</div>
+
 
 {{-- content header --}}
 <div class="image-background p-3">
@@ -415,6 +460,7 @@
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
 var selectedYear = [];
@@ -422,6 +468,19 @@ var selectedBrand = [];
 var selectedPromo = [];
 var filterSort = "relevance";
 var searchh = "";
+
+const loadingModal = (args, text = null) => {
+    const modal = document.getElementById('loading-modal');
+    const loadingText = document.getElementById('loading-text');
+    
+    if (args === 'show') {
+        loadingText.textContent = text || 'Loading...';
+        modal.style.display = 'flex'; // Menampilkan modal
+    } else if (args === 'hide') {
+        modal.style.display = 'none'; // Menyembunyikan modal
+    }
+}
+
 
 async function fetchBrand() {
     try {
@@ -477,31 +536,75 @@ async function applyFilters() {
         brands: brands.join(','),
         promos: promos.join(','),
     }).toString();
-
+    
     const url = `http://127.0.0.1:8000/api/v1/get-products?${queryParams}`;
+    loadingModal('show', 'Load Data...');
 
     try {
         const response = await fetch(url);
         if (response.ok) {
             const result = await response.json();
+            console.log('result', result);
             updateProductList(result.data.data);
-            Swal.fire({
-                icon: 'success',
-                title: 'Filter Berhasil di Terapkan',
-                text: `Produk berhasil diambil. Total produk: ${result.data.total}`
-            });
+            // Menampilkan pesan jika tidak ada produk yang ditemukan
+            const total = result.data.total || 0;
+            if (total === 0) {
+                showMessage("alert-form", ['Tidak ada produk yang ditemukan'], "error");  
+            } 
+            loadingModal('hide');
         } else {
             const error = await response.json();
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal Mengambil Produk',
-                text: error.message || 'Tidak dapat mengambil produk dengan kredensial yang diberikan.'
-            });
+            showMessage("alert-form", [error.message || 'Tidak dapat mengambil produk dengan kredensial yang diberikan.'], "error");
         }
     } catch (error) {
         console.error('Error fetching products:', error);
     }
 }
+
+
+
+function showMessage(el, messages, type) {
+    console.log('ShowMessage called with:', el, messages, type);
+    var alertClass;
+
+    switch (type) {
+        case "error":
+            alertClass = 'alert-danger';
+            break;
+        case "warning":
+            alertClass = "alert-warning";
+            break;
+        case "success":
+            alertClass = "alert-success";
+            break;
+        default:
+            alertClass = "alert-danger";
+            break;
+    }
+
+    $("#" + el).html(''); // Clear previous messages
+    jQuery.each(messages, (k, v) => {
+        var alert = `
+            <div id="alert${k}" class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                ${v}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`;
+        $('#' + el).append(alert);
+        slideUp(`alert${k}`);
+    });
+}
+
+function slideUp(alertId) {
+    setTimeout(() => {
+        const alertElement = $("#" + alertId);
+        if (alertElement.length) {
+            alertElement.slideUp(500, function() {
+                $(this).remove(); // Menghapus elemen dari DOM setelah slide up selesai
+            });
+        }
+    }, 3000); // 3 detik sebelum slide up
+}
+
 
 
 function updateProductList(products) {

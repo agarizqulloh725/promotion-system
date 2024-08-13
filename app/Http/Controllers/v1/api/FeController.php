@@ -10,6 +10,7 @@ use App\Models\ProductColor;
 use App\Models\ProductPromo;
 use Illuminate\Http\Request;
 use App\Models\Specification;
+use Laracasts\Flash\Flash;
 
 use PhpParser\Node\Stmt\Return_;
 use App\Http\Controllers\Controller;
@@ -142,6 +143,16 @@ class FeController extends Controller
             } else {
                 $results = $products; 
             }
+
+            // // Cek apakah hasil pencarian kosong
+            // if ($results->isEmpty()) {
+            //     Flash::error('Produk tidak ditemukan.');
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => 'Produk tidak ditemukan.',
+            //     ], 404);
+            // }
+
             
             return response()->json([
                 'success' => true,
