@@ -104,14 +104,14 @@
                         </div>
                         <div class="col-md-6">
 
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="createCashback" class="mb-2">Cashback</label>
                                 <input type="number" class="form-control" id="createCashback" placeholder="Cashback" step="0.01">
-                            </div>
-                            <div class="form-group">
+                            </div> --}}
+                            {{-- <div class="form-group">
                                 <label for="createBonus" class="mb-2 pt-3">Bonus</label>
                                 <input type="number" class="form-control" id="createBonus" placeholder="Bonus" step="0.01">
-                            </div>
+                            </div> --}}
                             <div class="form-group mb-3">
                                 <label for="createBrandDescription" class="mb-2 pt-3">Description</label>
                                 <input type="text" class="form-control" id="createBrandDescription" placeholder="Description">
@@ -234,14 +234,14 @@
                         </div>
                         <div class="col-md-6">
 
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="editCashback" class="mb-2">Cashback</label>
                                 <input type="number" class="form-control" id="editCashback" placeholder="Cashback" step="0.01">
-                            </div>
-                            <div class="form-group">
+                            </div> --}}
+                            {{-- <div class="form-group">
                                 <label for="editBonus" class="mb-2 pt-3">Bonus</label>
                                 <input type="number" class="form-control" id="editBonus" placeholder="Bonus" step="0.01">
-                            </div>
+                            </div> --}}
                             <div class="form-group mb-3">
                                 <label for="editBrandDescription" class="mb-2 pt-3">Description</label>
                                 <input type="text" class="form-control" id="editBrandDescription" placeholder="Description">
@@ -371,8 +371,8 @@ $(document).ready(function() {
     formData.append('name', $('#createBrandName').val());
     formData.append('product_id', $('#createProduct').val());
     formData.append('discount', $('#createDiscount').val());
-    formData.append('cashback', $('#createCashback').val());
-    formData.append('bonus', $('#createBonus').val());
+    // formData.append('cashback', $('#createCashback').val());
+    // formData.append('bonus', $('#createBonus').val());
     formData.append('promo_front', $('#createPromoFront').val());
     formData.append('promo_start', $('#createPromoStart').val());
     formData.append('promo_end', $('#createPromoEnd').val());
@@ -463,8 +463,8 @@ $(document).ready(function() {
     formData.append('name', $('#editName').val());
     formData.append('product_id', $('#editProduct').val());
     formData.append('discount', $('#editDiscount').val());
-    formData.append('cashback', $('#editCashback').val());
-    formData.append('bonus', $('#editBonus').val());
+    // formData.append('cashback', $('#editCashback').val());
+    // formData.append('bonus', $('#editBonus').val());
     formData.append('promo_front', $('#editPromoFront').val());
     formData.append('promo_start', $('#editPromoStart').val());
     formData.append('promo_end', $('#editPromoEnd').val());
@@ -575,8 +575,8 @@ function editBrand(id) {
             $('#editName').val(response.name);
             $('#editProduct').val(response.product_id).trigger('change');
             $('#editDiscount').val(response.discount);
-            $('#editCashback').val(response.cashback);
-            $('#editBonus').val(response.bonus);
+            // $('#editCashback').val(response.cashback);
+            // $('#editBonus').val(response.bonus);
             $('#editDescription').val(response.description);
             $('#editModal').modal('show');
             $('#editPromoFront').val(response.promo_front);
@@ -584,10 +584,20 @@ function editBrand(id) {
             $('#editPromoEnd').val(response.promo_end);
 
             if (response.img1) {
-                $('#EimagePreviewContainer1').attr('src', `/images/homepromo/${response.img1}`);
+                $("#EimagePreviewContainer1").empty();
+                let images = Array.isArray(response.img1) ? response.img1 : [response.img1];
+                    var fullPath = '/images/homepromo/' + response.img1;
+                    var img = $('<img>').attr("src", fullPath);
+                    img.css({ "max-width": "150px", "height": "auto" });
+                    $("#EimagePreviewContainer1").append(img);
             }
             if (response.img2) {
-                $('#EimagePreviewContainer2').attr('src', `/images/homepromo/${response.img2}`);
+                $("#EimagePreviewContainer2").empty();
+                let images = Array.isArray(response.img2) ? response.img2 : [response.img2];
+                    var fullPath = '/images/homepromo/' + response.img2;
+                    var img = $('<img>').attr("src", fullPath);
+                    img.css({ "max-width": "150px", "height": "auto" });
+                    $("#EimagePreviewContainer2").append(img);
             }
             loadExistingSpecs(JSON.parse(response.spec_array));
         },

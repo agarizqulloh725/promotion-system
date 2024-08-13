@@ -23,6 +23,14 @@
     @include('v1.frontend.layout.footer')
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    function openWhatsApp() {
+    const waMessage = encodeURIComponent('Halo, saya tertarik dengan product limawaktu. Bisa dibantu?');
+    const waNumber = '6285792125743';
+    const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
+    window.open(waUrl, '_blank');
+}
+  </script>
   @stack('script')
 </body>
 </html>

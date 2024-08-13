@@ -236,10 +236,10 @@ ul li {
 
 <div class="container pt-5 mt-5">
     <div class="row pt-5 mt-5">
-        <div class="col-4 d-flex justify-content-center align-items-center">
+        <div class="col-md-4 order-2 order-md-1 d-flex justify-content-center align-items-center">
             <img class="img-fluid" src="{{asset('frontend/img/limawrounded.png')}}" alt="Phone">
         </div>
-        <div class="col">
+        <div class="col order-2 order-md-1">
             <h2 class="poppins-semibold text-danger" >LIMAWAKTU - Jujur Harganya</h2>
             <p class="poppins-regular pt-3" style="font-size: 18px">
                 LIMAWAKTU  adalah solusi terbaik untuk kebutuhan gadget Anda. Kami 
@@ -273,35 +273,48 @@ ul li {
     </div>
 </div>
 
-{{-- content header --}}
 <div class="container pt-5 pb-5 mb-5">
     <div class="row pt-5 mt-5">
-        <div class="col">
-            <h2 class="poppins-semibold text-danger" >Temukan Inovasi Terkini dalam Gadget Pengalaman Belanja yang Tanpa Batas!</h2>
-            <p class="poppins-regular pt-3" style="font-size: 18px">Nikmati berbagai inovasi terbaru dalam gadget
-                 yang akan memberikan Anda pengalaman berbelanja yang tiada tanding. Temukan beragam produk berkualitas 
-                 yang siap memenuhi kebutuhan teknologi Anda dengan jaminan layanan terbaik.
+        <!-- Menggunakan kelas col-md-8 untuk medium devices dan col-lg-6 untuk large devices -->
+        <div class="col-md-8 col-lg-6">
+            <h2 class="poppins-semibold text-danger">Temukan Inovasi Terkini dalam Gadget Pengalaman Belanja yang Tanpa Batas!</h2>
+            <p class="poppins-regular pt-3" style="font-size: 18px">
+                Nikmati berbagai inovasi terbaru dalam gadget yang akan memberikan Anda pengalaman berbelanja yang tiada tanding.
+                Temukan beragam produk berkualitas yang siap memenuhi kebutuhan teknologi Anda dengan jaminan layanan terbaik.
             </p>
-            <div class="d-flex gap3 justify-content-between pb-4">
-                <div class="poppins-medium"> <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt=""> 100% Terpercaya </div>
-                <div class="poppins-medium"> <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt="">Bahan Berkualitas</div>
-                <div class="poppins-medium"> <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt="">Layanan Terbaik</div>
-            </div>
-            <button class="btn btn-danger p-2 poppins-medium" >Hubungi Kami Sekarang</button>
+            <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-center pb-4 gap-3">
+                <div class="poppins-medium text-center">
+                    <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt=""> 100% Terpercaya
+                </div>
+                <div class="poppins-medium text-center">
+                    <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt=""> Bahan Berkualitas
+                </div>
+                <div class="poppins-medium text-center">
+                    <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt=""> Layanan Terbaik
+                </div>
+            </div>            
+            <button class="btn btn-danger p-2 poppins-medium">Hubungi Kami Sekarang</button>
         </div>
-        <div class="col d-flex justify-content-center align-items-center">
-            <img src="{{asset('frontend/img/phone.png')}}" alt="Phone">
+        <!-- Menggunakan kelas col-md-4 untuk medium devices dan col-lg-6 untuk large devices -->
+        <div class="col-md-4 col-lg-6 d-flex justify-content-center align-items-center">
+            <img src="{{asset('frontend/img/phone.png')}}" alt="Phone" class="img-fluid"> <!-- class img-fluid untuk responsive image -->
         </div>
     </div>
 </div>
 
+
 <div class="container mt-5 pt-5 pb-5 mb-4">
     <div class="row">
         <div class="col-md-6 mt-5">
-            <div class="embed-responsive embed-responsive-16by9">
-                {{-- <iframe class="embed-responsive-item" src="https://youtu.be/xXh3M8EFPV4?si=PXyHBebHVuB_1UAv" allowfullscreen></iframe> --}}
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/xXh3M8EFPV4?si=PXyHBebHVuB_1UAv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+            <iframe src="https://www.youtube.com/embed/xXh3M8EFPV4?si=PXyHBebHVuB_1UAv" 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen 
+                    title="YouTube video player">
+            </iframe>
+        </div>
         </div>
         <div class="col-md-6">
             <h4 class="text-danger poppins-semibold">

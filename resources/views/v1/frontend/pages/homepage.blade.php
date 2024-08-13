@@ -224,7 +224,7 @@ ul li {
                 <div class="poppins-medium"> <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt="">Bahan Berkualitas</div>
                 <div class="poppins-medium"> <img width="25px" src="{{asset('frontend/img/checked-i.png')}}" alt="">Layanan Terbaik</div>
             </div>
-            <button class="btn btn-danger p-2 poppins-medium" style="">Hubungi Kami Sekarang</button>
+            <button class="btn btn-danger p-2 poppins-medium" style="" onclick="openWhatsApp()">Hubungi Kami Sekarang</button>
         </div>
         <div class="col d-flex justify-content-center align-items-center">
             <img src="{{asset('frontend/img/phone.png')}}" alt="Phone">
@@ -519,11 +519,11 @@ ul li {
     const promoContainer = document.getElementById('promoContainer'); 
     const imgElement = document.getElementById('imgtwo');
 
-    const imagePath = "{{ asset('frontend/img/') }}";
-    const productImage = products.data.image_name ? `${imagePath}/${products.data.image_name}` : "{{ asset('frontend/img/phone2.png') }}";
+    const imagePath = "{{ asset('images/homepromo/') }}";
+    const productImage = products.data.img1 ? `${imagePath}/${products.data.img1}` : "{{ asset('frontend/img/phone2.png') }}";
 
-    if (products.data.image_name) {
-        imgElement.src = `${imagePath}/${products.data.image_name}`;
+    if (products.data.img2) {
+        imgElement.src = `${imagePath}/${products.data.img2}`;
     } else {
         imgElement.src = "{{asset('frontend/img/phone3.png')}}";
     }

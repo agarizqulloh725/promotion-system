@@ -31,7 +31,7 @@
                         <a class="nav-link poppins-regular text-white {{ request()->is('about') ? 'active' : '' }}" href="/about">Tentang Kami</a>
                     </li>
                 </ul>                
-                <button class="btn btn-outline-danger poppins-regular btn-custom-nav ms-2" type="button">Hubungi Kami</button>
+                <button class="btn btn-outline-danger poppins-regular btn-custom-nav ms-2" type="button" onclick="openWhatsApp()">Hubungi Kami</button>
             </div>
         </div>
     </nav> 
