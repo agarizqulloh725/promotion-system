@@ -43,6 +43,7 @@
     <script src={{asset('backend/assets/js/todolist.js')}}></script>
     <script src={{asset('backend/assets/js/jquery.cookie.js')}}></script>
     <script src={{asset('backend/assets/js/dashboard.js')}}></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('utils.js') }}"></script>
     <script>
         const tokenn = getCookieValue('access_token');
@@ -55,7 +56,8 @@
                 },
                 contentType: 'application/json',
                 success: function(response) {
-                  myuserr = response.user.id;
+                var myuserr = response.user.id;
+                var branchId = response.user.branch_id;
 
                   const profileNames = document.querySelectorAll('.nameProfile');
                   const userName = response.user.name;
@@ -68,6 +70,99 @@
                   profilepermission.forEach(element => {
                       element.textContent = role;
                   });
+
+                const proCategoryLink = document.querySelector("a[href='/admin/pro-category']");
+                const brandLink = document.querySelector("a[href='/admin/brand']");
+                
+                if (branchId !== null && branchId !== '') {
+                    // Pro Category
+                    const proCategoryLink = document.querySelector("a[href='/admin/pro-category']");
+                    proCategoryLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Anda Tidak Memiliki Akses',
+                            text: 'Hubungi admin untuk informasi hak akses terkait',
+                        });
+                    });
+
+                    // Brand
+                    const brandLink = document.querySelector("a[href='/admin/brand']");
+                    brandLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Anda Tidak Memiliki Akses',
+                            text: 'Hubungi admin untuk informasi hak akses terkait',
+                        });
+                    });
+
+                    // Products
+                    const productsLink = document.querySelector("a[href='/admin/products']");
+                    productsLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Anda Tidak Memiliki Akses',
+                            text: 'Hubungi admin untuk informasi hak akses terkait',
+                        });
+                    });
+
+                    // Promo Product
+                    const promoProductLink = document.querySelector("a[href='/admin/product-promo']");
+                    promoProductLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Anda Tidak Memiliki Akses',
+                            text: 'Hubungi admin untuk informasi hak akses terkait',
+                        });
+                    });
+
+                    // Branch
+                    const branchLink = document.querySelector("a[href='/admin/branch']");
+                    branchLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Anda Tidak Memiliki Akses',
+                            text: 'Hubungi admin untuk informasi hak akses terkait',
+                        });
+                    });
+
+                    // Specification
+                    const specificationLink = document.querySelector("a[href='/admin/spesification']");
+                    specificationLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Anda Tidak Memiliki Akses',
+                            text: 'Hubungi admin untuk informasi hak akses terkait',
+                        });
+                    });
+
+                    // Color
+                    const colorLink = document.querySelector("a[href='/admin/color']");
+                    colorLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Anda Tidak Memiliki Akses',
+                            text: 'Hubungi admin untuk informasi hak akses terkait',
+                        });
+                    });
+
+                    // User Management
+                    const userRoleLink = document.querySelector("a[href='/admin/user-role']");
+                    userRoleLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Anda Tidak Memiliki Akses',
+                            text: 'Hubungi admin untuk informasi hak akses terkait',
+                        });
+                    });
+                }
 
                 },
                 error: function(error) {
