@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     async function fetchMe() {
         try {
             const response = await $.ajax({
-                url: '/api/v1/me/',
+                url: '/api/v1/me',
                 type: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#dataTable').DataTable({
             responsive: true,
             ajax: {
-                url: '/api/v1/admin/branch/',
+                url: '/api/v1/admin/branch',
                 type: 'GET',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('Authorization', 'Bearer ' + token);

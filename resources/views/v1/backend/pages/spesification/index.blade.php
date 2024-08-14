@@ -140,7 +140,7 @@ $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {
-            url: '/api/v1/admin/specification/',
+            url: '/api/v1/admin/specification',
             type:'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -172,7 +172,7 @@ $(document).ready(function() {
         e.preventDefault();
         var nameSpesification = $('#nameSpesification').val();
         $.ajax({
-            url: '/api/v1/admin/specification/',
+            url: '/api/v1/admin/specification',
             type: 'POST',
             headers: {
             'Authorization': 'Bearer ' + token

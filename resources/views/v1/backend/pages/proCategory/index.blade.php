@@ -152,7 +152,7 @@ $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {
-            url: '/api/v1/admin/pro-category/',
+            url: '/api/v1/admin/pro-category',
             type:'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -185,7 +185,7 @@ $(document).ready(function() {
         var categoryName = $('#categoryName').val();
         var categoryDescription = $('#categoryDescription').val();
         $.ajax({
-            url: '/api/v1/admin/pro-category/',
+            url: '/api/v1/admin/pro-category',
             type: 'POST',
             headers: {
             'Authorization': 'Bearer ' + token
@@ -227,7 +227,7 @@ $(document).ready(function() {
     $('#confirmDelete').click(function() {
         var categoryId = $(this).data('id');
         $.ajax({
-            url: '/api/v1/admin/pro-category/' + categoryId,
+            url: '/api/v1/admin/pro-category' + categoryId,
             type: 'DELETE',
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -260,7 +260,7 @@ $(document).ready(function() {
         var updatedName = $('#editName').val();
         var editDescription = $('#editDescription').val(); 
         $.ajax({
-            url: '/api/v1/admin/pro-category/' + id,
+            url: '/api/v1/admin/pro-category' + id,
             type: 'PUT',
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -301,7 +301,7 @@ $(document).ready(function() {
 });
 function showCategory(id) {
     $.ajax({
-        url: '/api/v1/admin/pro-category/' + id, 
+        url: '/api/v1/admin/pro-category' + id, 
         type: 'GET',
         headers: {
                 'Authorization': 'Bearer ' + token
@@ -327,7 +327,7 @@ function showCategory(id) {
 }
 function editCategory(id) {
     $.ajax({
-        url: '/api/v1/admin/pro-category/' + id, 
+        url: '/api/v1/admin/pro-category' + id, 
         type: 'GET',
         headers: {
                 'Authorization': 'Bearer ' + token

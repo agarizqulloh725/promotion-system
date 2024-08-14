@@ -207,7 +207,7 @@ $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {
-            url: '/api/v1/admin/brand/',
+            url: '/api/v1/admin/brand',
             type:'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -256,7 +256,7 @@ $(document).ready(function() {
       formData.append('is_show', $('#createIsShow').is(':checked') ? '1' : '0');
 
       $.ajax({
-          url: '/api/v1/admin/brand/',
+          url: '/api/v1/admin/brand',
           type: 'POST',
           headers: {
               'Authorization': 'Bearer ' + token

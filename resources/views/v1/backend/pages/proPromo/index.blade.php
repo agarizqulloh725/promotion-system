@@ -328,7 +328,7 @@ $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {
-            url: '/api/v1/admin/pro-promo/',
+            url: '/api/v1/admin/pro-promo',
             type:'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -387,7 +387,7 @@ $(document).ready(function() {
         formData.append('img2', image2);
     }
     $.ajax({
-        url: '/api/v1/admin/pro-promo/',
+        url: '/api/v1/admin/pro-promo',
         type: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token

@@ -253,7 +253,7 @@ $(document).ready(function() {
         e.preventDefault();
         var categoryName = $('#categoryName').val();
         $.ajax({
-            url: '/api/v1/admin/pro-specification/',
+            url: '/api/v1/admin/pro-specification',
             type: 'POST',
             headers: {
             'Authorization': 'Bearer ' + token

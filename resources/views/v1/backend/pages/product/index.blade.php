@@ -360,7 +360,7 @@ $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         responsive: true,
         ajax: {
-            url: '/api/v1/admin/product/',
+            url: '/api/v1/admin/product',
             type:'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -430,7 +430,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-        url: '/api/v1/admin/product/', 
+        url: '/api/v1/admin/product', 
         type: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token 
