@@ -564,7 +564,7 @@ ul li {
 @push('script')
 <script src="https://kit.fontawesome.com/d911015868.js" crossorigin="anonymous"></script>
 <script>
-    const assetPath = "{{ asset('images/product-image') }}";
+    const assetPath = "{{ asset('public/images/product-image') }}";
     document.addEventListener('DOMContentLoaded', function () {
         fetchPopularProducts();
         fetchPromoProducts();

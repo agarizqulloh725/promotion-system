@@ -244,7 +244,7 @@
         <div class="row g-0">
             <div class="col-md-4 d-flex justify-content-between align-items-center">
                 <div class="p-2">
-                    <img class="img-fluid rounded-3" width="450px" src="{{asset('images/branch/'.$mybranch->image)}}" alt="Lima Waktu - Waru">
+                    <img class="img-fluid rounded-3" width="450px" src="{{asset('public/images/branch/'.$mybranch->image)}}" alt="Lima Waktu - Waru">
                 </div>
             </div>
             <!-- Content Column -->

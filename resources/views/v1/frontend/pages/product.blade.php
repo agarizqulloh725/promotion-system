@@ -711,7 +711,7 @@ function updateProductList(products) {
         productListContainer.innerHTML += `
             <a class="col-md-4 mb-4 text-secondary text-decoration-none " href="/product/${product.id}">
                 <div class="card border-1 rounded-4 shadow">
-                    <img class="card-img-top pt-2" src="/images/product-image/${imagePath}" alt="${product.name}">
+                    <img class="card-img-top pt-2" src="https://lima-waktu.my.id/public/images/product-image/${imagePath}" alt="${product.name}">
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>
                         <p class="card-text mb-4 slug">${product.slug}</p>
