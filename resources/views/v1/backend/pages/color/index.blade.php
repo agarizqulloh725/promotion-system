@@ -328,7 +328,7 @@ function showCategory(id) {
             if (response.image) {
                 let images = Array.isArray(response.image) ? response.image : [response.image];
                 images.forEach(function(imageUrl) {
-                    var fullPath = '/images/color/' + imageUrl;
+                    var fullPath = 'https://lima-waktu.my.id/public/images/color/' + imageUrl;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     $("#showImagePreviewContainer").append(img);
@@ -362,7 +362,7 @@ function editCategory(id) {
                 $("#editImagePreviewContainer").empty();
                 let images = Array.isArray(response.image) ? response.image : [response.image];
                 images.forEach(function(imageUrl) {
-                    var fullPath = '/images/color/' + imageUrl;
+                    var fullPath = 'https://lima-waktu.my.id/public/images/color/' + imageUrl;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     $("#editImagePreviewContainer").append(img);

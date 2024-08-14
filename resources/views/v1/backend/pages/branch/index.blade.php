@@ -469,7 +469,7 @@ function editCategory(id) {
             if (response.image) {
                 let images = Array.isArray(response.image) ? response.image : [response.image];
                 images.forEach(function(imageUrl) {
-                    var fullPath = '/images/branch/' + imageUrl;
+                    var fullPath = 'https://lima-waktu.my.id/public/images/branch/' + imageUrl;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     container.append(img);

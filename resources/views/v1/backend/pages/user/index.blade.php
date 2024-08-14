@@ -464,7 +464,7 @@ function showUser(id) {
             if (response.image) {
               let images = Array.isArray(response.image) ? response.image : [response.image];
               images.forEach(function(imageUrl) {
-                  var fullPath = '/images/user/' + imageUrl;
+                  var fullPath = 'https://lima-waktu.my.id/public/images/user/' + imageUrl;
                   var img = $('<img>').attr("src", fullPath);
                   img.css({ "max-width": "150px", "height": "auto" });
                   $("#showImagePreviewContainer").append(img);
@@ -542,7 +542,7 @@ function editUser(id) {
             $('#editUserImages').val('');
             $('#editImagePreviewContainer').empty();
             if (response.image) {
-                let fullPath = '/images/user/' + response.image;
+                let fullPath = 'https://lima-waktu.my.id/public/images/user/' + response.image;
                 var img = $('<img>').attr("src", fullPath).css({ "max-width": "150px", "height": "auto" });
                 $("#editImagePreviewContainer").append(img);
             }

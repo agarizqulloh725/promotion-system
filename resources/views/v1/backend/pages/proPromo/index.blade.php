@@ -540,7 +540,7 @@ function showBrand(id) {
             if (response.image) {
               let images = Array.isArray(response.image) ? response.image : [response.image];
               images.forEach(function(imageUrl) {
-                  var fullPath = '/images/brand/' + imageUrl;
+                  var fullPath = 'https://lima-waktu.my.id/public/images/brand/' + imageUrl;
                   var img = $('<img>').attr("src", fullPath);
                   img.css({ "max-width": "150px", "height": "auto" });
                   $("#showImagePreviewContainer").append(img);
@@ -586,7 +586,7 @@ function editBrand(id) {
             if (response.img1) {
                 $("#EimagePreviewContainer1").empty();
                 let images = Array.isArray(response.img1) ? response.img1 : [response.img1];
-                    var fullPath = '/images/homepromo/' + response.img1;
+                    var fullPath = 'https://lima-waktu.my.id/public/images/homepromo/' + response.img1;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     $("#EimagePreviewContainer1").append(img);
@@ -594,7 +594,7 @@ function editBrand(id) {
             if (response.img2) {
                 $("#EimagePreviewContainer2").empty();
                 let images = Array.isArray(response.img2) ? response.img2 : [response.img2];
-                    var fullPath = '/images/homepromo/' + response.img2;
+                    var fullPath = 'https://lima-waktu.my.id/public/images/homepromo/' + response.img2;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     $("#EimagePreviewContainer2").append(img);

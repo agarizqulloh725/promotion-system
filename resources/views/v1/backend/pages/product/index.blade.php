@@ -596,7 +596,7 @@ $(document).ready(function() {
                 $("#showImagePreviewContainer").empty();
                 let images = Array.isArray(response.images) ? response.images : [response.images];
                 images.forEach(function(imageUrl) {
-                    var fullPath = '/images/product-image/' + imageUrl.name;
+                    var fullPath = 'https://lima-waktu.my.id/public/images/product-image/' + imageUrl.name;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     $("#showImagePreviewContainer").append(img);
@@ -643,7 +643,7 @@ function editProduct(id) {
                 $("#editImagePreviewContainer").empty();
                 let images = Array.isArray(response.images) ? response.images : [response.images];
                 images.forEach(function(imageUrl) {
-                    var fullPath = '/images/product-image/' + imageUrl.name;
+                    var fullPath = 'https://lima-waktu.my.id/public/images/product-image/' + imageUrl.name;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     $("#editImagePreviewContainer").append(img);
@@ -725,7 +725,7 @@ function showProduct(id) {
             if (response.images) {
                 let images = Array.isArray(response.images) ? response.images : [response.images];
                 images.forEach(function(imageUrl) {
-                    var fullPath = '/images/product-image/' + imageUrl.name;
+                    var fullPath = 'https://lima-waktu.my.id/public/images/product-image/' + imageUrl.name;
                     var img = $('<img>').attr("src", fullPath);
                     img.css({ "max-width": "150px", "height": "auto" });
                     $("#showImagePreviewContainer").append(img);
