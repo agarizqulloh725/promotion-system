@@ -196,7 +196,7 @@
                             <div class="form-group pt-5">
                                 <label for="editBranchImages" class="mb-2">Image :</label>
                                 <input type="file" class="form-control-file" id="editBranchImages" onchange="previewImages();">
-                                <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+                                <div id="editImagePreviewContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
                             </div>
                         </div>
                     </div>
