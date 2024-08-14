@@ -30,17 +30,17 @@ class BranchController extends Controller
     {
         try {
             $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'branch' => 'required|string|max:255',
-                'address' => 'required|string|max:1024',
-                'wa' => 'required|regex:/^\+?\d{10,15}$/',
-                'lat' => 'required|string|regex:/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])\.\d{1,6})$/',
-                'lang' => 'required|string|regex:/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])\.\d{1,6})$/',
-                'image' => 'required|image|max:2048'
+                'name' => 'required',
+                'branch' => 'required',
+                'address' => 'required',
+                'wa' => 'required',
+                'lat' => 'required',
+                'lang' => 'required',
+                'image' => 'required'
             ]);
     
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
+                $file = $request->file('image')[0];
                 if ($file->isValid()) {
                     $randomFileName = uniqid('brand_') . '.' . $file->extension();
                     $file->move(public_path('images/branch'), $randomFileName);
@@ -78,13 +78,13 @@ class BranchController extends Controller
     {
         try {
             $validated = $request->validate([
-                'name' => 'sometimes|required|string|max:255',
-                'branch' => 'nullable|string|max:255',
-                'address' => 'nullable|string|max:1024',
-                'wa' => 'nullable|regex:/^\+?\d{10,15}$/',
-                'lat' => 'nullable|string|regex:/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])\.\d{1,6})$/',
-                'lang' => 'nullable|string|regex:/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])\.\d{1,6})$/',
-                'image' => 'nullable|image|max:2048'
+                'name' => 'required',
+                'branch' => 'required',
+                'address' => 'required',
+                'wa' => 'required',
+                'lat' => 'required',
+                'lang' => 'required',
+                'image' => 'required'
             ]);
     
             if ($request->hasFile('image')) {
