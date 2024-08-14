@@ -14,9 +14,12 @@
     text-align: center;
 }
 .image-backgroundfoot {
-    background-image: url({{asset('frontend/img/bg-nav2.jpg')}});
-    background-size: cover;
+    /* background-image: url({{asset('frontend/img/bg-nav2.jpg')}}); */
+    background-color: red;
+    /* background-size: cover; */
     background-position: center;
+    height: 370px;
+    
 }
 .image-backgroundfooter {
     background-image: url({{asset('frontend/img/bg-nav.jpg')}});
@@ -120,6 +123,17 @@
     .ctr-urutkan{
         padding-top: 18px !important;
     }
+    .imgg {
+        width: 50%;
+    }
+    .jj1{
+        margin-top: -150px;
+    }
+    .jj2{
+    }
+    .textnav{
+        font-size: 12px; !important
+    }
 }
 
 
@@ -134,6 +148,19 @@
     .ctr-urutkan{
         padding-top: 18px !important;
     }
+    .imgg {
+        width: 50%;
+    }
+    .jj1{
+        margin-top: -150px;
+    }
+    .mysosmed{
+        width: 250px;
+    }
+    .mynav{
+        width: 250px;
+        font-size: 1px
+    }
 }
 
 @media (min-width: 374px) { 
@@ -146,6 +173,18 @@
     }
     .ctr-urutkan{
         padding-top: 18px !important;
+    }
+    .imgg {
+        width: 50%;
+    }
+    .jj1{
+        margin-top: -150px;
+    }
+    .mysosmed{
+        width: 300px;
+    }
+    .mynav{
+        width: 300px;
     }
 }
 
@@ -160,6 +199,21 @@
     .ctr-urutkan{
         padding-top: 18px !important;
     }
+    .imgg {
+        width: 50%;
+    }
+    .jj1{
+        margin-top: -150px;
+    }
+    .mysosmed{
+        width: 350px;
+    }
+    .mynav{
+        width: 350px;
+    }
+    .textnav{
+        font-size: 18px; !important
+    }
 }
 @media (min-width: 767px) { 
     .t-desc {
@@ -168,6 +222,18 @@
     .title{
         padding-top: 3rem;
         margin-top:1rem; 
+    }
+    .imgg {
+        width: auto;
+    }
+    .jj1{
+        margin-top: 0px;
+    }
+    .mysosmed{
+        width: 450px;
+    }
+    .mynav{
+        width: 450px;
     }
 }
 @media (min-width: 991px) { 
@@ -188,6 +254,12 @@
         padding-top: 3rem;
         margin-top:3rem; 
     }
+    .mysosmed{
+        width: 450px;
+    }
+    .mynav{
+        width: 450px;
+    }
 }
 
 @media (min-width: 1200px) { 
@@ -198,6 +270,25 @@
         padding-top: 3rem;
         margin-top:3rem; 
     }
+    .mysosmed{
+        width: 450px;
+    }
+    .mynav{
+        width: 450px;
+    }
+}
+.btn-custom {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    border-radius: 25px;
+}
+.btn-custom:hover {
+    background-color: red;
+    color: white;
+}
+.btn-custom .whatsapp-icon {
+    margin-right: 8px;
 }
 </style>
 @endpush
@@ -341,18 +432,21 @@
 </div>
 
 
-<div class="image-backgroundfoot p-3">
-    <div class="row">
-        <div class="col text-center">
-            <img src="{{asset('frontend/img/hubme.png')}}" alt="">
-        </div>
-        <div class="col">
-            <div class="pt-5 mt-5"></div>
-            <h3 class="text-white mt-5 pt-5">Masih ragu dan bingung dengan layanan kami ?</h3>
-            <p class="text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <button class="btn btn-primary">Hubungi Kami</button>
+<div class="image-backgroundfoot pt-5" style="margin-top: 100px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d-flex justify-content-center justify-content-md-start">
+                <img src="{{ asset('frontend/img/hubme.png') }}" alt="Gambar Layanan" class="img-fluid imgg" style="max-width: 100%; position: relative; top: -150px;">
+            </div>
+            <div class="col-md-6 text-white mt-md-0 pt-md-0">
+                <h3 class="jj1 poppins-medium">Masih ragu dan bingung dengan layanan kami?</h3>
+                <p class="jj2 poppins-light">
+                    Jangan khawatir, kami siap membantu Anda! Hubungi kami sekarang juga untuk mendapatkan penawaran terbaik dan layanan yang memuaskan. Temukan berbagai promo menarik dan kemudahan dalam bertransaksi hanya di toko kami.
+                </p>
+                <button class="btn btn-custom">
+                    <i class="fa fa-whatsapp whatsapp-icon"></i> Hubungi Kami
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -455,7 +549,7 @@ function fetchProductImages(id, colorid) {
             if (imageNames.length === 1) {
                 for (let i = 0; i < 3; i++) { 
                     const imgElement = document.createElement('img');
-                    imgElement.src = `/images/color-product/${imageNames[0]}`;
+                    imgElement.src = `/public/images/color-product/${imageNames[0]}`;
                     imgElement.alt = 'Product Color Image';
                     imgElement.className = 'img-fluid thumbnail-img';
                     imgElement.style.width = '110px';
@@ -468,10 +562,9 @@ function fetchProductImages(id, colorid) {
                     imageContainer.appendChild(imgCol);
                 }
             } else {
-                // Create an image element for each name in the array
                 imageNames.forEach(imageName => {
                     const imgElement = document.createElement('img');
-                    imgElement.src = `/path/to/images/${imageName}`;
+                    imgElement.src = `/public/images/${imageName}`;
                     imgElement.alt = 'Product Color Image';
                     imgElement.className = 'img-fluid thumbnail-img';
                     imgElement.style.width = '110px';
@@ -527,7 +620,7 @@ function fetchColor(id) {
                     
                     if (color.image) {
                         // colorDiv.style.backgroundImage = `url(${color.image})`;
-                        colorDiv.style.backgroundImage = `url('https://lima-waktu.my.id/images/color/${color.image}')`;
+                        colorDiv.style.backgroundImage = `url('https://lima-waktu.my.id/public/images/color/${color.image}')`;
                         colorDiv.style.backgroundSize = 'cover';
                     } else {
                         colorDiv.style.backgroundColor = color.name.toLowerCase();
@@ -660,7 +753,7 @@ function updateColorUI(colors, idSpecification) {
         if (color.image) {
             colorDiv.style.backgroundImage = `url(${color.image})`;
             // colorDiv.style.backgroundImage = `url('https://lima-waktu.my.id/images/product-image/product-image_66b878156aa47.png')`;
-            colorDiv.style.backgroundImage = `url('https://lima-waktu.my.id/images/color/${color.image}')`;
+            colorDiv.style.backgroundImage = `url('https://lima-waktu.my.id/public/images/color/${color.image}')`;
             colorDiv.style.backgroundSize = 'cover';
         } else {
             colorDiv.style.backgroundColor = color.name.toLowerCase();
@@ -683,7 +776,7 @@ function updateImgUI(products) {
 
     const mainImage = document.getElementById('main-image');    
     if (imagesData.length > 0) {
-        mainImage.src = `/images/product-image/${imagesData[0].name}`;
+        mainImage.src = `/public/images/product-image/${imagesData[0].name}`;
         mainImage.alt = 'Main Phone Image';
 
         imageContainer.innerHTML = '';
@@ -694,7 +787,7 @@ function updateImgUI(products) {
                 imgCol.className = 'col-12 mb-2';
                 const image = document.createElement('img');
                 image.className = 'img-fluid thumbnail-img';
-                image.src = `/images/product-image/${img.name}`;
+                image.src = `/public/images/product-image/${img.name}`;
                 image.alt = 'Phone Image';
                 image.style.width = '110px';
                 image.onclick = function() { changeImage(this); };
