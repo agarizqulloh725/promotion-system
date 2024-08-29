@@ -53,6 +53,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 contentType: 'application/json',
             });
             console.log(response.user.branch_id);
+            if (response.permission === "admin") {
+                $('#btnCreate').hide();
+            } else {
+                $('#btnCreate').show();
+            }
             return response.user.branch_id;
         } catch (error) {
             console.log('Error fetching user details:', error);
@@ -95,6 +100,8 @@ document.addEventListener('DOMContentLoaded', function () {
     async function main() {
         const token = getCookieValue('access_token');
         const userHandle = await fetchMe();
+        console.log(userHandle);
+        
         initializeTable(userHandle);
     }
 

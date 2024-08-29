@@ -37,7 +37,7 @@
             {{-- @endforeach --}}
         </div>
         <div class="d-flex justify-content-end">
-            <button type="button" id="btnCreate" class="btn btn-primary mb-2">
+            <button type="button" id="btnCreate" class="btn btn-primary mb-2" style="display: none">
                 <i class="fa fa-plus"></i> Add Product
             </button>        
         </div>
@@ -182,6 +182,7 @@
 <script src="{{ asset('utils.js') }}"></script>
 <script>
 const token = getCookieValue('access_token');
+const userHandle = fetchMe();
 const currentUrl = window.location.href;
 const urlParts = currentUrl.split('/');
 const idBranch = urlParts[urlParts.length - 1];
@@ -362,5 +363,27 @@ function editStock(id, idProduct) {
     });
 }
 
+async function fetchMe() {
+    try {
+        const response = await $.ajax({
+            url: '/api/v1/me',
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            contentType: 'application/json',
+        });
+        if (response.permission === "admin") {
+            $('#btnCreate').hide();
+        } else {
+            $('#btnCreate').show();
+        }
+        console.log(response);
+        return response.user.branch_id;
+    } catch (error) {
+        console.log('Error fetching user details:', error);
+        return nul
+    }
+}
 </script>
 @endpush
