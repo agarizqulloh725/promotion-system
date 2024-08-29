@@ -31,7 +31,7 @@
     <div class="page-header">
         <div>
             <h2 >Color</h2>
-            <h5>{{$branch->name}} / {{$prd->name}} / {{$spec->name}}</h5>
+            <h5>{{$nameBranch}} / {{$nameProduct}} / {{$nameSpecification}}</h5>
         </div>
         <div class="d-flex justify-content-end">
             <button type="button" id="btnCreate" class="btn btn-primary mb-2" style="display: none;">
@@ -238,7 +238,7 @@ $(document).ready(function() {
                 return data.color.name;
             }},
             { data: null, render: function (data, type, row) {
-                return `<button onclick="editStock(${row.id}, '${row.name}')" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Stock</button>
+                return `<button onclick="editStock(${row.id})" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Stock</button>
                         <button class="btn btn-danger btn-sm delete-btn" data-id="${row.id}"><i class="fa fa-trash"></i></button>
                 `;
             }}

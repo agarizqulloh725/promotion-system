@@ -32,9 +32,7 @@
     <div class="page-header">
         <div>
             <h2 >Stock Product Cabang</h2>
-            {{-- @foreach ($branch as $item)     --}}
-            <h5>{{ $branch->name }}</h5>
-            {{-- @endforeach --}}
+            <h5>{{ $nameBranch }}</h5>
         </div>
         <div class="d-flex justify-content-end">
             <button type="button" id="btnCreate" class="btn btn-primary mb-2" style="display: none">

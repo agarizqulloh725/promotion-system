@@ -32,7 +32,7 @@
     <div class="page-header">
         <div>
             <h2 >Stock Product Specification</h2>
-            <h5>{{$branch->name}} / {{$product->name}}</h5>
+            <h5>{{$nameBranch}} / {{$nameProduct}}</h5>
         </div>
         <div class="d-flex justify-content-end">
             <button type="button" id="btnCreate" class="btn btn-primary mb-2" style="display: none">

@@ -13,6 +13,7 @@ use App\Models\Specification;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\BranchProduct;
 use App\Models\Brand;
 use App\Models\ProductSpecification;
 use Illuminate\Support\Facades\Auth;
@@ -69,31 +70,39 @@ class GeneralRouteController extends Controller
         return view('v1.backend.pages.stock.branch');
     }
     public function adminShowStockBranch($branch){
+        $nameBranch = Branch::find($branch)->name;
         $product = Product::all();
         $totalStock = DB::table('product_stock')->where('branch_id', $branch)->sum('stock');
         $branch =  DB::table('branch')->select('branch.name')->where('id', $branch)->first();
         // return $branch;
-        return view('v1.backend.pages.stock.product',compact(['product','totalStock','branch']));
+        return view('v1.backend.pages.stock.product',compact(['product','totalStock','branch','nameBranch']));
     }
     public function adminShowStockProduct($branch,$product){
+        $nameBranch = Branch::find($branch)->name;
+        $idproduct = BranchProduct::find($product)->product_id;
+        $nameProduct =Product::find($idproduct)->name;
         $specification = Specification::all();
-        $totalStock = DB::table('product_stock')->where('product_id', $product)->where('branch_id',$branch)->sum('stock');
+        $totalStock = DB::table('product_stock')->where('product_id',$idproduct)->where('branch_id',$branch)->sum('stock');
         $branch = DB::table('branch')->select('name')->where('id', $branch)->first();
         $product = DB::table('product')->select('name')->where('id', $product)->first();
-        return view('v1.backend.pages.stock.specification', compact(['specification', 'totalStock', 'product', 'branch']));
+        return view('v1.backend.pages.stock.specification', compact(['specification', 'totalStock', 'product', 'branch','nameBranch','nameProduct']));
 
     }
     public function adminShowStockSpecification($branch,$product,$specification){
-        // dd($specification);
+        $nameBranch = Branch::find($branch)->name;
+        $idproduct = BranchProduct::find($product)->product_id;
+        $nameProduct =Product::find($idproduct)->name;
+        // $idSpec = ProductSpecification::find($specification)->specification_id;
+        $nameSpecification = ProductSpecification::find($specification)->name;
         $specificationn = Specification::all();
         $productt = Product::all();
         $color = Color::all();
-        $totalStock = DB::table('product_stock')->where('product_id', $product)->where('product_specification_id', $specification)->sum('stock');
+        $totalStock = DB::table('product_stock')->where('product_id', $idproduct)->where('product_specification_id', $specification)->sum('stock');
         $branch = DB::table('branch')->select('name')->where('id', $branch)->first();
         $prd = DB::table('product')->select('name')->where('id', $product)->first();
         $spec = DB::table('specification')->select('name')->where('id', $specification)->first();
 
-        return view('v1.backend.pages.stock.color', compact(['specificationn','productt','color','totalStock', 'branch', 'prd', 'spec']));
+        return view('v1.backend.pages.stock.color', compact(['specificationn','productt','color','totalStock', 'branch', 'prd', 'spec','nameBranch','nameProduct', 'nameSpecification']));
     }
     public function adminProduct(){
         $category = ProductCategory::all();
